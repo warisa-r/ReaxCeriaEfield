@@ -1,4 +1,4 @@
-#Initial Tasks
+# Initial Tasks
 
 - [ ] Slides summarizing the list of available interatomic potentials/forcefields/models from the review paper
     - [ ] which of these have charges as explicit variables
