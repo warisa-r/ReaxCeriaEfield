@@ -1,0 +1,206 @@
+LAMMPS (2 Aug 2023 - Update 3)
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+# Find minimum energy fcc configuration
+
+# ---------- Initialize Simulation ---------------------
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+# 'metal' uses Angstroms and eV, among other units
+units metal
+dimension 3
+boundary p p p
+atom_style charge
+atom_modify map array
+
+# ---------- Create Atoms ---------------------
+lattice 	fcc 4
+Lattice spacing in x,y,z = 4 4 4
+region 	box block 0 1 0 1 0 1 units lattice
+create_box	2 box    # Changed to 2 types of atoms
+Created orthogonal box = (0 0 0) to (4 4 4)
+  1 by 1 by 1 MPI processor grid
+lattice	fcc 4 orient x 1 0 0 orient y 0 1 0 orient z 0 0 1
+Lattice spacing in x,y,z = 4 4 4
+
+create_atoms 1 random 4 54321 box  # First type of atom
+Created 4 atoms
+  using lattice units in orthogonal box = (0 0 0) to (4 4 4)
+  create_atoms CPU = 0.001 seconds
+create_atoms 2 random 2 12345 box # Second type of atom
+Created 2 atoms
+  using lattice units in orthogonal box = (0 0 0) to (4 4 4)
+  create_atoms CPU = 0.000 seconds
+
+# Set masses for each atom type
+mass 1 16.0   # Mass for Oxygen (type 1) in atomic mass units (amu)
+mass 2 140.0  # Mass for Cerium (type 2) in atomic mass units (amu)
+
+# ---------- Define Interatomic Potential ---------------------
+pair_style reaxff NULL checkqeq no # Don't fix charge
+pair_coeff * * ffield.reax O Ce
+neighbor 2.0 bin
+neigh_modify delay 10 check yes
+
+# ---------- Define Settings ---------------------
+compute eng all pe/atom
+compute eatoms all reduce sum c_eng
+
+# ---------- Run Minimization ---------------------
+reset_timestep 0
+# fix 1 all box/relax iso 1.0 vmax 1
+thermo 1
+thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms
+min_style cg
+minimize 1e-25 1e-25 5000 10000
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+
+- pair reaxff command: doi:10.1016/j.parco.2011.08.005
+
+@Article{Aktulga12,
+ author = {H. M. Aktulga and J. C. Fogarty and S. A. Pandit and A. Y. Grama},
+ title = {Parallel Reactive Molecular Dynamics: {N}umerical Methods and Algorithmic Techniques},
+ journal = {Parallel Computing},
+ year =    2012,
+ volume =  38,
+ number =  {4--5},
+ pages =   {245--259}
+}
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 1 1 1
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 44.61 | 44.61 | 44.61 Mbytes
+   Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
+         0   1297.6624      4              4              4              84974427       54703311       1.7632973e+08  23890236       1297.6624    
+         1   835.85723      4              4              4              70882119       52309214       1.374978e+08   22839349       835.85723    
+         2   634.67637      4              4              4              61794695       41498130       1.2137687e+08  22509082       634.67637    
+         3   480.52157      4              4              4              52073740       24034630       1.074483e+08   24738288       480.52157    
+         4   350.47599      4              4              4              46067640       19167996       90408142       28626783       350.47599    
+         5   237.18458      4              4              4              41276706       17165676       74887247       31777193       237.18458    
+         6   141.03793      4              4              4              37253568       16164045       61861824       33734834       141.03793    
+         7   63.348912      4              4              4              33832252       15796749       51542855       34157151       63.348912    
+         8   0.95588737     4              4              4              31119075       16149862       43729006       33478358       0.95588737   
+         9  -50.505897      4              4              4              29292716       17429831       38266533       32181785      -50.505897    
+        10  -95.781342      4              4              4              28706189       19918397       35219347       30980822      -95.781342    
+        11  -140.41907      4              4              4              28589609       21473268       33923564       30371995      -140.41907    
+        12  -176.99079      4              4              4              27636819       18916441       34589217       29404798      -176.99079    
+        13  -201.48856      4              4              4              27309569       19069348       32661147       30198210      -201.48856    
+        14  -225.17532      4              4              4              26729334       17028382       32466319       30693302      -225.17532    
+        15  -250.5953       4              4              4              26717955       18770551       31696828       29686486      -250.5953     
+        16  -279.09139      4              4              4              27010037       22084836       30428829       28516445      -279.09139    
+        17  -301.79515      4              4              4              27628206       26025461       29206032       27653124      -301.79515    
+        18  -337.59883      4              4              4              27103160       25599866       29089901       26619713      -337.59883    
+        19  -366.74305      4              4              4              27251462       25862739       28763036       27128612      -366.74305    
+        20  -391.26027      4              4              4              27047319       24123517       30182447       26835992      -391.26027    
+        21  -406.8971       4              4              4              28429225       25817469       30742366       28727839      -406.8971     
+        22  -421.0766       4              4              4              27885620       24138545       32977931       26540383      -421.0766     
+        23  -427.12177      4              4              4              28581866       24359070       33072130       28314397      -427.12177    
+        24  -433.03573      4              4              4              29341831       25306120       34836638       27882736      -433.03573    
+        25  -438.06062      4              4              4              31257939       27909886       36338520       29525410      -438.06062    
+        26  -444.30196      4              4              4              32553428       29571319       36529393       31559572      -444.30196    
+        27  -447.24335      4              4              4              32234957       29479877       36427745       30797249      -447.24335    
+        28  -448.77546      4              4              4              32404822       30139944       36679288       30395234      -448.77546    
+        29  -449.25021      4              4              4              32531514       30243360       36812674       30538507      -449.25021    
+        30  -449.71649      4              4              4              32381082       30294934       36475847       30372464      -449.71649    
+        31  -450.09595      4              4              4              32161342       30145385       36243553       30095089      -450.09595    
+        32  -451.15173      4              4              4              31486117       29950937       35493224       29014189      -451.15173    
+        33  -451.77318      4              4              4              31308872       29877753       35142424       28906439      -451.77318    
+        34  -452.31916      4              4              4              31410383       29807504       35192025       29231620      -452.31916    
+        35  -452.37076      4              4              4              31515370       29840780       35320556       29384775      -452.37076    
+        36  -452.40946      4              4              4              31470777       29813787       35240560       29357985      -452.40946    
+        37  -452.41066      4              4              4              31367030       29692357       35241513       29167221      -452.41066    
+        38  -452.41662      4              4              4              31341335       29666058       35219777       29138170      -452.41662    
+        39  -452.46329      4              4              4              31277652       29612716       35137012       29083228      -452.46329    
+        40  -452.48065      4              4              4              31320074       29638046       35144807       29177369      -452.48065    
+        41  -452.48073      4              4              4              31318647       29636821       35143510       29175609      -452.48073    
+        42  -452.48489      4              4              4              31249071       29598089       35099616       29049508      -452.48489    
+        43  -452.48534      4              4              4              31243246       29590324       35092337       29047078      -452.48534    
+        44  -452.49815      4              4              4              31236599       29543453       35120258       29046086      -452.49815    
+        45  -452.50171      4              4              4              31229225       29538071       35114124       29035479      -452.50171    
+        46  -452.50751      4              4              4              31267561       29600164       35080196       29122323      -452.50751    
+        47  -452.50757      4              4              4              31211293       29547401       35079008       29007471      -452.50757    
+        48  -452.51326      4              4              4              31239620       29580523       35038509       29099829      -452.51326    
+        49  -452.51847      4              4              4              31155685       29477054       35003147       28986853      -452.51847    
+        50  -452.52118      4              4              4              31147318       29453315       34999842       28988796      -452.52118    
+        51  -452.52387      4              4              4              31140180       29439842       35005985       28974714      -452.52387    
+        52  -452.52391      4              4              4              31192423       29496565       34999836       29080868      -452.52391    
+        53  -452.52396      4              4              4              31140164       29440606       35006016       28973870      -452.52396    
+        54  -452.52399      4              4              4              31192547       29497253       34999807       29080580      -452.52399    
+        55  -452.52403      4              4              4              31192933       29499499       34999697       29079605      -452.52403    
+        56  -452.52415      4              4              4              31140707       29443599       35005897       28972624      -452.52415    
+        57  -452.52429      4              4              4              31142997       29448344       35007744       28972904      -452.52429    
+        58  -452.52432      4              4              4              31143183       29448218       35008117       28973215      -452.52432    
+        59  -452.52432      4              4              4              31143188       29448194       35008136       28973233      -452.52432    
+        60  -452.52432      4              4              4              31143188       29448194       35008136       28973233      -452.52432    
+        61  -452.52432      4              4              4              31143188       29448194       35008136       28973233      -452.52432    
+Loop time of 4.22442 on 1 procs for 61 steps with 6 atoms
+
+86.6% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+      1297.66237816351  -452.524322780392  -452.524322780392
+  Force two-norm initial, final = 4436.8676 0.57921481
+  Force max component initial, final = 2987.1328 0.30823866
+  Final line search alpha, max atom move = 1.9337173e-08 5.9604645e-09
+  Iterations, force evaluations = 61 240
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 4.1787     | 4.1787     | 4.1787     |   0.0 | 98.92
+Neigh   | 0.010115   | 0.010115   | 0.010115   |   0.0 |  0.24
+Comm    | 0.003034   | 0.003034   | 0.003034   |   0.0 |  0.07
+Output  | 0.03072    | 0.03072    | 0.03072    |   0.0 |  0.73
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 0.001865   |            |       |  0.04
+
+Nlocal:              6 ave           6 max           6 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           2052 ave        2052 max        2052 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           4125 ave        4125 max        4125 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 4125
+Ave neighs/atom = 687.5
+Neighbor list builds = 2
+Dangerous builds = 0
+
+variable natoms equal "count(all)"
+variable teng equal "c_eatoms"
+variable length equal "lx"
+variable ecoh equal "v_teng/v_natoms"
+
+print "Total energy (eV) = ${teng};"
+Total energy (eV) = -452.524322780389;
+print "Number of atoms = ${natoms};"
+Number of atoms = 6;
+print "Lattice constant (Angstoms) = ${length};"
+Lattice constant (Angstoms) = 4;
+print "Cohesive energy (eV) = ${ecoh};"
+Cohesive energy (eV) = -75.4207204633982;
+
+print "All done!"
+All done!
+Total wall time: 0:00:04
