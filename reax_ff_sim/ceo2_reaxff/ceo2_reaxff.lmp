@@ -20,7 +20,7 @@ mass 1 16.0   # Mass for Oxygen (type 1) in atomic mass units (amu)
 mass 2 140.0  # Mass for Cerium (type 2) in atomic mass units (amu)
 
 # ---------- Define Interatomic Potential ---------------------
-pair_style reaxff NULL checkqeq yes
+pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
 pair_coeff * * ffield.reax O Ce
 fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
 neighbor 2.0 bin 
