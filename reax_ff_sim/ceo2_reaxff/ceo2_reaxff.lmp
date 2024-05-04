@@ -2,8 +2,7 @@
 
 # ---------- Initialize Simulation --------------------- 
 clear 
-# 'metal' uses Angstroms and eV, among other units
-units metal 
+units real
 dimension 3 
 boundary p p p 
 atom_style charge
@@ -20,9 +19,10 @@ create_atoms 2 random 50 12345 box # Second type of atom
 mass 1 16.0   # Mass for Oxygen (type 1) in atomic mass units (amu)
 mass 2 140.0  # Mass for Cerium (type 2) in atomic mass units (amu)
 
-# ---------- Define Interatomic Potential --------------------- 
-pair_style reaxff NULL checkqeq no # Don't fix charge
+# ---------- Define Interatomic Potential ---------------------
+pair_style reaxff NULL checkqeq yes
 pair_coeff * * ffield.reax O Ce
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
 neighbor 2.0 bin 
 neigh_modify delay 10 check yes 
  
@@ -30,10 +30,14 @@ neigh_modify delay 10 check yes
 compute eng all pe/atom 
 compute eatoms all reduce sum c_eng 
 
+# ---------- Add Electric Field ---------------------
+# Apply force to all atoms in the direction of the electric field
+# fix efield all efield 1.0 0.0 0.0 region box
+
 # ---------- Run Minimization --------------------- 
 reset_timestep 0 
 # fix 1 all box/relax iso 1.0 vmax 1
-thermo 1
+thermo 10
 thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms 
 min_style cg 
 minimize 1e-25 1e-25 5000 10000 
@@ -49,3 +53,5 @@ print "Lattice constant (Angstoms) = ${length};"
 print "Cohesive energy (eV) = ${ecoh};"
 
 print "All done!"
+
+# Without efield Total energy (eV) = -16359.1770939916
