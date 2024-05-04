@@ -4,7 +4,7 @@
 clear 
 units real
 dimension 3 
-boundary s s s  # Setting all boundaries to "s" (shrink-wrapped)
+boundary s p p  # Setting all boundaries to "s" (shrink-wrapped)
 atom_style charge
 atom_modify map array
 
@@ -54,5 +54,5 @@ print "Cohesive energy (eV) = ${ecoh};"
 
 print "All done!"
 
-# Without efield Total energy (eV) = -16546.0457018543
-# With efield Total energy (eV) = 5436.42950163428;
+# Without efield Total energy (eV) = -17592.5440683454
+# With efield Total energy (eV) = 6623.48326880241;
