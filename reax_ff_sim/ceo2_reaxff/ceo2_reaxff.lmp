@@ -4,7 +4,7 @@
 clear 
 units real
 dimension 3 
-boundary p p p 
+boundary s s s  # Setting all boundaries to "s" (shrink-wrapped)
 atom_style charge
 atom_modify map array
 
@@ -32,7 +32,7 @@ compute eatoms all reduce sum c_eng
 
 # ---------- Add Electric Field ---------------------
 # Apply force to all atoms in the direction of the electric field
-# fix efield all efield 1.0 0.0 0.0 region box
+fix efield all efield 1.0 0.0 0.0 region box
 
 # ---------- Run Minimization --------------------- 
 reset_timestep 0 
@@ -54,4 +54,5 @@ print "Cohesive energy (eV) = ${ecoh};"
 
 print "All done!"
 
-# Without efield Total energy (eV) = -16359.1770939916
+# Without efield Total energy (eV) = -16546.0457018543
+# With efield Total energy (eV) = 5436.42950163428;

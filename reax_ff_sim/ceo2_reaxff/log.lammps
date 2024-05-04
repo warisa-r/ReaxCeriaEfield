@@ -11,7 +11,7 @@ OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98
 Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
 units real
 dimension 3
-boundary p p p
+boundary s s s  # Setting all boundaries to "s" (shrink-wrapped)
 atom_style charge
 atom_modify map array
 
@@ -23,11 +23,11 @@ Created orthogonal box = (-20 -20 -20) to (20 20 20)
 
 create_atoms 1 random 100 54321 box  # First type of atom
 Created 100 atoms
-  using lattice units in orthogonal box = (-20 -20 -20) to (20 20 20)
+  using lattice units in orthogonal box = (-20.004 -20.004 -20.004) to (20.004 20.004 20.004)
   create_atoms CPU = 0.001 seconds
 create_atoms 2 random 50 12345 box # Second type of atom
 Created 50 atoms
-  using lattice units in orthogonal box = (-20 -20 -20) to (20 20 20)
+  using lattice units in orthogonal box = (-20.004 -20.004 -20.004) to (20.004 20.004 20.004)
   create_atoms CPU = 0.000 seconds
 
 # Set masses for each atom type
@@ -35,7 +35,7 @@ mass 1 16.0   # Mass for Oxygen (type 1) in atomic mass units (amu)
 mass 2 140.0  # Mass for Cerium (type 2) in atomic mass units (amu)
 
 # ---------- Define Interatomic Potential ---------------------
-pair_style reaxff NULL checkqeq yes # Don't fix charge
+pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
 pair_coeff * * ffield.reax O Ce
 fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
 neighbor 2.0 bin
@@ -87,5 +87,83 @@ Your simulation uses code contributions which should be cited:
 CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
 
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-ERROR: Must not have electric field component in direction of periodic boundary when using charge equilibration with ReaxFF. (src/REAXFF/fix_qeq_reaxff.cpp:419)
-Last command: minimize 1e-25 1e-25 5000 10000
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 7 7 7
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 9.277 | 9.277 | 9.277 Mbytes
+   Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
+         0   10432.347      39.497189      39.301957      39.508929      4666.5662      5165.4952      4973.1408      3861.0625      10432.347    
+        10   7603.2204      39.497189      39.301957      39.508929      1357.9279      1110.5671      1515.9998      1447.2168      7603.2204    
+        20   7426.6935      39.497189      39.301957      39.508929      1203.5098      813.58553      1459.2658      1337.678       7426.6935    
+        30   6726.4769      39.497189      39.301957      39.508929      1281.9247      880.91083      1613.4358      1351.4275      6726.4769    
+        40   5479.4561      40.179405      39.458812      39.007379      1338.2511      1038.05        1606.6904      1370.013       5479.4561    
+        50   5436.4404      40.179405      39.458812      39.007379      1414.1382      1271.7728      1611.7473      1358.8945      5436.4404    
+        53   5436.4295      40.179405      39.458812      39.007379      1414.1291      1271.7633      1611.7367      1358.8874      5436.4295    
+Loop time of 0.265091 on 1 procs for 53 steps with 150 atoms
+
+70.7% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+      10432.3473159869   5436.42764734737   5436.42950163428
+  Force two-norm initial, final = 7540.6479 305.78202
+  Force max component initial, final = 3095.1126 76.36004
+  Final line search alpha, max atom move = 7.6228112e-14 5.8207817e-12
+  Iterations, force evaluations = 53 713
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.21138    | 0.21138    | 0.21138    |   0.0 | 79.74
+Neigh   | 8.1e-05    | 8.1e-05    | 8.1e-05    |   0.0 |  0.03
+Comm    | 6.9e-05    | 6.9e-05    | 6.9e-05    |   0.0 |  0.03
+Output  | 0.00221    | 0.00221    | 0.00221    |   0.0 |  0.83
+Modify  | 0.05002    | 0.05002    | 0.05002    |   0.0 | 18.87
+Other   |            | 0.00133    |            |       |  0.50
+
+Nlocal:            150 ave         150 max         150 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:            826 ave         826 max         826 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 826
+Ave neighs/atom = 5.5066667
+Neighbor list builds = 1
+Dangerous builds = 0
+
+variable natoms equal "count(all)"
+variable teng equal "c_eatoms"
+variable length equal "lx"
+variable ecoh equal "v_teng/v_natoms"
+
+print "Total energy (eV) = ${teng};"
+Total energy (eV) = 5436.42950163428;
+print "Number of atoms = ${natoms};"
+Number of atoms = 150;
+print "Lattice constant (Angstoms) = ${length};"
+Lattice constant (Angstoms) = 40.1794047800967;
+print "Cohesive energy (eV) = ${ecoh};"
+Cohesive energy (eV) = 36.2428633442285;
+
+print "All done!"
+All done!
+
+# Without efield Total energy (eV) = -16546.0457018543
+Total wall time: 0:00:00
