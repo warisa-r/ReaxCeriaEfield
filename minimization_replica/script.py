@@ -1,5 +1,6 @@
 import subprocess
 import random
+import numpy as np
 
 def extract_potential_energy(filename):
     potential_energy = None
@@ -61,35 +62,38 @@ for i, line in enumerate(content_lines):
         break
 
 # Run simulation 1000 times with different seed numbers
-min_pot = 0
-min_seed = 0
-for i in range(1000):
+min_pot = np.inf * np.ones(23)  # Initialize with positive infinity
+min_seed = np.zeros(23, dtype=int)  # Initialize with zeros
+
+for j in range(2, 25):
+
+    for i in range(1000):
     
-    # Generate a random seed number with 6 digits
-    seed_number = random.randint(100000, 999999)
+        # Generate a random seed number with 6 digits
+        seed_number = random.randint(100000, 999999)
 
-    # Insert create_atoms line with the random seed number at the appropriate index
-    content_with_seed = content_lines[:insert_index] + [f"create_atoms 1 random 13 {seed_number} simulation_box"] + content_lines[insert_index:]
+        # Insert create_atoms line with the random seed number at the appropriate index
+        content_with_seed = content_lines[:insert_index] + [f"create_atoms 1 random {j} {seed_number} simulation_box"] + content_lines[insert_index:]
 
-    # Write content to input.min.lammps file
-    with open("input.min.lammps", "w") as file:
-        file.write('\n'.join(content_with_seed))
+        # Write content to input.min.lammps file
+        with open("input.min.lammps", "w") as file:
+            file.write('\n'.join(content_with_seed))
 
-    # Call lmp_serial with the input file
-    subprocess.run(["lmp_serial", "-in", "input.min.lammps"])
+        # Call lmp_serial with the input file
+        subprocess.run(["lmp_serial", "-in", "input.min.lammps"])
 
-    # Extract potential energy from log file
-    potential_energy = extract_potential_energy("log.lammps")
+        # Extract potential energy from log file
+        potential_energy = extract_potential_energy("log.lammps")
 
-    # Print the potential energy for each iteration
-    if potential_energy is not None:
-        print(f"Iteration {i+1}: Potential Energy = {potential_energy}")
-        if potential_energy < min_pot:
-            min_pot = potential_energy
-            min_seed = seed_number
+        # Print the potential energy for each iteration
+        if potential_energy is not None:
+            print(f"Iteration {i+1}: Potential Energy = {potential_energy}")
+            if potential_energy < min_pot[j-2]:
+                min_pot[j-2] = potential_energy
+                min_seed[j-2] = seed_number
             
-    else:
-        print(f"Iteration {i+1}: Potential energy not found in the log file.")
+        else:
+            print(f"Iteration {i+1}: Potential energy not found in the log file.")
 
-
-print(f"Potential Energy {min_pot} with seed {min_seed}")
+for j, pot_energy, seed in zip(range(2, 25), min_pot, min_seed):
+    print(f"For j={j}: Potential Energy {pot_energy} with seed {seed}")
