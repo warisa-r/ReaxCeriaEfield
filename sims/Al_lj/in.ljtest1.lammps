@@ -1,0 +1,43 @@
+# lerning by doing with lammps tutorial
+# 1 Initialization
+# 2 System definition
+# 3 Simulation settings
+# 4 Visualization
+# 5 Run
+
+# Initialization
+units           lj
+dimension       3
+atom_style      atomic
+pair_style      lj/cut 2.5
+boundary        p p p
+
+# System definition
+region          box block -20 20 -20 20 -20 20
+create_box      2 box
+create_atoms    1 random 1500 113462 box
+create_atoms    2 random 100 136389 box
+
+# Simulation settings
+mass            1 1
+mass            2 1
+pair_coeff      1 1 1.0 1.0
+pair_coeff      2 2 0.5 3.0
+#pair_coeff     1 2 0.707 1.732
+
+# Visualization
+thermo          10
+thermo_style    custom step temp pe ke etotal press
+
+# Run
+minimize 1.0e-4 1.0e-6 1000 10000
+
+# Visualization2
+thermo          50
+dump mydmp all atom 100 dump.lammpstrj
+
+# Run2
+fix mynve all nve
+fix mylgv all langevin 1.0 1.0 0.1 134752
+timestep 0.005
+run 10000
