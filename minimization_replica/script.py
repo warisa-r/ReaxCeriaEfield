@@ -62,10 +62,10 @@ for i, line in enumerate(content_lines):
         break
 
 # Run simulation 1000 times with different seed numbers
-min_pot = np.inf * np.ones(23)  # Initialize with positive infinity
-min_seed = np.zeros(23, dtype=int)  # Initialize with zeros
+min_pot = np.inf * np.ones(24)  # Initialize with positive infinity
+min_seed = np.zeros(24, dtype=int)  # Initialize with zeros
 
-for j in range(2, 25):
+for j in range(2, 26):
 
     for i in range(1000):
     
@@ -95,5 +95,5 @@ for j in range(2, 25):
         else:
             print(f"Iteration {i+1}: Potential energy not found in the log file.")
 
-for j, pot_energy, seed in zip(range(2, 25), min_pot, min_seed):
+for j, pot_energy, seed in zip(range(2, 26), min_pot, min_seed):
     print(f"For j={j}: Potential Energy {pot_energy} with seed {seed}")
