@@ -1,0 +1,59 @@
+# Find minimum energy fcc configuration
+
+# ---------- Initialize Simulation --------------------- 
+clear 
+units real
+dimension 3 
+boundary s p p  # Setting all boundaries to "s" (shrink-wrapped)
+atom_style charge
+atom_modify map array
+
+# ---------- Create Atoms ---------------------
+region box block -20 20 -20 20 -20 20
+create_box	2 box    # Changed to 2 types of atoms
+
+create_atoms 1 random 100 54321 box  # First type of atom
+create_atoms 2 random 50 12345 box # Second type of atom
+
+# Set masses for each atom type
+mass 1 16.0   # Mass for Oxygen (type 1) in atomic mass units (amu)
+mass 2 140.0  # Mass for Cerium (type 2) in atomic mass units (amu)
+
+# ---------- Define Interatomic Potential ---------------------
+pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
+pair_coeff * * ffield.reax O Ce
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+neighbor 2.0 bin 
+neigh_modify delay 10 check yes 
+ 
+# ---------- Define Settings --------------------- 
+compute eng all pe/atom 
+compute eatoms all reduce sum c_eng 
+
+# ---------- Add Electric Field ---------------------
+# Apply force to all atoms in the direction of the electric field
+fix efield all efield 1.0 0.0 0.0 region box
+
+# ---------- Run Minimization --------------------- 
+reset_timestep 0 
+# fix 1 all box/relax iso 1.0 vmax 1
+thermo 10
+thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms 
+dump mydmp all atom 1 dump_efield.lammpstrj
+min_style cg 
+minimize 1e-25 1e-25 5000 10000 
+
+variable natoms equal "count(all)" 
+variable teng equal "c_eatoms"
+variable length equal "lx"
+variable ecoh equal "v_teng/v_natoms"
+
+print "Total energy (eV) = ${teng};"
+print "Number of atoms = ${natoms};"
+print "Lattice constant (Angstoms) = ${length};"
+print "Cohesive energy (eV) = ${ecoh};"
+
+print "All done!"
+
+# Without efield Total energy (eV) = -17592.5440683454
+# With efield Total energy (eV) = 6623.48326880241;
