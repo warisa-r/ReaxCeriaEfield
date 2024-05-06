@@ -1,0 +1,169 @@
+LAMMPS (2 Aug 2023 - Update 3)
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+# Find minimum energy fcc configuration
+
+# ---------- Initialize Simulation ---------------------
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary s p p  # Setting all boundaries to "s" (shrink-wrapped)
+atom_style charge
+atom_modify map array
+
+# ---------- Create Atoms ---------------------
+region box block -20 20 -20 20 -20 20
+create_box	2 box    # Changed to 2 types of atoms
+Created orthogonal box = (-20 -20 -20) to (20 20 20)
+  1 by 1 by 1 MPI processor grid
+
+create_atoms 1 random 100 54321 box  # First type of atom
+Created 100 atoms
+  using lattice units in orthogonal box = (-20.004 -20 -20) to (20.004 20 20)
+  create_atoms CPU = 0.001 seconds
+create_atoms 2 random 50 12345 box # Second type of atom
+Created 50 atoms
+  using lattice units in orthogonal box = (-20.004 -20 -20) to (20.004 20 20)
+  create_atoms CPU = 0.001 seconds
+
+# Set masses for each atom type
+mass 1 16.0   # Mass for Oxygen (type 1) in atomic mass units (amu)
+mass 2 140.0  # Mass for Cerium (type 2) in atomic mass units (amu)
+
+# ---------- Define Interatomic Potential ---------------------
+pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
+pair_coeff * * ffield.reax O Ce
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+neighbor 2.0 bin
+neigh_modify delay 10 check yes
+
+# ---------- Define Settings ---------------------
+compute eng all pe/atom
+compute eatoms all reduce sum c_eng
+
+# ---------- Add Electric Field ---------------------
+# Apply force to all atoms in the direction of the electric field
+fix efield all efield 1.0 0.0 0.0 region box
+
+# ---------- Run Minimization ---------------------
+reset_timestep 0
+# fix 1 all box/relax iso 1.0 vmax 1
+thermo 10
+thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms
+dump mydmp all atom 1 dump_efield.lammpstrj
+min_style cg
+minimize 1e-25 1e-25 5000 10000
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+
+- pair reaxff command: doi:10.1016/j.parco.2011.08.005
+
+@Article{Aktulga12,
+ author = {H. M. Aktulga and J. C. Fogarty and S. A. Pandit and A. Y. Grama},
+ title = {Parallel Reactive Molecular Dynamics: {N}umerical Methods and Algorithmic Techniques},
+ journal = {Parallel Computing},
+ year =    2012,
+ volume =  38,
+ number =  {4--5},
+ pages =   {245--259}
+}
+
+- fix qeq/reaxff command: doi:10.1016/j.parco.2011.08.005
+
+@Article{Aktulga12,
+ author = {H. M. Aktulga and J. C. Fogarty and S. A. Pandit and A. Y. Grama},
+ title = {Parallel Reactive Molecular Dynamics: {N}umerical Methods and Algorithmic Techniques},
+ journal = {Parallel Computing},
+ year =    2012,
+ volume =  38,
+ pages =   {245--259}
+}
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 7 7 7
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 12.56 | 12.56 | 12.56 Mbytes
+   Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
+         0   10264.342      39.497189      40             40             4684.7412      5121.7323      4926.2203      4006.271       10264.342    
+        10   7436.0966      39.497189      40             40             1478.6398      1194.2588      1572.2276      1669.4331      7436.0966    
+        20   7188.0849      39.497189      40             40             1454.8223      1182.8307      1566.3223      1615.3141      7188.0849    
+        30   6623.4832      39.497189      40             40             1508.3295      1194.9887      1662.4639      1667.5359      6623.4832    
+        32   6623.4833      39.497189      40             40             1508.3287      1194.9813      1662.4622      1667.5424      6623.4833    
+Loop time of 0.217899 on 1 procs for 32 steps with 150 atoms
+
+57.4% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+      10264.3416141323   6623.43465980792   6623.48326880242
+  Force two-norm initial, final = 7540.2702 312.94876
+  Force max component initial, final = 3094.4237 60.845369
+  Final line search alpha, max atom move = 9.5667288e-14 5.8209115e-12
+  Iterations, force evaluations = 32 346
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.16198    | 0.16198    | 0.16198    |   0.0 | 74.34
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.000928   | 0.000928   | 0.000928   |   0.0 |  0.43
+Output  | 0.010761   | 0.010761   | 0.010761   |   0.0 |  4.94
+Modify  | 0.041271   | 0.041271   | 0.041271   |   0.0 | 18.94
+Other   |            | 0.002956   |            |       |  1.36
+
+Nlocal:            150 ave         150 max         150 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            240 ave         240 max         240 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           1292 ave        1292 max        1292 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 1292
+Ave neighs/atom = 8.6133333
+Neighbor list builds = 0
+Dangerous builds = 0
+
+variable natoms equal "count(all)"
+variable teng equal "c_eatoms"
+variable length equal "lx"
+variable ecoh equal "v_teng/v_natoms"
+
+print "Total energy (eV) = ${teng};"
+Total energy (eV) = 6623.48326880241;
+print "Number of atoms = ${natoms};"
+Number of atoms = 150;
+print "Lattice constant (Angstoms) = ${length};"
+Lattice constant (Angstoms) = 39.4971887155777;
+print "Cohesive energy (eV) = ${ecoh};"
+Cohesive energy (eV) = 44.1565551253494;
+
+print "All done!"
+All done!
+
+# Without efield Total energy (eV) = -17592.5440683454
+# With efield Total energy (eV) = 6623.48326880241;
+Total wall time: 0:00:00
