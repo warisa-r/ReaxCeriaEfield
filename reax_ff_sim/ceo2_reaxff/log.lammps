@@ -28,7 +28,7 @@ Created 100 atoms
 create_atoms 2 random 50 12345 box # Second type of atom
 Created 50 atoms
   using lattice units in orthogonal box = (-20.004 -20 -20) to (20.004 20 20)
-  create_atoms CPU = 0.000 seconds
+  create_atoms CPU = 0.001 seconds
 
 # Set masses for each atom type
 mass 1 16.0   # Mass for Oxygen (type 1) in atomic mass units (amu)
@@ -54,6 +54,7 @@ reset_timestep 0
 # fix 1 all box/relax iso 1.0 vmax 1
 thermo 10
 thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms
+dump mydmp all atom 1 dump_efield.lammpstrj
 min_style cg
 minimize 1e-25 1e-25 5000 10000
 
@@ -111,9 +112,9 @@ Per MPI rank memory allocation (min/avg/max) = 12.56 | 12.56 | 12.56 Mbytes
         20   7188.0849      39.497189      40             40             1454.8223      1182.8307      1566.3223      1615.3141      7188.0849    
         30   6623.4832      39.497189      40             40             1508.3295      1194.9887      1662.4639      1667.5359      6623.4832    
         32   6623.4833      39.497189      40             40             1508.3287      1194.9813      1662.4622      1667.5424      6623.4833    
-Loop time of 0.174164 on 1 procs for 32 steps with 150 atoms
+Loop time of 0.217899 on 1 procs for 32 steps with 150 atoms
 
-80.7% CPU use with 1 MPI tasks x 1 OpenMP threads
+57.4% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
@@ -127,12 +128,12 @@ Minimization stats:
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.1394     | 0.1394     | 0.1394     |   0.0 | 80.04
+Pair    | 0.16198    | 0.16198    | 0.16198    |   0.0 | 74.34
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0.000348   | 0.000348   | 0.000348   |   0.0 |  0.20
-Output  | 0.001645   | 0.001645   | 0.001645   |   0.0 |  0.94
-Modify  | 0.031658   | 0.031658   | 0.031658   |   0.0 | 18.18
-Other   |            | 0.001115   |            |       |  0.64
+Comm    | 0.000928   | 0.000928   | 0.000928   |   0.0 |  0.43
+Output  | 0.010761   | 0.010761   | 0.010761   |   0.0 |  4.94
+Modify  | 0.041271   | 0.041271   | 0.041271   |   0.0 | 18.94
+Other   |            | 0.002956   |            |       |  1.36
 
 Nlocal:            150 ave         150 max         150 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
