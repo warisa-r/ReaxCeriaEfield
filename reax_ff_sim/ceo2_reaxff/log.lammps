@@ -16,15 +16,17 @@ atom_style charge
 atom_modify map array
 
 # ---------- Create Atoms ---------------------
-region box block -20 20 -20 20 -20 20
+region box block -1 1 -1 1 -1 1
 
-read_data ceo2_structure.lmp
+# Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
+# use atomsk 'ceo2_structure.cif lammps' to convert the file
+read_data geometry_file/ceo2_structure.lmp
 Reading data file ...
   orthogonal box = (0 0 0) to (5.415 5.415 5.415)
   1 by 1 by 1 MPI processor grid
   reading atoms ...
   2 atoms
-  read_data CPU = 0.003 seconds
+  read_data CPU = 0.002 seconds
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
@@ -39,7 +41,7 @@ compute eatoms all reduce sum c_eng
 
 # ---------- Add Electric Field ---------------------
 # Apply force to all atoms in the direction of the electric field
-fix efield all efield 1.0 0.0 0.0 region box
+fix efield all efield 5.0 0.0 0.0 region box
 
 # ---------- Run Minimization ---------------------
 reset_timestep 0
@@ -100,31 +102,31 @@ Neighbor list info ...
 WARNING: Proc sub-domain size < neighbor skin, could lead to lost atoms (src/domain.cpp:966)
 Per MPI rank memory allocation (min/avg/max) = 8.003 | 8.003 | 8.003 Mbytes
    Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
-         0  -137.51788      1.354833       5.415          5.415         -113503.75     -131511.02     -104500.12     -104500.12     -137.51788    
-        10  -231.48045      1.354833       5.415          5.415         -740.44518     -5224.0668      1501.3656      1501.3656     -231.48045    
-        16  -232.6064       1.354833       5.415          5.415          2814.1613     -2488.8565      5465.6701      5465.6701     -232.6064     
-Loop time of 0.008445 on 1 procs for 16 steps with 2 atoms
+         0  -138.68789      1.354833       5.415          5.415         -118002.98     -142368.63     -105820.15     -105820.15     -138.68789    
+        10  -224.53354      1.354833       5.415          5.415          33106.136      1937.9601      48690.224      48690.224     -224.53354    
+        17  -225.05008      1.354833       5.415          5.415          2764.1498     -18359.041      13325.745      13325.745     -225.05008    
+Loop time of 0.016373 on 1 procs for 17 steps with 2 atoms
 
 0.0% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -137.517879153517  -232.606414993606  -232.606399440076
-  Force two-norm initial, final = 133.79778 32.964073
-  Force max component initial, final = 67.621328 20.768785
-  Final line search alpha, max atom move = 8.9684385e-12 1.8626357e-10
-  Iterations, force evaluations = 16 182
+     -138.687891505694   -225.05006289889  -225.050079716617
+  Force two-norm initial, final = 170.29966 114.06578
+  Force max component initial, final = 126.13375 112.39623
+  Final line search alpha, max atom move = 8.2860603e-13 9.3132192e-11
+  Iterations, force evaluations = 17 364
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.006377   | 0.006377   | 0.006377   |   0.0 | 75.51
+Pair    | 0.013068   | 0.013068   | 0.013068   |   0.0 | 79.81
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 9.4e-05    | 9.4e-05    | 9.4e-05    |   0.0 |  1.11
-Output  | 0.000603   | 0.000603   | 0.000603   |   0.0 |  7.14
-Modify  | 0.000915   | 0.000915   | 0.000915   |   0.0 | 10.83
-Other   |            | 0.000456   |            |       |  5.40
+Comm    | 0.000142   | 0.000142   | 0.000142   |   0.0 |  0.87
+Output  | 0.00076    | 0.00076    | 0.00076    |   0.0 |  4.64
+Modify  | 0.00174    | 0.00174    | 0.00174    |   0.0 | 10.63
+Other   |            | 0.000663   |            |       |  4.05
 
 Nlocal:              2 ave           2 max           2 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -144,13 +146,13 @@ variable length equal "lx"
 variable ecoh equal "v_teng/v_natoms"
 
 print "Total energy (eV) = ${teng};"
-Total energy (eV) = -232.606399440076;
+Total energy (eV) = -225.050079716617;
 print "Number of atoms = ${natoms};"
 Number of atoms = 2;
 print "Lattice constant (Angstoms) = ${length};"
 Lattice constant (Angstoms) = 1.354833;
 print "Cohesive energy (eV) = ${ecoh};"
-Cohesive energy (eV) = -116.303199720038;
+Cohesive energy (eV) = -112.525039858309;
 
 print "All done!"
 All done!

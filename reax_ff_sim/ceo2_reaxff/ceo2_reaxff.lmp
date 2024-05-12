@@ -9,11 +9,11 @@ atom_style charge
 atom_modify map array
 
 # ---------- Create Atoms ---------------------
-region box block -20 20 -20 20 -20 20
+region box block -1 1 -1 1 -1 1
 
 # Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
-# use atomsk ceo2_structure.cif lammps to convert the file
-read_data ceo2_structure.lmp
+# use atomsk 'ceo2_structure.cif lammps' to convert the file
+read_data geometry_file/ceo2_structure.lmp
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
@@ -28,7 +28,7 @@ compute eatoms all reduce sum c_eng
 
 # ---------- Add Electric Field ---------------------
 # Apply force to all atoms in the direction of the electric field
-fix efield all efield 1.0 0.0 0.0 region box
+fix efield all efield 5.0 0.0 0.0 region box
 
 # ---------- Run Minimization --------------------- 
 reset_timestep 0 
