@@ -10,14 +10,10 @@ atom_modify map array
 
 # ---------- Create Atoms ---------------------
 region box block -20 20 -20 20 -20 20
-create_box	2 box    # Changed to 2 types of atoms
 
-create_atoms 1 random 100 54321 box  # First type of atom
-create_atoms 2 random 50 12345 box # Second type of atom
-
-# Set masses for each atom type
-mass 1 16.0   # Mass for Oxygen (type 1) in atomic mass units (amu)
-mass 2 140.0  # Mass for Cerium (type 2) in atomic mass units (amu)
+# Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
+# use atomsk ceo2_structure.cif lammps to convert the file
+read_data ceo2_structure.lmp
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)

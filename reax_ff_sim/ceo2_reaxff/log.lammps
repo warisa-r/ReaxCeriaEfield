@@ -17,22 +17,14 @@ atom_modify map array
 
 # ---------- Create Atoms ---------------------
 region box block -20 20 -20 20 -20 20
-create_box	2 box    # Changed to 2 types of atoms
-Created orthogonal box = (-20 -20 -20) to (20 20 20)
+
+read_data ceo2_structure.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.415 5.415 5.415)
   1 by 1 by 1 MPI processor grid
-
-create_atoms 1 random 100 54321 box  # First type of atom
-Created 100 atoms
-  using lattice units in orthogonal box = (-20.004 -20 -20) to (20.004 20 20)
-  create_atoms CPU = 0.001 seconds
-create_atoms 2 random 50 12345 box # Second type of atom
-Created 50 atoms
-  using lattice units in orthogonal box = (-20.004 -20 -20) to (20.004 20 20)
-  create_atoms CPU = 0.001 seconds
-
-# Set masses for each atom type
-mass 1 16.0   # Mass for Oxygen (type 1) in atomic mass units (amu)
-mass 2 140.0  # Mass for Cerium (type 2) in atomic mass units (amu)
+  reading atoms ...
+  2 atoms
+  read_data CPU = 0.003 seconds
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
@@ -93,7 +85,7 @@ Neighbor list info ...
   max neighbors/atom: 2000, page size: 100000
   master list distance cutoff = 12
   ghost atom cutoff = 12
-  binsize = 6, bins = 7 7 7
+  binsize = 6, bins = 1 1 1
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -105,45 +97,44 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 12.56 | 12.56 | 12.56 Mbytes
+WARNING: Proc sub-domain size < neighbor skin, could lead to lost atoms (src/domain.cpp:966)
+Per MPI rank memory allocation (min/avg/max) = 8.003 | 8.003 | 8.003 Mbytes
    Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
-         0   10264.342      39.497189      40             40             4684.7412      5121.7323      4926.2203      4006.271       10264.342    
-        10   7436.0966      39.497189      40             40             1478.6398      1194.2588      1572.2276      1669.4331      7436.0966    
-        20   7188.0849      39.497189      40             40             1454.8223      1182.8307      1566.3223      1615.3141      7188.0849    
-        30   6623.4832      39.497189      40             40             1508.3295      1194.9887      1662.4639      1667.5359      6623.4832    
-        32   6623.4833      39.497189      40             40             1508.3287      1194.9813      1662.4622      1667.5424      6623.4833    
-Loop time of 0.217899 on 1 procs for 32 steps with 150 atoms
+         0  -137.51788      1.354833       5.415          5.415         -113503.75     -131511.02     -104500.12     -104500.12     -137.51788    
+        10  -231.48045      1.354833       5.415          5.415         -740.44518     -5224.0668      1501.3656      1501.3656     -231.48045    
+        16  -232.6064       1.354833       5.415          5.415          2814.1613     -2488.8565      5465.6701      5465.6701     -232.6064     
+Loop time of 0.008445 on 1 procs for 16 steps with 2 atoms
 
-57.4% CPU use with 1 MPI tasks x 1 OpenMP threads
+0.0% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-      10264.3416141323   6623.43465980792   6623.48326880242
-  Force two-norm initial, final = 7540.2702 312.94876
-  Force max component initial, final = 3094.4237 60.845369
-  Final line search alpha, max atom move = 9.5667288e-14 5.8209115e-12
-  Iterations, force evaluations = 32 346
+     -137.517879153517  -232.606414993606  -232.606399440076
+  Force two-norm initial, final = 133.79778 32.964073
+  Force max component initial, final = 67.621328 20.768785
+  Final line search alpha, max atom move = 8.9684385e-12 1.8626357e-10
+  Iterations, force evaluations = 16 182
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.16198    | 0.16198    | 0.16198    |   0.0 | 74.34
+Pair    | 0.006377   | 0.006377   | 0.006377   |   0.0 | 75.51
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0.000928   | 0.000928   | 0.000928   |   0.0 |  0.43
-Output  | 0.010761   | 0.010761   | 0.010761   |   0.0 |  4.94
-Modify  | 0.041271   | 0.041271   | 0.041271   |   0.0 | 18.94
-Other   |            | 0.002956   |            |       |  1.36
+Comm    | 9.4e-05    | 9.4e-05    | 9.4e-05    |   0.0 |  1.11
+Output  | 0.000603   | 0.000603   | 0.000603   |   0.0 |  7.14
+Modify  | 0.000915   | 0.000915   | 0.000915   |   0.0 | 10.83
+Other   |            | 0.000456   |            |       |  5.40
 
-Nlocal:            150 ave         150 max         150 min
+Nlocal:              2 ave           2 max           2 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:            240 ave         240 max         240 min
+Nghost:             59 ave          59 max          59 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:           1292 ave        1292 max        1292 min
+Neighs:             53 ave          53 max          53 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 1292
-Ave neighs/atom = 8.6133333
+Total # of neighbors = 53
+Ave neighs/atom = 26.5
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -153,13 +144,13 @@ variable length equal "lx"
 variable ecoh equal "v_teng/v_natoms"
 
 print "Total energy (eV) = ${teng};"
-Total energy (eV) = 6623.48326880241;
+Total energy (eV) = -232.606399440076;
 print "Number of atoms = ${natoms};"
-Number of atoms = 150;
+Number of atoms = 2;
 print "Lattice constant (Angstoms) = ${length};"
-Lattice constant (Angstoms) = 39.4971887155777;
+Lattice constant (Angstoms) = 1.354833;
 print "Cohesive energy (eV) = ${ecoh};"
-Cohesive energy (eV) = 44.1565551253494;
+Cohesive energy (eV) = -116.303199720038;
 
 print "All done!"
 All done!
