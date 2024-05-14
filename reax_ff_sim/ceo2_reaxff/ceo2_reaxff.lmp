@@ -50,6 +50,3 @@ print "Lattice constant (Angstoms) = ${length};"
 print "Cohesive energy (eV) = ${ecoh};"
 
 print "All done!"
-
-# Without efield Total energy (eV) = -17592.5440683454
-# With efield Total energy (eV) = 6623.48326880241;
