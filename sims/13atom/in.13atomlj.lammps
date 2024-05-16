@@ -7,9 +7,9 @@ atom_style      atomic
 pair_style      lj/cut 30
 
 # System definition
-region          box block 0 10.91 0 10.91 0 10.91
+region          box block 0 10 0 10 0 10
 create_box      1 box
-create_atoms    1 random 13 235194 box
+create_atoms    1 random 13 419816 box
 
 # Simulation settings
 mass            1 1
@@ -21,4 +21,4 @@ thermo_style    custom step temp pe ke etotal press
 dump            1 all atom 10 dump.13atom.lammpstrj
 
 # Run
-minimize        1e-10 1e-12 10000 10000s
+minimize        1e-12 1e-14 10000 10000
