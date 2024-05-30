@@ -39,13 +39,15 @@ Reading data file ...
   reading atoms ...
   12 atoms
   read_data CPU = 0.002 seconds
+group Ce type 1
+4 atoms in group Ce
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
 pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/ffield.reax O Ce
 fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
 neighbor 2.0 bin
-neigh_modify delay 10 check yes
+neigh_modify delay 10000 check yes
 
 # ---------- Set Temperature to 0K ---------------------
 velocity all create 0.0 12345 mom yes rot yes
@@ -118,9 +120,9 @@ Per MPI rank memory allocation (min/avg/max) = 44.7 | 44.7 | 44.7 Mbytes
    Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
          0  -903.36095      5.46745        5.46745        5.46745        1626827.5      1626827.5      1626827.5      1626827.5     -903.36095    
          5  -903.36095      5.46745        5.46745        5.46745        1626827.5      1626827.5      1626827.5      1626827.5     -903.36095    
-Loop time of 0.175397 on 1 procs for 5 steps with 12 atoms
+Loop time of 0.174704 on 1 procs for 5 steps with 12 atoms
 
-89.1% CPU use with 1 MPI tasks x 1 OpenMP threads
+89.4% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
@@ -134,12 +136,12 @@ Minimization stats:
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.17192    | 0.17192    | 0.17192    |   0.0 | 98.02
+Pair    | 0.17147    | 0.17147    | 0.17147    |   0.0 | 98.15
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0.000137   | 0.000137   | 0.000137   |   0.0 |  0.08
+Comm    | 0.000135   | 0.000135   | 0.000135   |   0.0 |  0.08
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.002332   | 0.002332   | 0.002332   |   0.0 |  1.33
-Other   |            | 0.001004   |            |       |  0.57
+Modify  | 0.002593   | 0.002593   | 0.002593   |   0.0 |  1.48
+Other   |            | 0.000506   |            |       |  0.29
 
 Nlocal:             12 ave          12 max          12 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -162,27 +164,13 @@ variable energy_per_cell equal ${teng}/${total_cells}
 variable energy_per_cell equal -903.360945874056/${total_cells}
 variable energy_per_cell equal -903.360945874056/8
 
-# Define the number of Ce and O atoms in one unit cell
-variable n_Ce_per_cell equal 1
-variable n_O_per_cell equal 2
+# Calculate the number of Cerium atoms
+variable nCe equal "count(Ce)"
 
-# Define the formation energy of CeO2 per atom (replace with your own values)
-variable mu_Ce equal 4.0   # Chemical potential of Ce
-variable mu_O equal -2.0    # Chemical potential of O
-
-variable vv equal ${n_Ce_per_cell}*${mu_Ce}+${n_O_per_cell}*${mu_O}
-variable vv equal 1*${mu_Ce}+${n_O_per_cell}*${mu_O}
-variable vv equal 1*4+${n_O_per_cell}*${mu_O}
-variable vv equal 1*4+2*${mu_O}
-variable vv equal 1*4+2*-2
-
-# Calculate the formation energy per cell
-variable formation_energy_per_cell equal ${energy_per_cell}-(${n_Ce_per_cell}*${mu_Ce}+${n_O_per_cell}*${mu_O})
-variable formation_energy_per_cell equal -112.920118234257-(${n_Ce_per_cell}*${mu_Ce}+${n_O_per_cell}*${mu_O})
-variable formation_energy_per_cell equal -112.920118234257-(1*${mu_Ce}+${n_O_per_cell}*${mu_O})
-variable formation_energy_per_cell equal -112.920118234257-(1*4+${n_O_per_cell}*${mu_O})
-variable formation_energy_per_cell equal -112.920118234257-(1*4+2*${mu_O})
-variable formation_energy_per_cell equal -112.920118234257-(1*4+2*-2)
+# Calculate the energy per Cerium atom
+variable energy_per_Ce equal ${teng}/${nCe}
+variable energy_per_Ce equal -903.360945874056/${nCe}
+variable energy_per_Ce equal -903.360945874056/4
 
 # Calculate lattice parameter a (assuming cubic lattice)
 variable a0 equal "lx"
@@ -206,8 +194,8 @@ print "Volume = ${v_vol}"
 Volume = 163.438534804444
 print "Energy per cell = ${energy_per_cell}"
 Energy per cell = -112.920118234257
-print "Formation energy per cell (eV) = ${formation_energy_per_cell}"
-Formation energy per cell (eV) = -112.920118234257
+print "Energy per Cerium atom = ${energy_per_Ce}"
+Energy per Cerium atom = -225.840236468514
 print "All done!"
 All done!
 Total wall time: 0:00:00
