@@ -11,7 +11,7 @@ OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98
 Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
 units real
 dimension 3
-boundary s p p  # Setting all boundaries to "s" (shrink-wrapped)
+boundary p p p  # Setting all boundaries to "s" (shrink-wrapped)
 atom_style charge
 atom_modify map array
 
@@ -20,12 +20,13 @@ region box block -1 1 -1 1 -1 1
 
 # Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
 # use atomsk 'ceo2_structure.cif lammps' to convert the file
-read_data geometry_file/ceo2_structure.lmp
+read_data geometry_file/Ce2O3.lmp
 Reading data file ...
-  orthogonal box = (0 0 0) to (5.415 5.415 5.415)
+  triclinic box = (0 0 0) to (3.8709839 3.3523704 5.8957727) with tilt (-1.935492 0 0)
+WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (src/domain.cpp:220)
   1 by 1 by 1 MPI processor grid
   reading atoms ...
-  2 atoms
+  3 atoms
   read_data CPU = 0.002 seconds
 
 # ---------- Define Interatomic Potential ---------------------
@@ -41,14 +42,14 @@ compute eatoms all reduce sum c_eng
 
 # ---------- Add Electric Field ---------------------
 # Apply force to all atoms in the direction of the electric field
-fix efield all efield 5.0 0.0 0.0 region box
+#fix efield all efield 5.0 0.0 0.0 region box
 
 # ---------- Run Minimization ---------------------
 reset_timestep 0
 # fix 1 all box/relax iso 1.0 vmax 1
 thermo 10
 thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms
-dump mydmp all atom 1 dump_efield.lammpstrj
+#dump mydmp all atom 1 dump_efield.lammpstrj
 min_style cg
 minimize 1e-25 1e-25 5000 10000
 
@@ -82,6 +83,7 @@ Your simulation uses code contributions which should be cited:
 CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
 
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Fix qeq/reaxff group is not charge neutral, net charge = -1 (src/REAXFF/fix_qeq_reaxff.cpp:392)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
@@ -99,44 +101,43 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-WARNING: Proc sub-domain size < neighbor skin, could lead to lost atoms (src/domain.cpp:966)
-Per MPI rank memory allocation (min/avg/max) = 8.003 | 8.003 | 8.003 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 23.04 | 23.04 | 23.04 Mbytes
    Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
-         0  -138.68789      1.354833       5.415          5.415         -118002.98     -142368.63     -105820.15     -105820.15     -138.68789    
-        10  -224.53354      1.354833       5.415          5.415          33106.136      1937.9601      48690.224      48690.224     -224.53354    
-        17  -225.05008      1.354833       5.415          5.415          2764.1498     -18359.041      13325.745      13325.745     -225.05008    
-Loop time of 0.016373 on 1 procs for 17 steps with 2 atoms
+         0  -396.8468       3.8709839      3.3523704      5.8957727     -36306.713      10788.182      10788.18      -130496.5      -396.8468     
+        10  -459.49653      3.8709839      3.3523704      5.8957727      23152.392      12162.282      12162.282      45132.611     -459.49653    
+        15  -459.49657      3.8709839      3.3523704      5.8957727      23199.199      12190.196      12190.196      45217.204     -459.49657    
+Loop time of 0.104542 on 1 procs for 15 steps with 3 atoms
 
-0.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+44.8% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -138.687891505694   -225.05006289889  -225.050079716617
-  Force two-norm initial, final = 170.29966 114.06578
-  Force max component initial, final = 126.13375 112.39623
-  Final line search alpha, max atom move = 8.2860603e-13 9.3132192e-11
-  Iterations, force evaluations = 17 364
+     -396.846799869361  -459.496567450062  -459.496569009399
+  Force two-norm initial, final = 190.21666 0.00016114032
+  Force max component initial, final = 151.70038 0.00013032077
+  Final line search alpha, max atom move = 0.5 6.5160385e-05
+  Iterations, force evaluations = 15 26
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.013068   | 0.013068   | 0.013068   |   0.0 | 79.81
+Pair    | 0.10148    | 0.10148    | 0.10148    |   0.0 | 97.07
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0.000142   | 0.000142   | 0.000142   |   0.0 |  0.87
-Output  | 0.00076    | 0.00076    | 0.00076    |   0.0 |  4.64
-Modify  | 0.00174    | 0.00174    | 0.00174    |   0.0 | 10.63
-Other   |            | 0.000663   |            |       |  4.05
+Comm    | 0.000277   | 0.000277   | 0.000277   |   0.0 |  0.26
+Output  | 0.000656   | 0.000656   | 0.000656   |   0.0 |  0.63
+Modify  | 0.001468   | 0.001468   | 0.001468   |   0.0 |  1.40
+Other   |            | 0.000662   |            |       |  0.63
 
-Nlocal:              2 ave           2 max           2 min
+Nlocal:              3 ave           3 max           3 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:             59 ave          59 max          59 min
+Nghost:           1021 ave        1021 max        1021 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:             53 ave          53 max          53 min
+Neighs:            875 ave         875 max         875 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 53
-Ave neighs/atom = 26.5
+Total # of neighbors = 875
+Ave neighs/atom = 291.66667
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -145,18 +146,25 @@ variable teng equal "c_eatoms"
 variable length equal "lx"
 variable ecoh equal "v_teng/v_natoms"
 
+# Calculate lattice parameter a (assuming cubic lattice)
+variable a0 equal "lx"
+
+# Calculate lattice parameter c (for non-cubic systems, e.g., hexagonal)
+variable c0 equal "lz"
+
+
+# Print the results
 print "Total energy (eV) = ${teng};"
-Total energy (eV) = -225.050079716617;
+Total energy (eV) = -459.496569009398;
 print "Number of atoms = ${natoms};"
-Number of atoms = 2;
-print "Lattice constant (Angstoms) = ${length};"
-Lattice constant (Angstoms) = 1.354833;
+Number of atoms = 3;
+print "Lattice constant a_0 (Angstroms) = ${a0};"
+Lattice constant a_0 (Angstroms) = 3.87098395;
+print "Lattice constant c_0 (Angstroms) = ${c0};"
+Lattice constant c_0 (Angstroms) = 5.89577273;
 print "Cohesive energy (eV) = ${ecoh};"
-Cohesive energy (eV) = -112.525039858309;
+Cohesive energy (eV) = -153.165523003133;
 
 print "All done!"
 All done!
-
-# Without efield Total energy (eV) = -17592.5440683454
-# With efield Total energy (eV) = 6623.48326880241;
 Total wall time: 0:00:00
