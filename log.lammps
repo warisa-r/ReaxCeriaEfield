@@ -1,2 +1,152 @@
-ERROR on proc 0: Cannot open input script ceo2_reaxff.lmp: No such file or directory (src/lammps.cpp:542)
-Last command: (unknown)
+LAMMPS (2 Aug 2023 - Update 3)
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+# Find minimum energy fcc configuration
+
+# ---------- Initialize Simulation ---------------------
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p  # Setting all boundaries to "s" (shrink-wrapped)
+atom_style charge
+atom_modify map array
+
+# ---------- Create Atoms ---------------------
+# Define supercell parameters
+variable nx equal 2
+variable ny equal 2
+variable nz equal 2
+variable total_cells equal ${nx}*${ny}*${nz}
+variable total_cells equal 2*${ny}*${nz}
+variable total_cells equal 2*2*${nz}
+variable total_cells equal 2*2*2
+
+region box block 0 ${nx} 0 ${ny} 0 ${nz}
+region box block 0 2 0 ${ny} 0 ${nz}
+region box block 0 2 0 2 0 ${nz}
+region box block 0 2 0 2 0 2
+
+# Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
+# use atomsk 'ceo2_structure.cif lammps' to convert the file
+read_data reax_ff_sim/ceo2_reaxff/geometry_file/CeO2_rutile.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.134657 5.134657 3.63642)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  2 atoms
+  read_data CPU = 0.001 seconds
+
+# ---------- Define Interatomic Potential ---------------------
+pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/ffield.reax O Ce
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+neighbor 2.0 bin
+neigh_modify delay 10 check yes
+
+# ---------- Define Settings ---------------------
+compute eng all pe/atom
+compute eatoms all reduce sum c_eng
+
+# ---------- Add Electric Field ---------------------
+# Apply force to all atoms in the direction of the electric field
+#fix efield all efield 5.0 0.0 0.0 region box
+
+# ---------- Run Minimization ---------------------
+reset_timestep 0
+# fix 1 all box/relax iso 1.0 vmax 5
+thermo 10
+thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms
+#dump mydmp all atom 1 dump_efield.lammpstrj
+min_style cg
+minimize 1e-25 1e-25 5000 10000
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+
+- pair reaxff command: doi:10.1016/j.parco.2011.08.005
+
+@Article{Aktulga12,
+ author = {H. M. Aktulga and J. C. Fogarty and S. A. Pandit and A. Y. Grama},
+ title = {Parallel Reactive Molecular Dynamics: {N}umerical Methods and Algorithmic Techniques},
+ journal = {Parallel Computing},
+ year =    2012,
+ volume =  38,
+ number =  {4--5},
+ pages =   {245--259}
+}
+
+- fix qeq/reaxff command: doi:10.1016/j.parco.2011.08.005
+
+@Article{Aktulga12,
+ author = {H. M. Aktulga and J. C. Fogarty and S. A. Pandit and A. Y. Grama},
+ title = {Parallel Reactive Molecular Dynamics: {N}umerical Methods and Algorithmic Techniques},
+ journal = {Parallel Computing},
+ year =    2012,
+ volume =  38,
+ pages =   {245--259}
+}
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Fix qeq/reaxff group is not charge neutral, net charge = 2 (src/REAXFF/fix_qeq_reaxff.cpp:392)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 1 1 1
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 14.54 | 14.54 | 14.54 Mbytes
+   Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
+         0  -263.79606      5.134657       5.134657       3.63642       -126270.13     -57414.143     -57414.143     -263982.11     -263.79606    
+         8  -333.14273      5.134657       5.134657       3.63642        26537.946     -1877.9861     -1877.9861      83369.811     -333.14273    
+Loop time of 0.029376 on 1 procs for 8 steps with 2 atoms
+
+106.4% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -263.796057807982  -333.142726910538  -333.142726910538
+  Force two-norm initial, final = 155.92267 0.49072003
+  Force max component initial, final = 77.961335 0.24536002
+  Final line search alpha, max atom move = 4.8585459e-08 1.1920929e-08
+  Iterations, force evaluations = 8 58
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.028057   | 0.028057   | 0.028057   |   0.0 | 95.51
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.000175   | 0.000175   | 0.000175   |   0.0 |  0.60
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.001023   | 0.001023   | 0.001023   |   0.0 |  3.48
+Other   |            | 0.000121   |            |       |  0.41
+
+Nlocal:              2 ave           2 max           2 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            538 ave         538 max         538 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:            283 ave         283 max         283 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 283
+Ave neighs/atom = 141.5
+Neighbor list builds = 0
+Dangerous builds = 0

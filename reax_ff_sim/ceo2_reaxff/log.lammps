@@ -16,25 +16,39 @@ atom_style charge
 atom_modify map array
 
 # ---------- Create Atoms ---------------------
-region box block -1 1 -1 1 -1 1
+# Define supercell parameters
+variable nx equal 2
+variable ny equal 2
+variable nz equal 2
+variable total_cells equal ${nx}*${ny}*${nz}
+variable total_cells equal 2*${ny}*${nz}
+variable total_cells equal 2*2*${nz}
+variable total_cells equal 2*2*2
+
+region box block 0 ${nx} 0 ${ny} 0 ${nz}
+region box block 0 2 0 ${ny} 0 ${nz}
+region box block 0 2 0 2 0 ${nz}
+region box block 0 2 0 2 0 2
 
 # Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
 # use atomsk 'ceo2_structure.cif lammps' to convert the file
-read_data geometry_file/Ce2O3.lmp
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/CeO2_fluorite.lmp
 Reading data file ...
-  triclinic box = (0 0 0) to (3.8709839 3.3523704 5.8957727) with tilt (-1.935492 0 0)
-WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (src/domain.cpp:220)
+  orthogonal box = (0 0 0) to (5.46745 5.46745 5.46745)
   1 by 1 by 1 MPI processor grid
   reading atoms ...
-  3 atoms
+  12 atoms
   read_data CPU = 0.002 seconds
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
-pair_coeff * * ffield.reax O Ce
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/ffield.reax O Ce
 fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
 neighbor 2.0 bin
 neigh_modify delay 10 check yes
+
+# ---------- Set Temperature to 0K ---------------------
+velocity all create 0.0 12345 mom yes rot yes
 
 # ---------- Define Settings ---------------------
 compute eng all pe/atom
@@ -46,7 +60,7 @@ compute eatoms all reduce sum c_eng
 
 # ---------- Run Minimization ---------------------
 reset_timestep 0
-# fix 1 all box/relax iso 1.0 vmax 1
+# fix 1 all box/relax iso 1.0 vmax 5
 thermo 10
 thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms
 #dump mydmp all atom 1 dump_efield.lammpstrj
@@ -83,7 +97,6 @@ Your simulation uses code contributions which should be cited:
 CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
 
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Fix qeq/reaxff group is not charge neutral, net charge = -1 (src/REAXFF/fix_qeq_reaxff.cpp:392)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
@@ -101,50 +114,75 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 23.04 | 23.04 | 23.04 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 44.7 | 44.7 | 44.7 Mbytes
    Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
-         0  -396.8468       3.8709839      3.3523704      5.8957727     -36306.713      10788.182      10788.18      -130496.5      -396.8468     
-        10  -459.49653      3.8709839      3.3523704      5.8957727      23152.392      12162.282      12162.282      45132.611     -459.49653    
-        15  -459.49657      3.8709839      3.3523704      5.8957727      23199.199      12190.196      12190.196      45217.204     -459.49657    
-Loop time of 0.104542 on 1 procs for 15 steps with 3 atoms
+         0  -903.36095      5.46745        5.46745        5.46745        1626827.5      1626827.5      1626827.5      1626827.5     -903.36095    
+         5  -903.36095      5.46745        5.46745        5.46745        1626827.5      1626827.5      1626827.5      1626827.5     -903.36095    
+Loop time of 0.175397 on 1 procs for 5 steps with 12 atoms
 
-44.8% CPU use with 1 MPI tasks x 1 OpenMP threads
+89.1% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -396.846799869361  -459.496567450062  -459.496569009399
-  Force two-norm initial, final = 190.21666 0.00016114032
-  Force max component initial, final = 151.70038 0.00013032077
-  Final line search alpha, max atom move = 0.5 6.5160385e-05
-  Iterations, force evaluations = 15 26
+      -903.36094584125  -903.360945844556  -903.360945874056
+  Force two-norm initial, final = 2.8735426e-12 1.620353e-05
+  Force max component initial, final = 9.8943076e-13 5.6752645e-06
+  Final line search alpha, max atom move = 0.5 2.8376322e-06
+  Iterations, force evaluations = 5 11
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.10148    | 0.10148    | 0.10148    |   0.0 | 97.07
+Pair    | 0.17192    | 0.17192    | 0.17192    |   0.0 | 98.02
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0.000277   | 0.000277   | 0.000277   |   0.0 |  0.26
-Output  | 0.000656   | 0.000656   | 0.000656   |   0.0 |  0.63
-Modify  | 0.001468   | 0.001468   | 0.001468   |   0.0 |  1.40
-Other   |            | 0.000662   |            |       |  0.63
+Comm    | 0.000137   | 0.000137   | 0.000137   |   0.0 |  0.08
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.002332   | 0.002332   | 0.002332   |   0.0 |  1.33
+Other   |            | 0.001004   |            |       |  0.57
 
-Nlocal:              3 ave           3 max           3 min
+Nlocal:             12 ave          12 max          12 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1021 ave        1021 max        1021 min
+Nghost:           1654 ave        1654 max        1654 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:            875 ave         875 max         875 min
+Neighs:           6430 ave        6430 max        6430 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 875
-Ave neighs/atom = 291.66667
+Total # of neighbors = 6430
+Ave neighs/atom = 535.83333
 Neighbor list builds = 0
 Dangerous builds = 0
 
 variable natoms equal "count(all)"
-variable teng equal "c_eatoms"
+variable teng equal pe
 variable length equal "lx"
 variable ecoh equal "v_teng/v_natoms"
+variable v_vol equal vol
+variable energy_per_cell equal ${teng}/${total_cells}
+variable energy_per_cell equal -903.360945874056/${total_cells}
+variable energy_per_cell equal -903.360945874056/8
+
+# Define the number of Ce and O atoms in one unit cell
+variable n_Ce_per_cell equal 1
+variable n_O_per_cell equal 2
+
+# Define the formation energy of CeO2 per atom (replace with your own values)
+variable mu_Ce equal 4.0   # Chemical potential of Ce
+variable mu_O equal -2.0    # Chemical potential of O
+
+variable vv equal ${n_Ce_per_cell}*${mu_Ce}+${n_O_per_cell}*${mu_O}
+variable vv equal 1*${mu_Ce}+${n_O_per_cell}*${mu_O}
+variable vv equal 1*4+${n_O_per_cell}*${mu_O}
+variable vv equal 1*4+2*${mu_O}
+variable vv equal 1*4+2*-2
+
+# Calculate the formation energy per cell
+variable formation_energy_per_cell equal ${energy_per_cell}-(${n_Ce_per_cell}*${mu_Ce}+${n_O_per_cell}*${mu_O})
+variable formation_energy_per_cell equal -112.920118234257-(${n_Ce_per_cell}*${mu_Ce}+${n_O_per_cell}*${mu_O})
+variable formation_energy_per_cell equal -112.920118234257-(1*${mu_Ce}+${n_O_per_cell}*${mu_O})
+variable formation_energy_per_cell equal -112.920118234257-(1*4+${n_O_per_cell}*${mu_O})
+variable formation_energy_per_cell equal -112.920118234257-(1*4+2*${mu_O})
+variable formation_energy_per_cell equal -112.920118234257-(1*4+2*-2)
 
 # Calculate lattice parameter a (assuming cubic lattice)
 variable a0 equal "lx"
@@ -155,16 +193,21 @@ variable c0 equal "lz"
 
 # Print the results
 print "Total energy (eV) = ${teng};"
-Total energy (eV) = -459.496569009398;
+Total energy (eV) = -903.360945874056;
 print "Number of atoms = ${natoms};"
-Number of atoms = 3;
+Number of atoms = 12;
 print "Lattice constant a_0 (Angstroms) = ${a0};"
-Lattice constant a_0 (Angstroms) = 3.87098395;
+Lattice constant a_0 (Angstroms) = 5.46745;
 print "Lattice constant c_0 (Angstroms) = ${c0};"
-Lattice constant c_0 (Angstroms) = 5.89577273;
+Lattice constant c_0 (Angstroms) = 5.46745;
 print "Cohesive energy (eV) = ${ecoh};"
-Cohesive energy (eV) = -153.165523003133;
-
+Cohesive energy (eV) = -75.280078822838;
+print "Volume = ${v_vol}"
+Volume = 163.438534804444
+print "Energy per cell = ${energy_per_cell}"
+Energy per cell = -112.920118234257
+print "Formation energy per cell (eV) = ${formation_energy_per_cell}"
+Formation energy per cell (eV) = -112.920118234257
 print "All done!"
 All done!
 Total wall time: 0:00:00
