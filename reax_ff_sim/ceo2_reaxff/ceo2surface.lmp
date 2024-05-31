@@ -1,0 +1,36 @@
+# compare the surface energy with pbe+u
+
+# ---------- Initialize Simulation --------------------- 
+clear 
+units real
+dimension 3 
+boundary p p p  # Setting all boundaries to "s" (shrink-wrapped)
+atom_style charge
+atom_modify map array
+
+
+varaible E_bulk equal -3.938 #eV/stom
+varaible A_sur equal 42.2750884 #A^2
+
+# ---------- create atoms ------------------------------------
+read_data geometry_file/110slab.lmp
+
+# ---------- Define Interatomic Potential ---------------------
+pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
+pair_coeff * * ffield.reax O Ce
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+neighbor 2.0 bin 
+neigh_modify delay 10000 check yes 
+
+velocity all create 0.0 12345 mom yes rot yes
+
+# ----------------varaibels-------------
+compute eng all pe/atom
+
+reset_timestep 0 
+# fix 1 all box/relax iso 1.0 vmax 5
+thermo 10
+thermo_style custom step pe lx ly lz press pxx pyy pzz 
+#dump mydmp all atom 1 dump_efield.lammpstrj
+min_style cg 
+minimize 1e-25 1e-25 5000 10000

@@ -9,9 +9,8 @@ atom_style charge
 atom_modify map array
 
 # ---------- Create Atoms ---------------------
-region box block -1 1 -1 1 -1 1
-# Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
-# use atomsk 'ceo2_structure.cif lammps' to convert the file
+
+
 read_data geometry_file/CeO2_mp-20194_conventional_standard.lmp
 
 # ---------- Define Interatomic Potential ---------------------
