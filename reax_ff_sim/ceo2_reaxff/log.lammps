@@ -32,15 +32,15 @@ region box block 0 2 0 2 0 2
 
 # Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
 # use atomsk 'ceo2_structure.cif lammps' to convert the file
-read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/CeO2_rutile.lmp
+read_data C:\Users\user\Documents\School\FFparamOpt\CeO2_rutile_supercell.lmp
 Reading data file ...
-  orthogonal box = (0 0 0) to (5.134657 5.134657 3.63642)
+  orthogonal box = (0 0 0) to (10.156 10.156 7.134)
   1 by 1 by 1 MPI processor grid
   reading atoms ...
-  2 atoms
-  read_data CPU = 0.002 seconds
+  48 atoms
+  read_data CPU = 0.009 seconds
 group Ce type 1
-1 atoms in group Ce
+16 atoms in group Ce
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
@@ -99,13 +99,12 @@ Your simulation uses code contributions which should be cited:
 CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
 
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Fix qeq/reaxff group is not charge neutral, net charge = 2 (src/REAXFF/fix_qeq_reaxff.cpp:392)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
   master list distance cutoff = 12
   ghost atom cutoff = 12
-  binsize = 6, bins = 1 1 1
+  binsize = 6, bins = 2 2 2
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -117,42 +116,43 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 14.54 | 14.54 | 14.54 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 57.31 | 57.31 | 57.31 Mbytes
    Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
-         0  -263.79606      5.134657       5.134657       3.63642       -126270.13     -57414.143     -57414.143     -263982.11     -263.79606    
-         8  -333.14273      5.134657       5.134657       3.63642        26537.946     -1877.9861     -1877.9861      83369.811     -333.14273    
-Loop time of 0.028861 on 1 procs for 8 steps with 2 atoms
+         0   1062519        10.156         10.156         7.134         -84487822       36341647       36341647      -3.2614676e+08  1062519      
+        10  -2.5971465e+08  10.156         10.156         7.134         -1.011508e+12  -2.1556649e+11 -2.1556586e+11 -2.6033917e+12 -2.5971465e+08
+        11  -2.5928966e+08  10.156         10.156         7.134         -1.0099157e+12 -2.1522655e+11 -2.1522658e+11 -2.5992941e+12 -2.5928966e+08
+Loop time of 14.7143 on 1 procs for 11 steps with 48 atoms
 
-0.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+99.6% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -263.796057807982  -333.142726910538  -333.142726910538
-  Force two-norm initial, final = 155.92267 0.49072003
-  Force max component initial, final = 77.961335 0.24536002
-  Final line search alpha, max atom move = 4.8585459e-08 1.1920929e-08
-  Iterations, force evaluations = 8 58
+      1062519.04364216  -259714647.244154  -259289661.365533
+  Force two-norm initial, final = 3647423.8 2.6488776e+10
+  Force max component initial, final = 816926.62 6.0292934e+09
+  Final line search alpha, max atom move = 1.4352449e-29 8.6535126e-20
+  Iterations, force evaluations = 11 631
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.02742    | 0.02742    | 0.02742    |   0.0 | 95.01
+Pair    | 13.193     | 13.193     | 13.193     |   0.0 | 89.66
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0.000161   | 0.000161   | 0.000161   |   0.0 |  0.56
-Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.000946   | 0.000946   | 0.000946   |   0.0 |  3.28
-Other   |            | 0.000334   |            |       |  1.16
+Comm    | 0.008522   | 0.008522   | 0.008522   |   0.0 |  0.06
+Output  | 0.000459   | 0.000459   | 0.000459   |   0.0 |  0.00
+Modify  | 1.5088     | 1.5088     | 1.5088     |   0.0 | 10.25
+Other   |            | 0.003056   |            |       |  0.02
 
-Nlocal:              2 ave           2 max           2 min
+Nlocal:             48 ave          48 max          48 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:            538 ave         538 max         538 min
+Nghost:           2598 ave        2598 max        2598 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:            283 ave         283 max         283 min
+Neighs:          22760 ave       22760 max       22760 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 283
-Ave neighs/atom = 141.5
+Total # of neighbors = 22760
+Ave neighs/atom = 474.16667
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -176,31 +176,31 @@ variable conv equal 0.0433641
 
 # Calculate the energy per Cerium atom in eV
 variable energy_eV equal ${teng}*${conv} #eV/atom
-variable energy_eV equal -333.142726910538*${conv} 
-variable energy_eV equal -333.142726910538*0.0433641 
+variable energy_eV equal -259289661.365533*${conv} 
+variable energy_eV equal -259289661.365533*0.0433641 
 
 # Calculate the energy per Cerium atom
 variable energy_eV_per_CeO2 equal ${energy_eV}/${nCe}
-variable energy_eV_per_CeO2 equal -14.4464345240213/${nCe}
-variable energy_eV_per_CeO2 equal -14.4464345240213/1
+variable energy_eV_per_CeO2 equal -11243862.8044211/${nCe}
+variable energy_eV_per_CeO2 equal -11243862.8044211/16
 
 # Print the results
 print "Total energy (kcal/mol) = ${teng};"
-Total energy (kcal/mol) = -333.142726910538;
+Total energy (kcal/mol) = -259289661.365533;
 print "Number of atoms = ${natoms};"
-Number of atoms = 2;
+Number of atoms = 48;
 print "Lattice constant a_0 (Angstroms) = ${a0};"
-Lattice constant a_0 (Angstroms) = 5.134657;
+Lattice constant a_0 (Angstroms) = 10.156;
 print "Lattice constant c_0 (Angstroms) = ${c0};"
-Lattice constant c_0 (Angstroms) = 3.63642;
+Lattice constant c_0 (Angstroms) = 7.134;
 print "Cohesive energy (eV) = ${ecoh};"
-Cohesive energy (eV) = -166.571363455269;
+Cohesive energy (eV) = -5401867.94511527;
 print "Volume = ${v_vol}"
-Volume = 95.873131492865
+Volume = 735.831693024
 print "Energy (eV) = ${energy_eV}"
-Energy (eV) = -14.4464345240213
-print "Energy per Cerium atom (eV) = ${energy_eV_per_CeO2}"
-Energy per Cerium atom (eV) = -14.4464345240213
+Energy (eV) = -11243862.8044211
+print "Energy per Ceriumoxide atom (eV) = ${energy_eV_per_CeO2}"
+Energy per Ceriumoxide atom (eV) = -702741.425276319
 print "All done!"
 All done!
-Total wall time: 0:00:00
+Total wall time: 0:00:14

@@ -19,7 +19,7 @@ region box block 0 ${nx} 0 ${ny} 0 ${nz}
 
 # Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
 # use atomsk 'ceo2_structure.cif lammps' to convert the file
-read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/CeO2_rutile.lmp
+read_data C:\Users\user\Documents\School\FFparamOpt\CeO2_rutile_supercell.lmp
 group Ce type 1
 
 # ---------- Define Interatomic Potential ---------------------
