@@ -19,12 +19,12 @@ region box block 0 ${nx} 0 ${ny} 0 ${nz}
 
 # Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
 # use atomsk 'ceo2_structure.cif lammps' to convert the file
-read_data C:\Users\user\Documents\School\FFparamOpt\CeO2_rutile_supercell.lmp
+read_data C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ceo2_reaxff\geometry_file\ceO2_fluorite.lmp
 group Ce type 1
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
-pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/ffield.reax O Ce
+pair_coeff * * C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ffield.reax O Ce
 fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
 neighbor 2.0 bin 
 neigh_modify delay 10000 check yes

@@ -2,7 +2,7 @@ LAMMPS (2 Aug 2023 - Update 3)
 OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
   using 1 OpenMP thread(s) per MPI task
 Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
-# Find minimum energy fcc configuration
+# Find minimum energy configuration of O2 using ReaxFF
 
 # ---------- Initialize Simulation ---------------------
 clear
@@ -11,62 +11,51 @@ OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98
 Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
 units real
 dimension 3
-boundary p p p  # Setting all boundaries to "s" (shrink-wrapped)
+boundary p p p  # Periodic boundary conditions
 atom_style charge
 atom_modify map array
 
 # ---------- Create Atoms ---------------------
 # Define supercell parameters
-variable nx equal 2
-variable ny equal 2
-variable nz equal 2
+variable nx equal 1
+variable ny equal 1
+variable nz equal 1
 variable total_cells equal ${nx}*${ny}*${nz}
-variable total_cells equal 2*${ny}*${nz}
-variable total_cells equal 2*2*${nz}
-variable total_cells equal 2*2*2
+variable total_cells equal 1*${ny}*${nz}
+variable total_cells equal 1*1*${nz}
+variable total_cells equal 1*1*1
 
 region box block 0 ${nx} 0 ${ny} 0 ${nz}
-region box block 0 2 0 ${ny} 0 ${nz}
-region box block 0 2 0 2 0 ${nz}
-region box block 0 2 0 2 0 2
+region box block 0 1 0 ${ny} 0 ${nz}
+region box block 0 1 0 1 0 ${nz}
+region box block 0 1 0 1 0 1
 
-# Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
-# use atomsk 'ceo2_structure.cif lammps' to convert the file
-read_data C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ceo2_reaxff\geometry_file\Ce2O3.lmp
+# Read O2 geometry data (assuming you have the file named 'O2.lmp')
+read_data C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\o2_reaxff\geometry_file\O2.lmp
 Reading data file ...
-  triclinic box = (0 0 0) to (3.8709839 3.3523704 5.8957727) with tilt (-1.935492 0 0)
-WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (src/domain.cpp:220)
+  orthogonal box = (0 0 0) to (3.003546 3.77977 7.797674)
   1 by 1 by 1 MPI processor grid
   reading atoms ...
-  3 atoms
+  1 atoms
   read_data CPU = 0.008 seconds
-group Ce type 1
-1 atoms in group Ce
+group O type 1
+1 atoms in group O
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
-pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/ffield.reax O Ce
+pair_coeff * * C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ffield.reax O
 fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
 neighbor 2.0 bin
-neigh_modify delay 10000 check yes
-
-# ---------- Set Temperature to 0K ---------------------
-velocity all create 0.0 12345 mom yes rot yes
+neigh_modify delay 0 every 1 check yes
 
 # ---------- Define Settings ---------------------
 compute eng all pe/atom
 compute eatoms all reduce sum c_eng
 
-# ---------- Add Electric Field ---------------------
-# Apply force to all atoms in the direction of the electric field
-#fix efield all efield 5.0 0.0 0.0 region box
-
 # ---------- Run Minimization ---------------------
 reset_timestep 0
-# fix 1 all box/relax iso 1.0 vmax 5
 thermo 10
 thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms
-#dump mydmp all atom 1 dump_efield.lammpstrj
 min_style cg
 minimize 1e-25 1e-25 5000 10000
 
@@ -99,14 +88,13 @@ Your simulation uses code contributions which should be cited:
 
 CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
 
-Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Fix qeq/reaxff group is not charge neutral, net charge = -1 (src/REAXFF/fix_qeq_reaxff.cpp:392)
+WARNING: Fix qeq/reaxff group is not charge neutral, net charge = -2 (src/REAXFF/fix_qeq_reaxff.cpp:392)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
   master list distance cutoff = 12
   ghost atom cutoff = 12
-  binsize = 6, bins = 1 1 1
+  binsize = 6, bins = 1 1 2
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -118,43 +106,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 23.04 | 23.04 | 23.04 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 11.11 | 11.11 | 11.11 Mbytes
    Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
-         0  -396.8468       3.8709839      3.3523704      5.8957727     -36306.713      10788.182      10788.18      -130496.5      -396.8468     
-        10  -459.49653      3.8709839      3.3523704      5.8957727      23152.392      12162.282      12162.282      45132.611     -459.49653    
-        15  -459.49657      3.8709839      3.3523704      5.8957727      23199.199      12190.196      12190.196      45217.204     -459.49657    
-Loop time of 0.105328 on 1 procs for 15 steps with 3 atoms
+         0  -0.33293596     3.003546       3.77977        7.797674       5093.4148      13182.591      2108.6564     -11.00291      -0.33293596   
+         1  -0.33293596     3.003546       3.77977        7.797674       5093.4148      13182.591      2108.6564     -11.00291      -0.33293596   
+Loop time of 0.001491 on 1 procs for 1 steps with 1 atoms
 
-74.2% CPU use with 1 MPI tasks x 1 OpenMP threads
+0.0% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
-  Stopping criterion = linesearch alpha is zero
+  Stopping criterion = quadratic factors are zero
   Energy initial, next-to-last, final = 
-     -396.846799869361  -459.496567450062  -459.496569009399
-  Force two-norm initial, final = 190.21666 0.00016114032
-  Force max component initial, final = 151.70038 0.00013032077
-  Final line search alpha, max atom move = 0.5 6.5160385e-05
-  Iterations, force evaluations = 15 26
+    -0.332935964299975 -0.332935964299975 -0.332935964299986
+  Force two-norm initial, final = 8.8991145e-16 8.8991145e-16
+  Force max component initial, final = 8.8817842e-16 8.8817842e-16
+  Final line search alpha, max atom move = 1 8.8817842e-16
+  Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.10241    | 0.10241    | 0.10241    |   0.0 | 97.23
+Pair    | 0.001144   | 0.001144   | 0.001144   |   0.0 | 76.73
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0.000258   | 0.000258   | 0.000258   |   0.0 |  0.24
-Output  | 0.000666   | 0.000666   | 0.000666   |   0.0 |  0.63
-Modify  | 0.001449   | 0.001449   | 0.001449   |   0.0 |  1.38
-Other   |            | 0.000542   |            |       |  0.51
+Comm    | 9e-06      | 9e-06      | 9e-06      |   0.0 |  0.60
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 3.9e-05    | 3.9e-05    | 3.9e-05    |   0.0 |  2.62
+Other   |            | 0.000299   |            |       | 20.05
 
-Nlocal:              3 ave           3 max           3 min
+Nlocal:              1 ave           1 max           1 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1021 ave        1021 max        1021 min
+Nghost:            287 ave         287 max         287 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:            875 ave         875 max         875 min
+Neighs:             86 ave          86 max          86 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 875
-Ave neighs/atom = 291.66667
+Total # of neighbors = 86
+Ave neighs/atom = 86
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -164,8 +151,8 @@ variable length equal "lx"
 variable ecoh equal "v_teng/v_natoms"
 variable v_vol equal vol
 
-# Calculate the number of Cerium atoms
-variable nCe equal "count(Ce)"
+# Calculate the number of Oxygen atoms
+variable nO equal "count(O)"
 
 # Calculate lattice parameter a (assuming cubic lattice)
 variable a0 equal "lx"
@@ -176,33 +163,25 @@ variable c0 equal "lz"
 # Conversion factor from kcal/mol to eV
 variable conv equal 0.0433641
 
-# Calculate the energy per Cerium atom in eV
+# Calculate the energy per Oxygen atom in eV
 variable energy_eV equal ${teng}*${conv} #eV/atom
-variable energy_eV equal -459.496569009399*${conv} 
-variable energy_eV equal -459.496569009399*0.0433641 
+variable energy_eV equal -0.332935964299986*${conv} 
+variable energy_eV equal -0.332935964299986*0.0433641 
 
-# Calculate the energy per Cerium atom
-variable energy_eV_per_CeO2 equal ${energy_eV}/${nCe}
-variable energy_eV_per_CeO2 equal -19.9256551681805/${nCe}
-variable energy_eV_per_CeO2 equal -19.9256551681805/1
+# Calculate the energy per O2 molecule
+variable energy_eV_per_O2 equal ${energy_eV}/(${nO}/2.0)
+variable energy_eV_per_O2 equal -0.014437468449501/(${nO}/2.0)
+variable energy_eV_per_O2 equal -0.014437468449501/(1/2.0)
 
 # Print the results
 print "Total energy (kcal/mol) = ${teng};"
-Total energy (kcal/mol) = -459.496569009399;
+Total energy (kcal/mol) = -0.332935964299986;
 print "Number of atoms = ${natoms};"
-Number of atoms = 3;
+Number of atoms = 1;
 print "Lattice constant a_0 (Angstroms) = ${a0};"
-Lattice constant a_0 (Angstroms) = 3.87098395;
+Lattice constant a_0 (Angstroms) = 3.003546;
 print "Lattice constant c_0 (Angstroms) = ${c0};"
-Lattice constant c_0 (Angstroms) = 5.89577273;
-print "Cohesive energy (eV) = ${ecoh};"
-Cohesive energy (eV) = -153.165523003133;
-print "Volume = ${v_vol}"
-Volume = 76.5092785864223
-print "Energy (eV) = ${energy_eV}"
-Energy (eV) = -19.9256551681805
-print "Energy per Ceriumoxide atom (eV) = ${energy_eV_per_CeO2}"
-Energy per Ceriumoxide atom (eV) = -19.9256551681805
-print "All done!"
-All done!
+Lattice constant c_0 (Angstroms) = 7.797674;
+print "Energy (eV) per Oxygen = ${energy_eV_per_O2};"
+Energy (eV) per Oxygen = -0.028874936899002;
 Total wall time: 0:00:00

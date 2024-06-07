@@ -1,0 +1,71 @@
+# Find minimum energy configuration of O2 using ReaxFF
+
+# ---------- Initialize Simulation ---------------------
+clear 
+units real
+dimension 3 
+boundary p p p  # Periodic boundary conditions
+atom_style charge
+atom_modify map array
+
+# ---------- Create Atoms ---------------------
+# Define supercell parameters
+variable nx equal 1
+variable ny equal 1
+variable nz equal 1
+variable total_cells equal ${nx}*${ny}*${nz}
+
+region box block 0 ${nx} 0 ${ny} 0 ${nz}
+
+# Read O2 geometry data (assuming you have the file named 'O2.lmp')
+read_data C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\o2_reaxff\geometry_file\O2.lmp
+group O type 1
+
+# ---------- Define Interatomic Potential ---------------------
+pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
+pair_coeff * * C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ffield.reax O
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+neighbor 2.0 bin 
+neigh_modify delay 0 every 1 check yes
+
+# ---------- Define Settings ---------------------
+compute eng all pe/atom 
+compute eatoms all reduce sum c_eng 
+
+# ---------- Run Minimization ---------------------
+reset_timestep 0 
+thermo 10
+thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms 
+min_style cg 
+minimize 1e-25 1e-25 5000 10000
+
+variable natoms equal "count(all)" 
+variable teng equal pe
+variable length equal "lx"
+variable ecoh equal "v_teng/v_natoms"
+variable v_vol equal vol
+
+# Calculate the number of Oxygen atoms
+variable nO equal "count(O)"
+
+# Calculate lattice parameter a (assuming cubic lattice)
+variable a0 equal "lx"
+
+# Calculate lattice parameter c (for non-cubic systems, e.g., hexagonal)
+variable c0 equal "lz"
+
+# Conversion factor from kcal/mol to eV
+variable conv equal 0.0433641
+
+# Calculate the energy per Oxygen atom in eV
+variable energy_eV equal ${teng}*${conv} #eV/atom
+
+# Calculate the energy per O2 molecule
+variable energy_eV_per_O2 equal ${energy_eV}/(${nO}/2.0)
+
+# Print the results
+print "Total energy (kcal/mol) = ${teng};"
+print "Number of atoms = ${natoms};"
+print "Lattice constant a_0 (Angstroms) = ${a0};"
+print "Lattice constant c_0 (Angstroms) = ${c0};"
+print "Energy (eV) per Oxygen = ${energy_eV_per_O2};"
