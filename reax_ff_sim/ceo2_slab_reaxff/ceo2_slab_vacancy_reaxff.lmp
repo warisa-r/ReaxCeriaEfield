@@ -1,0 +1,53 @@
+# Perform NVE simulation on a surface (111 slab)
+
+# ---------- Initialize Simulation --------------------- 
+clear
+units real
+dimension 3
+boundary p p p  # Periodic boundary conditions
+atom_style charge
+atom_modify map array
+
+# ---------- Create Atoms ---------------------
+# Read the geometry data of the 111 slab
+read_data C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ceo2_slab_reaxff\geometry_files\111slab_with_charges_vacancy.lmp
+
+# ---------- Define Interatomic Potential ---------------------
+pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
+pair_coeff * * C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ffield.reax O Ce # Adjust atom types as necessary
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+# ---------- Set Initial Velocities ---------------------
+# Initialize velocities to a specific temperature, e.g., 300K
+velocity all create 300.0 12345 mom yes rot yes dist gaussian
+
+# ---------- Define Settings --------------------- 
+compute eng all pe/atom 
+compute eatoms all reduce sum c_eng 
+
+# ---------- Run Minimization --------------------- 
+reset_timestep 0 
+thermo 10
+thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms 
+min_style cg 
+
+# Dump the final positions of all atoms to a file
+# Use a large interval (e.g., 1000000) so that only the final positions are written
+#dump myDump all atom 651 final_positions.lammpstrj
+
+minimize 1e-25 1e-25 5000 10000
+
+# Write the final atom positions to a LAMMPS data file
+write_data slab_vacancy_after_emin.lmp
+
+variable conv equal 0.0433641
+
+# Calculate the energy
+variable natoms equal "count(all)" 
+variable teng equal pe
+variable energy_eV equal ${teng}*${conv}
+variable length equal "lx"
+variable ecoh equal "v_teng/v_natoms"
+variable v_vol equal vol
+
+print "Total energy (eV) = ${teng};"
