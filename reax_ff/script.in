@@ -1,0 +1,27 @@
+# Simple NVE simulation for geometry optimization at 0K
+
+# 1. Initialize
+units           lj        # Use LJ (Lennard-Jones) units
+dimension       3         # 3D simulation
+boundary        p p p     # Periodic boundaries in all directions
+
+# 2. Atom definition
+atom_style      atomic    # Style for atomic simulation
+read_data       data_13atoms_iteration3.data # Specify the path to your data file
+
+# 3. Potential
+pair_style      lj/cut 20 # Lennard-Jones potential with a cutoff of 2.5
+pair_coeff      * * 1.0 1.0 # LJ parameters (epsilon = 1.0, sigma = 1.0)
+
+# 4. Simulation settings
+timestep        0.005     # Timestep size
+thermo_style    custom step pe lx ly lz press pxx pyy pzz # Output thermodynamic properties
+thermo          1000      # Output thermodynamic properties every 1000 steps
+dump            1 all custom 1000 dump.traj id type x y z vx vy vz # Dump trajectory in .traj format
+
+# 5. Minimization settings (geometry optimization)
+min_style       cg        # Conjugate gradient minimization
+minimize        1e-10 1e-10 1000 10000 # Tolerance and maximum iterations
+
+# 6. Run simulation
+run             10000     # Run simulation for 10000 steps (adjust as needed)
