@@ -1,1 +1,179 @@
 LAMMPS (2 Aug 2023 - Update 3)
+# compare the surface energy with pbe+u
+
+# ---------- Initialize Simulation ---------------------
+clear
+units real
+dimension 3
+boundary p p p
+atom_style charge
+atom_modify map array
+
+# ---------- create atoms ------------------------------------
+read_data geometry_file/CeO2_111slab_structure.data
+Reading data file ...
+  triclinic box = (0 0 0) to (7.73214 6.6962297 73.4037) with tilt (3.86607 0 0)
+WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (src/src/domain.cpp:220)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  168 atoms
+  read_data CPU = 0.001 seconds
+
+# ---------- Define Interatomic Potential ---------------------
+pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
+pair_coeff * * ffield.reax O Ce
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+neighbor 2.0 bin
+neigh_modify delay 10000 check yes
+
+velocity all create 0.0 12345 mom yes rot yes
+
+reset_timestep 0
+
+thermo 10
+thermo_style custom step pe
+#dump mydmp all atom 1 dump_efield.lammpstrj
+min_style cg
+minimize 1e-25 1e-25 5000 10000
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+
+- pair reaxff command: doi:10.1016/j.parco.2011.08.005
+
+@Article{Aktulga12,
+ author = {H. M. Aktulga and J. C. Fogarty and S. A. Pandit and A. Y. Grama},
+ title = {Parallel Reactive Molecular Dynamics: {N}umerical Methods and Algorithmic Techniques},
+ journal = {Parallel Computing},
+ year =    2012,
+ volume =  38,
+ number =  {4--5},
+ pages =   {245--259}
+}
+
+- fix qeq/reaxff command: doi:10.1016/j.parco.2011.08.005
+
+@Article{Aktulga12,
+ author = {H. M. Aktulga and J. C. Fogarty and S. A. Pandit and A. Y. Grama},
+ title = {Parallel Reactive Molecular Dynamics: {N}umerical Methods and Algorithmic Techniques},
+ journal = {Parallel Computing},
+ year =    2012,
+ volume =  38,
+ pages =   {245--259}
+}
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 2 2 13
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 90.56 | 90.56 | 90.56 Mbytes
+   Step         PotEng    
+         0  -13012.984    
+        10  -14443.774    
+        20  -15640.968    
+        30  -16880.353    
+        40  -18158.856    
+        50  -19262.88     
+        60  -20102.711    
+        70  -20756.832    
+        80  -21271.602    
+        90  -21653.04     
+       100  -21974.405    
+       110  -22288.182    
+       120  -22594.226    
+       130  -22894.294    
+       140  -23112.062    
+       150  -23331.877    
+       160  -23528.117    
+       170  -23669.326    
+       180  -23762.612    
+       190  -23835.058    
+       200  -23932.487    
+       210  -24035.113    
+       220  -24141.754    
+       230  -24283.823    
+       240  -24431.538    
+       250  -24537.378    
+       260  -24674.252    
+       270  -24800.56     
+       280  -24870.321    
+       290  -24896.784    
+       300  -24914.884    
+       310  -24940.231    
+       320  -24952.412    
+       330  -24958.989    
+       340  -24963.571    
+       350  -24965.881    
+       360  -24967.229    
+       370  -24967.716    
+       380  -24967.921    
+       390  -24968.014    
+       400  -24968.076    
+       410  -24968.158    
+       420  -24968.242    
+       430  -24968.302    
+       440  -24968.336    
+       450  -24968.352    
+       460  -24968.36     
+       470  -24968.367    
+       480  -24968.369    
+       490  -24968.371    
+       500  -24968.372    
+       510  -24968.372    
+       520  -24968.373    
+       530  -24968.374    
+       540  -24968.374    
+       550  -24968.375    
+       553  -24968.375    
+Loop time of 16.7543 on 1 procs for 553 steps with 168 atoms
+
+97.7% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -13012.9837441462  -24968.3745747226  -24968.3745782846
+  Force two-norm initial, final = 739.02915 0.047818621
+  Force max component initial, final = 268.5995 0.0083830085
+  Final line search alpha, max atom move = 3.8146973e-06 3.197864e-08
+  Iterations, force evaluations = 553 950
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 13.777     | 13.777     | 13.777     |   0.0 | 82.23
+Neigh   | 0.24111    | 0.24111    | 0.24111    |   0.0 |  1.44
+Comm    | 0.014897   | 0.014897   | 0.014897   |   0.0 |  0.09
+Output  | 0.0016896  | 0.0016896  | 0.0016896  |   0.0 |  0.01
+Modify  | 2.7109     | 2.7109     | 2.7109     |   0.0 | 16.18
+Other   |            | 0.009192   |            |       |  0.05
+
+Nlocal:            168 ave         168 max         168 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           4674 ave        4674 max        4674 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          49701 ave       49701 max       49701 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 49701
+Ave neighs/atom = 295.83929
+Neighbor list builds = 22
+Dangerous builds = 0
+Total wall time: 0:03:06
