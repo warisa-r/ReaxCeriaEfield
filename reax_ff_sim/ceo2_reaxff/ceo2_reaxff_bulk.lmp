@@ -19,8 +19,7 @@ region box block 0 ${nx} 0 ${ny} 0 ${nz}
 
 # Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
 # use atomsk 'ceo2_structure.cif lammps' to convert the file
-read_data C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ceo2_reaxff\geometry_file\fluorite_scaled\ceO2_fluorite_1.191.lmp
-dump initial_config all atom 1 initial_config.lammpstrj
+read_data C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ceo2_reaxff\geometry_file\rutile_scaled\ceO2_rutile_1.690.lmp
 group Ce type 1
 
 # ---------- Define Interatomic Potential ---------------------
@@ -49,6 +48,7 @@ reset_timestep 0
 # fix 1 all box/relax iso 1.0 vmax 5
 thermo 10
 thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms 
+dump mydmp all custom 1 dump_rutile_1.690.lammpstrj id type x y z
 min_style cg 
 minimize 1e-25 1e-25 5000 10000
 
