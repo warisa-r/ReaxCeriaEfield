@@ -11,31 +11,34 @@ OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98
 Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
 units real
 dimension 3
-boundary p p p  # Setting all boundaries to "s" (shrink-wrapped)
+boundary p p p
 atom_style charge
 atom_modify map array
 
-# ---------- Create Atoms ---------------------
-region box block 0 1 0 1 0 1
+
 
 # Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
 # use atomsk 'ceo2_structure.cif lammps' to convert the file
-read_data C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ceo2_reaxff\geometry_file\CeO2_rutile_with_charges.lmp
+read_data C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ceo2_reaxff\geometry_file\fluorite_scaled\ceO2_fluorite_1.191.lmp
 Reading data file ...
-  orthogonal box = (0 0 0) to (10.156 10.156 7.134)
+  orthogonal box = (0 0 0) to (6.511733 6.511733 6.511733)
   1 by 1 by 1 MPI processor grid
   reading atoms ...
-  48 atoms
-  read_data CPU = 0.009 seconds
+  12 atoms
+  read_data CPU = 0.002 seconds
+dump initial_config all atom 1 initial_config.lammpstrj
 group Ce type 1
-16 atoms in group Ce
+4 atoms in group Ce
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
 pair_coeff * * C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ffield.reax O Ce
 fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
 neighbor 2.0 bin
-neigh_modify delay 10000 check yes
+neigh_modify every 1 delay 0 check yes
+
+# Increase buffer size for bonds
+comm_modify vel yes
 
 # ---------- Set Temperature to 0K ---------------------
 velocity all create 0.0 12345 mom yes rot yes
@@ -53,7 +56,6 @@ reset_timestep 0
 # fix 1 all box/relax iso 1.0 vmax 5
 thermo 10
 thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms
-#dump mydmp all atom 1 dump_efield.lammpstrj
 min_style cg
 minimize 1e-25 1e-25 5000 10000
 
@@ -86,7 +88,6 @@ Your simulation uses code contributions which should be cited:
 
 CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
 
-Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
@@ -104,46 +105,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 52.26 | 52.26 | 52.26 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 32.73 | 32.73 | 32.73 Mbytes
    Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
-         0  -4543.5982      10.156         10.156         7.134          1426460.4      1419208        1419208        1440965.3     -4543.5982    
-        10  -5162.7858      10.156         10.156         7.134          1009276        1018389        1018389        991050.01     -5162.7858    
-        20  -5164.2385      10.156         10.156         7.134          1010209.8      1020203.8      1020203.8      990221.68     -5164.2385    
-        30  -5164.295       10.156         10.156         7.134          1010791.1      1020894.9      1020894.9      990583.47     -5164.295     
-        40  -5164.3015      10.156         10.156         7.134          1010738.8      1020665.5      1020665.5      990885.53     -5164.3015    
-        45  -5164.3016      10.156         10.156         7.134          1010739.1      1020667        1020667        990883.2      -5164.3016    
-Loop time of 3.59644 on 1 procs for 45 steps with 48 atoms
+         0  -1537.7235      6.511733       6.511733       6.511733       15370.445      15370.445      15370.445      15370.445     -1537.7235    
+         2  -1537.7235      6.511733       6.511733       6.511733       15370.445      15370.445      15370.445      15370.445     -1537.7235    
+Loop time of 0.049135 on 1 procs for 2 steps with 12 atoms
 
-98.6% CPU use with 1 MPI tasks x 1 OpenMP threads
+127.2% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -4543.59816191847  -5164.30156692539  -5164.30155693405
-  Force two-norm initial, final = 767.57696 0.060985817
-  Force max component initial, final = 123.18844 0.013526613
-  Final line search alpha, max atom move = 1.9073486e-06 2.5799966e-08
-  Iterations, force evaluations = 45 175
+     -1537.72351121928  -1537.72351121929  -1537.72351121929
+  Force two-norm initial, final = 8.6491835e-13 7.6919856e-08
+  Force max component initial, final = 4.395373e-13 2.496769e-08
+  Final line search alpha, max atom move = 0.5 1.2483845e-08
+  Iterations, force evaluations = 2 4
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 3.4408     | 3.4408     | 3.4408     |   0.0 | 95.67
+Pair    | 0.046995   | 0.046995   | 0.046995   |   0.0 | 95.64
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0.002337   | 0.002337   | 0.002337   |   0.0 |  0.06
-Output  | 0.002336   | 0.002336   | 0.002336   |   0.0 |  0.06
-Modify  | 0.14954    | 0.14954    | 0.14954    |   0.0 |  4.16
-Other   |            | 0.001458   |            |       |  0.04
+Comm    | 8.8e-05    | 8.8e-05    | 8.8e-05    |   0.0 |  0.18
+Output  | 0.000166   | 0.000166   | 0.000166   |   0.0 |  0.34
+Modify  | 0.000636   | 0.000636   | 0.000636   |   0.0 |  1.29
+Other   |            | 0.00125    |            |       |  2.54
 
-Nlocal:             48 ave          48 max          48 min
+Nlocal:             12 ave          12 max          12 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           2347 ave        2347 max        2347 min
+Nghost:           1352 ave        1352 max        1352 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          21969 ave       21969 max       21969 min
+Neighs:           3558 ave        3558 max        3558 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 21969
-Ave neighs/atom = 457.6875
+Total # of neighbors = 3558
+Ave neighs/atom = 296.5
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -167,31 +164,31 @@ variable conv equal 0.0433641
 
 # Calculate the energy per Cerium atom in eV
 variable energy_eV equal ${teng}*${conv} #eV/atom
-variable energy_eV equal -5164.30155693405*${conv} 
-variable energy_eV equal -5164.30155693405*0.0433641 
+variable energy_eV equal -1537.72351121929*${conv} 
+variable energy_eV equal -1537.72351121929*0.0433641 
 
 # Calculate the energy per Cerium atom
 variable energy_eV_per_CeO2 equal ${energy_eV}/${nCe}
-variable energy_eV_per_CeO2 equal -223.945289145044/${nCe}
-variable energy_eV_per_CeO2 equal -223.945289145044/16
+variable energy_eV_per_CeO2 equal -66.6819961128644/${nCe}
+variable energy_eV_per_CeO2 equal -66.6819961128644/4
 
 # Print the results
 print "Total energy (kcal/mol) = ${teng};"
-Total energy (kcal/mol) = -5164.30155693405;
+Total energy (kcal/mol) = -1537.72351121929;
 print "Number of atoms = ${natoms};"
-Number of atoms = 48;
+Number of atoms = 12;
 print "Lattice constant a_0 (Angstroms) = ${a0};"
-Lattice constant a_0 (Angstroms) = 10.156;
+Lattice constant a_0 (Angstroms) = 6.51173295;
 print "Lattice constant c_0 (Angstroms) = ${c0};"
-Lattice constant c_0 (Angstroms) = 7.134;
+Lattice constant c_0 (Angstroms) = 6.51173295;
 print "Cohesive energy (eV) = ${ecoh};"
-Cohesive energy (eV) = -107.589615769459;
+Cohesive energy (eV) = -128.143625934941;
 print "Volume = ${v_vol}"
-Volume = 735.831693024
+Volume = 276.114837438939
 print "Energy (eV) = ${energy_eV}"
-Energy (eV) = -223.945289145044
+Energy (eV) = -66.6819961128644
 print "Energy per Ceriumoxide atom (eV) = ${energy_eV_per_CeO2}"
-Energy per Ceriumoxide atom (eV) = -13.9965805715653
+Energy per Ceriumoxide atom (eV) = -16.6704990282161
 print "All done!"
 All done!
-Total wall time: 0:00:03
+Total wall time: 0:00:00
