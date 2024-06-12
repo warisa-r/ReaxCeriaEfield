@@ -9,7 +9,7 @@ atom_style charge
 atom_modify map array
 
 # ---------- create atoms ------------------------------------
-read_data geometry_file/110slab.lmp
+read_data geometry_file/110supercell.lmp
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
