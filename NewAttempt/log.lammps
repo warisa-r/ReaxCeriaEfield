@@ -19,8 +19,23 @@ Reading data file ...
   12 atoms
   read_data CPU = 0.000 seconds
 
-# Define dimensions of the supercell
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.46745
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.9349 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.9349 0.0 10.9349 0.0 ${double_xhi} units box
 region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
 replicate 2 2 2
@@ -81,7 +96,7 @@ Your simulation uses code contributions which should be cited:
 CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
 
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
@@ -103,9 +118,9 @@ Per MPI rank memory allocation (min/avg/max) = 44.22 | 44.22 | 44.22 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
          0   0             -13626.913      0             -13626.913      921678.65    
          1   0             -13626.913      0             -13626.913      921678.65    
-Loop time of 0.0563333 on 1 procs for 1 steps with 96 atoms
+Loop time of 0.0352127 on 1 procs for 1 steps with 96 atoms
 
-92.4% CPU use with 1 MPI tasks x no OpenMP threads
+92.2% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
@@ -119,12 +134,12 @@ Minimization stats:
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.053853   | 0.053853   | 0.053853   |   0.0 | 95.60
+Pair    | 0.033638   | 0.033638   | 0.033638   |   0.0 | 95.53
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.5751e-05 | 2.5751e-05 | 2.5751e-05 |   0.0 |  0.05
+Comm    | 1.7501e-05 | 1.7501e-05 | 1.7501e-05 |   0.0 |  0.05
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0022495  | 0.0022495  | 0.0022495  |   0.0 |  3.99
-Other   |            | 0.000205   |            |       |  0.36
+Modify  | 0.0014191  | 0.0014191  | 0.0014191  |   0.0 |  4.03
+Other   |            | 0.0001382  |            |       |  0.39
 
 Nlocal:             96 ave          96 max          96 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -139,4 +154,3910 @@ Neighbor list builds = 0
 Dangerous builds = 0
 
 thermo          100
-Total wall time: 0:00:00
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_0.95.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.1940775 5.1940775 5.1940775)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.1940775
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.388155 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.388155 0.0 10.388155 0.0 ${double_xhi} units box
+region supercell block 0.0 10.388155 0.0 10.388155 0.0 10.388155 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (10.388155 10.388155 10.388155)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 64.5 | 64.5 | 64.5 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -9651.5106      0             -9651.5106      2408063.5    
+         1   0             -9651.5106      0             -9651.5106      2408063.5    
+Loop time of 0.0454612 on 1 procs for 1 steps with 96 atoms
+
+92.8% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -9651.51056246266  -9651.51056246266  -9651.51056246251
+  Force two-norm initial, final = 6.9660994e-11 9.9704588e-05
+  Force max component initial, final = 1.3571366e-11 1.5274398e-05
+  Final line search alpha, max atom move = 1 1.5274398e-05
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.043749   | 0.043749   | 0.043749   |   0.0 | 96.23
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 2.325e-05  | 2.325e-05  | 2.325e-05  |   0.0 |  0.05
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0015598  | 0.0015598  | 0.0015598  |   0.0 |  3.43
+Other   |            | 0.0001293  |            |       |  0.28
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           2297 ave        2297 max        2297 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          25176 ave       25176 max       25176 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 25176
+Ave neighs/atom = 262.25
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_0.96.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.248752 5.248752 5.248752)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.248752
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.497504 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.497504 0.0 10.497504 0.0 ${double_xhi} units box
+region supercell block 0.0 10.497504 0.0 10.497504 0.0 10.497504 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (10.497504 10.497504 10.497504)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 64.5 | 64.5 | 64.5 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -10748.41       0             -10748.41       1993043.6    
+         1   0             -10748.41       0             -10748.41       1993043.6    
+Loop time of 0.0441513 on 1 procs for 1 steps with 96 atoms
+
+93.5% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -10748.4102632757  -10748.4102632757   -10748.410263276
+  Force two-norm initial, final = 4.5283784e-11 4.1107069e-05
+  Force max component initial, final = 1.0359713e-11 5.9205862e-06
+  Final line search alpha, max atom move = 1 5.9205862e-06
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.042348   | 0.042348   | 0.042348   |   0.0 | 95.92
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 2.2791e-05 | 2.2791e-05 | 2.2791e-05 |   0.0 |  0.05
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0015957  | 0.0015957  | 0.0015957  |   0.0 |  3.61
+Other   |            | 0.0001848  |            |       |  0.42
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           2297 ave        2297 max        2297 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          25176 ave       25176 max       25176 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 25176
+Ave neighs/atom = 262.25
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_0.97.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.3034265 5.3034265 5.3034265)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.3034265
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.606853 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.606853 0.0 10.606853 0.0 ${double_xhi} units box
+region supercell block 0.0 10.606853 0.0 10.606853 0.0 10.606853 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (10.606853 10.606853 10.606853)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 64.48 | 64.48 | 64.48 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -11670.491      0             -11670.491      1646955.3    
+         1   0             -11670.491      0             -11670.491      1646955.3    
+Loop time of 0.0447605 on 1 procs for 1 steps with 96 atoms
+
+89.2% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -11670.4911912294  -11670.4911912294  -11670.4911912294
+  Force two-norm initial, final = 1.5121656e-11 2.3504021e-05
+  Force max component initial, final = 2.692957e-12 3.0732856e-06
+  Final line search alpha, max atom move = 1 3.0732856e-06
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.043018   | 0.043018   | 0.043018   |   0.0 | 96.11
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 2.3083e-05 | 2.3083e-05 | 2.3083e-05 |   0.0 |  0.05
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0015927  | 0.0015927  | 0.0015927  |   0.0 |  3.56
+Other   |            | 0.000127   |            |       |  0.28
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           2297 ave        2297 max        2297 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          23736 ave       23736 max       23736 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 23736
+Ave neighs/atom = 247.25
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_0.98.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.358101 5.358101 5.358101)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.358101
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.716202 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.716202 0.0 10.716202 0.0 ${double_xhi} units box
+region supercell block 0.0 10.716202 0.0 10.716202 0.0 10.716202 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (10.716202 10.716202 10.716202)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 64.44 | 64.44 | 64.44 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -12440.034      0             -12440.034      1360003.2    
+         1   0             -12440.034      0             -12440.034      1360003.2    
+Loop time of 0.0435237 on 1 procs for 1 steps with 96 atoms
+
+94.7% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -12440.0340748432  -12440.0340748432  -12440.0340748432
+  Force two-norm initial, final = 2.7770087e-11 1.8280008e-05
+  Force max component initial, final = 3.6379788e-12 2.5336919e-06
+  Final line search alpha, max atom move = 1 2.5336919e-06
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.042026   | 0.042026   | 0.042026   |   0.0 | 96.56
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 2.2125e-05 | 2.2125e-05 | 2.2125e-05 |   0.0 |  0.05
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0013485  | 0.0013485  | 0.0013485  |   0.0 |  3.10
+Other   |            | 0.0001273  |            |       |  0.29
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           2297 ave        2297 max        2297 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          20832 ave       20832 max       20832 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 20832
+Ave neighs/atom = 217
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_0.99.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.4127755 5.4127755 5.4127755)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.4127755
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.825551 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.825551 0.0 10.825551 0.0 ${double_xhi} units box
+region supercell block 0.0 10.825551 0.0 10.825551 0.0 10.825551 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (10.825551 10.825551 10.825551)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 64.44 | 64.44 | 64.44 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -13087.539      0             -13087.539      1121251.2    
+         1   0             -13087.539      0             -13087.539      1121251.2    
+Loop time of 0.0439745 on 1 procs for 1 steps with 96 atoms
+
+94.4% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -13087.5391052035  -13087.5391052035  -13087.5391052036
+  Force two-norm initial, final = 1.2712312e-11 1.585316e-05
+  Force max component initial, final = 2.6535441e-12 2.2668154e-06
+  Final line search alpha, max atom move = 1 2.2668154e-06
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.042457   | 0.042457   | 0.042457   |   0.0 | 96.55
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 2.2291e-05 | 2.2291e-05 | 2.2291e-05 |   0.0 |  0.05
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0013498  | 0.0013498  | 0.0013498  |   0.0 |  3.07
+Other   |            | 0.0001454  |            |       |  0.33
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           2297 ave        2297 max        2297 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          20832 ave       20832 max       20832 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 20832
+Ave neighs/atom = 217
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.00.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.46745 5.46745 5.46745)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.46745
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.9349 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 10.9349 0.0 10.9349 0.0 ${double_xhi} units box
+region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (10.9349 10.9349 10.9349)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 44.22 | 44.22 | 44.22 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -13626.913      0             -13626.913      921678.65    
+         1   0             -13626.913      0             -13626.913      921678.65    
+Loop time of 0.0407078 on 1 procs for 1 steps with 96 atoms
+
+82.4% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -13626.9133696668  -13626.9133696668  -13626.9133696669
+  Force two-norm initial, final = 1.5333721e-11 1.6359039e-05
+  Force max component initial, final = 2.0605739e-12 1.6749089e-06
+  Final line search alpha, max atom move = 1 1.6749089e-06
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.038877   | 0.038877   | 0.038877   |   0.0 | 95.50
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 2.7708e-05 | 2.7708e-05 | 2.7708e-05 |   0.0 |  0.07
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0016604  | 0.0016604  | 0.0016604  |   0.0 |  4.08
+Other   |            | 0.0001423  |            |       |  0.35
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          20832 ave       20832 max       20832 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 20832
+Ave neighs/atom = 217
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.01.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.5221245 5.5221245 5.5221245)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.5221245
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.044249 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.044249 0.0 11.044249 0.0 ${double_xhi} units box
+region supercell block 0.0 11.044249 0.0 11.044249 0.0 11.044249 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (11.044249 11.044249 11.044249)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 44.21 | 44.21 | 44.21 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -14074.399      0             -14074.399      753089.84    
+         1   0             -14074.399      0             -14074.399      753089.84    
+Loop time of 0.0343112 on 1 procs for 1 steps with 96 atoms
+
+93.5% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -14074.3992700197  -14074.3992700197  -14074.3992700199
+  Force two-norm initial, final = 1.1175828e-11 1.4892182e-06
+  Force max component initial, final = 1.1191048e-12 1.9770442e-07
+  Final line search alpha, max atom move = 1 1.9770442e-07
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.032778   | 0.032778   | 0.032778   |   0.0 | 95.53
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.7999e-05 | 1.7999e-05 | 1.7999e-05 |   0.0 |  0.05
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0013854  | 0.0013854  | 0.0013854  |   0.0 |  4.04
+Other   |            | 0.0001294  |            |       |  0.38
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          20112 ave       20112 max       20112 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 20112
+Ave neighs/atom = 209.5
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.02.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.576799 5.576799 5.576799)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.576799
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.153598 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.153598 0.0 11.153598 0.0 ${double_xhi} units box
+region supercell block 0.0 11.153598 0.0 11.153598 0.0 11.153598 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (11.153598 11.153598 11.153598)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 44.21 | 44.21 | 44.21 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -14441.021      0             -14441.021      609032.85    
+         1   0             -14441.021      0             -14441.021      609032.85    
+Loop time of 0.0343907 on 1 procs for 1 steps with 96 atoms
+
+92.4% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -14441.0214284352  -14441.0214284352   -14441.021428435
+  Force two-norm initial, final = 1.4383995e-11 5.8445663e-06
+  Force max component initial, final = 2.0605739e-12 8.1231872e-07
+  Final line search alpha, max atom move = 1 8.1231872e-07
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.032935   | 0.032935   | 0.032935   |   0.0 | 95.77
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.9333e-05 | 1.9333e-05 | 1.9333e-05 |   0.0 |  0.06
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0012938  | 0.0012938  | 0.0012938  |   0.0 |  3.76
+Other   |            | 0.0001421  |            |       |  0.41
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          20112 ave       20112 max       20112 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 20112
+Ave neighs/atom = 209.5
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.03.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.6314735 5.6314735 5.6314735)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.6314735
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.262947 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.262947 0.0 11.262947 0.0 ${double_xhi} units box
+region supercell block 0.0 11.262947 0.0 11.262947 0.0 11.262947 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (11.262947 11.262947 11.262947)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 44.21 | 44.21 | 44.21 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -14737.604      0             -14737.604      484251.65    
+         1   0             -14737.604      0             -14737.604      484251.65    
+Loop time of 0.0346891 on 1 procs for 1 steps with 96 atoms
+
+92.5% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -14737.6035905642  -14737.6035905642  -14737.6035905641
+  Force two-norm initial, final = 8.0651639e-12 2.1189686e-06
+  Force max component initial, final = 1.6452581e-12 3.1638841e-07
+  Final line search alpha, max atom move = 1 3.1638841e-07
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.033033   | 0.033033   | 0.033033   |   0.0 | 95.22
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 3.2501e-05 | 3.2501e-05 | 3.2501e-05 |   0.0 |  0.09
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0014024  | 0.0014024  | 0.0014024  |   0.0 |  4.04
+Other   |            | 0.0002216  |            |       |  0.64
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          20112 ave       20112 max       20112 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 20112
+Ave neighs/atom = 209.5
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.04.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.686148 5.686148 5.686148)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.686148
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.372296 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.372296 0.0 11.372296 0.0 ${double_xhi} units box
+region supercell block 0.0 11.372296 0.0 11.372296 0.0 11.372296 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (11.372296 11.372296 11.372296)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 44.21 | 44.21 | 44.21 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -14971.699      0             -14971.699      374901.72    
+         1   0             -14971.699      0             -14971.699      374901.72    
+Loop time of 0.0329835 on 1 procs for 1 steps with 96 atoms
+
+93.6% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -14971.6989089502  -14971.6989089502  -14971.6989089499
+  Force two-norm initial, final = 9.5610282e-12 4.4181939e-06
+  Force max component initial, final = 1.7542252e-12 7.0125202e-07
+  Final line search alpha, max atom move = 1 7.0125202e-07
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.031436   | 0.031436   | 0.031436   |   0.0 | 95.31
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 2.1e-05    | 2.1e-05    | 2.1e-05    |   0.0 |  0.06
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0014029  | 0.0014029  | 0.0014029  |   0.0 |  4.25
+Other   |            | 0.0001239  |            |       |  0.38
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          20112 ave       20112 max       20112 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 20112
+Ave neighs/atom = 209.5
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.05.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.7408225 5.7408225 5.7408225)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.7408225
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.481645 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.481645 0.0 11.481645 0.0 ${double_xhi} units box
+region supercell block 0.0 11.481645 0.0 11.481645 0.0 11.481645 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (11.481645 11.481645 11.481645)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 44.19 | 44.19 | 44.19 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -15149.94       0             -15149.94       278123.27    
+         1   0             -15149.94       0             -15149.94       278123.27    
+Loop time of 0.026618 on 1 procs for 1 steps with 96 atoms
+
+93.9% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -15149.9401095477  -15149.9401095477  -15149.9401095475
+  Force two-norm initial, final = 1.2806323e-11 3.4179844e-06
+  Force max component initial, final = 2.0889956e-12 4.6812599e-07
+  Final line search alpha, max atom move = 1 4.6812599e-07
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.025284   | 0.025284   | 0.025284   |   0.0 | 94.99
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.7707e-05 | 1.7707e-05 | 1.7707e-05 |   0.0 |  0.07
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0011967  | 0.0011967  | 0.0011967  |   0.0 |  4.50
+Other   |            | 0.0001194  |            |       |  0.45
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          18684 ave       18684 max       18684 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 18684
+Ave neighs/atom = 194.625
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.06.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.795497 5.795497 5.795497)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.795497
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.590994 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.590994 0.0 11.590994 0.0 ${double_xhi} units box
+region supercell block 0.0 11.590994 0.0 11.590994 0.0 11.590994 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (11.590994 11.590994 11.590994)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 37.99 | 37.99 | 37.99 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -15274.551      0             -15274.551      193897.83    
+         1   0             -15274.551      0             -15274.551      193897.83    
+Loop time of 0.0217457 on 1 procs for 1 steps with 96 atoms
+
+93.1% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -15274.5510039486  -15274.5510039486  -15274.5510039486
+  Force two-norm initial, final = 6.3271931e-12 3.2471519e-07
+  Force max component initial, final = 1.1471424e-12 7.1609428e-08
+  Final line search alpha, max atom move = 0.5 3.5804714e-08
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.020368   | 0.020368   | 0.020368   |   0.0 | 93.67
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 3.0458e-05 | 3.0458e-05 | 3.0458e-05 |   0.0 |  0.14
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0011298  | 0.0011298  | 0.0011298  |   0.0 |  5.20
+Other   |            | 0.0002172  |            |       |  1.00
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          17259 ave       17259 max       17259 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 17259
+Ave neighs/atom = 179.78125
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.07.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.8501715 5.8501715 5.8501715)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.8501715
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.700343 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.700343 0.0 11.700343 0.0 ${double_xhi} units box
+region supercell block 0.0 11.700343 0.0 11.700343 0.0 11.700343 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (11.700343 11.700343 11.700343)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 37.99 | 37.99 | 37.99 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -15360.928      0             -15360.928      148869.4     
+         1   0             -15360.928      0             -15360.928      148869.4     
+Loop time of 0.0211474 on 1 procs for 1 steps with 96 atoms
+
+92.7% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -15360.9278048594  -15360.9278048594  -15360.9278048594
+  Force two-norm initial, final = 1.0796639e-11 3.4004065e-06
+  Force max component initial, final = 1.7585933e-12 4.8944666e-07
+  Final line search alpha, max atom move = 0.5 2.4472333e-07
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.019898   | 0.019898   | 0.019898   |   0.0 | 94.09
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.7624e-05 | 1.7624e-05 | 1.7624e-05 |   0.0 |  0.08
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0011133  | 0.0011133  | 0.0011133  |   0.0 |  5.26
+Other   |            | 0.0001188  |            |       |  0.56
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          17259 ave       17259 max       17259 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 17259
+Ave neighs/atom = 179.78125
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.08.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.904846 5.904846 5.904846)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.904846
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.809692 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.809692 0.0 11.809692 0.0 ${double_xhi} units box
+region supercell block 0.0 11.809692 0.0 11.809692 0.0 11.809692 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (11.809692 11.809692 11.809692)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 37.99 | 37.99 | 37.99 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -15370.637      0             -15370.637     -220972.48    
+         1   0             -15370.637      0             -15370.637     -220972.48    
+Loop time of 0.0223277 on 1 procs for 1 steps with 96 atoms
+
+94.1% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -15370.6369263194  -15370.6369263194  -15370.6369263192
+  Force two-norm initial, final = 1.9531574e-11 5.5361305e-06
+  Force max component initial, final = 3.8067587e-12 1.0776826e-06
+  Final line search alpha, max atom move = 1 1.0776826e-06
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.021036   | 0.021036   | 0.021036   |   0.0 | 94.21
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.9625e-05 | 1.9625e-05 | 1.9625e-05 |   0.0 |  0.09
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0011398  | 0.0011398  | 0.0011398  |   0.0 |  5.10
+Other   |            | 0.0001326  |            |       |  0.59
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          17259 ave       17259 max       17259 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 17259
+Ave neighs/atom = 179.78125
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.09.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.9595205 5.9595205 5.9595205)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*5.9595205
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.919041 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 11.919041 0.0 11.919041 0.0 ${double_xhi} units box
+region supercell block 0.0 11.919041 0.0 11.919041 0.0 11.919041 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (11.919041 11.919041 11.919041)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 37.99 | 37.99 | 37.99 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -15165.709      0             -15165.709     -293618.29    
+         1   0             -15165.709      0             -15165.709     -293618.29    
+Loop time of 0.015049 on 1 procs for 1 steps with 96 atoms
+
+90.2% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -15165.7090039113  -15165.7090039113  -15165.7090039125
+  Force two-norm initial, final = 1.3701934e-11 1.4376732e-07
+  Force max component initial, final = 3.2943093e-12 3.3076539e-08
+  Final line search alpha, max atom move = 1 3.3076539e-08
+  Iterations, force evaluations = 1 1
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.014107   | 0.014107   | 0.014107   |   0.0 | 93.74
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.0999e-05 | 1.0999e-05 | 1.0999e-05 |   0.0 |  0.07
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.000797   | 0.000797   | 0.000797   |   0.0 |  5.30
+Other   |            | 0.0001343  |            |       |  0.89
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          17259 ave       17259 max       17259 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 17259
+Ave neighs/atom = 179.78125
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.10.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.014195 6.014195 6.014195)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.014195
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.02839 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.02839 0.0 12.02839 0.0 ${double_xhi} units box
+region supercell block 0.0 12.02839 0.0 12.02839 0.0 12.02839 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (12.02839 12.02839 12.02839)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 37.96 | 37.96 | 37.96 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -14946.049      0             -14946.049     -313155.46    
+         1   0             -14946.049      0             -14946.049     -313155.46    
+Loop time of 0.0204643 on 1 procs for 1 steps with 96 atoms
+
+93.6% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -14946.0490845442  -14946.0490845442  -14946.0490845442
+  Force two-norm initial, final = 2.1626915e-11 4.7902594e-06
+  Force max component initial, final = 3.6311253e-12 7.0911874e-07
+  Final line search alpha, max atom move = 0.5 3.5455937e-07
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.019327   | 0.019327   | 0.019327   |   0.0 | 94.44
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.7667e-05 | 1.7667e-05 | 1.7667e-05 |   0.0 |  0.09
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0010057  | 0.0010057  | 0.0010057  |   0.0 |  4.91
+Other   |            | 0.0001143  |            |       |  0.56
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          15171 ave       15171 max       15171 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 15171
+Ave neighs/atom = 158.03125
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.11.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.0688695 6.0688695 6.0688695)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.0688695
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.137739 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.137739 0.0 12.137739 0.0 ${double_xhi} units box
+region supercell block 0.0 12.137739 0.0 12.137739 0.0 12.137739 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (12.137739 12.137739 12.137739)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 37.96 | 37.96 | 37.96 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -14711.681      0             -14711.681     -325221.7     
+         1   0             -14711.681      0             -14711.681     -325221.7     
+Loop time of 0.0166261 on 1 procs for 1 steps with 96 atoms
+
+87.6% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -14711.6810726618  -14711.6810726618  -14711.6810726622
+  Force two-norm initial, final = 1.7656218e-11 1.2330249e-07
+  Force max component initial, final = 3.3217873e-12 2.1454952e-08
+  Final line search alpha, max atom move = 1 2.1454952e-08
+  Iterations, force evaluations = 1 1
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.015726   | 0.015726   | 0.015726   |   0.0 | 94.58
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.1833e-05 | 1.1833e-05 | 1.1833e-05 |   0.0 |  0.07
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.00077192 | 0.00077192 | 0.00077192 |   0.0 |  4.64
+Other   |            | 0.0001166  |            |       |  0.70
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          15171 ave       15171 max       15171 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 15171
+Ave neighs/atom = 158.03125
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.12.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.123544 6.123544 6.123544)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.123544
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.247088 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.247088 0.0 12.247088 0.0 ${double_xhi} units box
+region supercell block 0.0 12.247088 0.0 12.247088 0.0 12.247088 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (12.247088 12.247088 12.247088)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 37.96 | 37.96 | 37.96 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -14470.389      0             -14470.389     -328386.06    
+         1   0             -14470.389      0             -14470.389     -328386.06    
+Loop time of 0.0222462 on 1 procs for 1 steps with 96 atoms
+
+94.1% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -14470.3891110455  -14470.3891110455  -14470.3891110455
+  Force two-norm initial, final = 1.6406326e-11 1.6277421e-06
+  Force max component initial, final = 3.0411229e-12 3.6621637e-07
+  Final line search alpha, max atom move = 0.5 1.8310818e-07
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.02102    | 0.02102    | 0.02102    |   0.0 | 94.49
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 2.0248e-05 | 2.0248e-05 | 2.0248e-05 |   0.0 |  0.09
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0010909  | 0.0010909  | 0.0010909  |   0.0 |  4.90
+Other   |            | 0.000115   |            |       |  0.52
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          15171 ave       15171 max       15171 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 15171
+Ave neighs/atom = 158.03125
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.13.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.1782185 6.1782185 6.1782185)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.1782185
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.356437 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.356437 0.0 12.356437 0.0 ${double_xhi} units box
+region supercell block 0.0 12.356437 0.0 12.356437 0.0 12.356437 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (12.356437 12.356437 12.356437)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 37.96 | 37.96 | 37.96 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -14227.717      0             -14227.717     -323829.93    
+         1   0             -14227.717      0             -14227.717     -323829.93    
+Loop time of 0.0211713 on 1 procs for 1 steps with 96 atoms
+
+92.4% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -14227.7166825294  -14227.7166825294  -14227.7166825293
+  Force two-norm initial, final = 1.487366e-11 1.0356542e-06
+  Force max component initial, final = 4.355627e-12 1.8520775e-07
+  Final line search alpha, max atom move = 0.5 9.2603877e-08
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.019983   | 0.019983   | 0.019983   |   0.0 | 94.39
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.9209e-05 | 1.9209e-05 | 1.9209e-05 |   0.0 |  0.09
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0010585  | 0.0010585  | 0.0010585  |   0.0 |  5.00
+Other   |            | 0.0001103  |            |       |  0.52
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          15171 ave       15171 max       15171 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 15171
+Ave neighs/atom = 158.03125
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.14.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.232893 6.232893 6.232893)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.232893
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.465786 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.465786 0.0 12.465786 0.0 ${double_xhi} units box
+region supercell block 0.0 12.465786 0.0 12.465786 0.0 12.465786 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (12.465786 12.465786 12.465786)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 37.96 | 37.96 | 37.96 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -13988.648      0             -13988.648     -312840.73    
+         1   0             -13988.648      0             -13988.648     -312840.73    
+Loop time of 0.0226978 on 1 procs for 1 steps with 96 atoms
+
+90.8% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+      -13988.648339535   -13988.648339535   -13988.648339535
+  Force two-norm initial, final = 8.5860658e-12 6.6859738e-08
+  Force max component initial, final = 1.1510792e-12 1.1424369e-08
+  Final line search alpha, max atom move = 0.5 5.7121846e-09
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.021487   | 0.021487   | 0.021487   |   0.0 | 94.66
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.825e-05  | 1.825e-05  | 1.825e-05  |   0.0 |  0.08
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0010532  | 0.0010532  | 0.0010532  |   0.0 |  4.64
+Other   |            | 0.0001396  |            |       |  0.62
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          15171 ave       15171 max       15171 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 15171
+Ave neighs/atom = 158.03125
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.15.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.2875675 6.2875675 6.2875675)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.2875675
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.575135 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.575135 0.0 12.575135 0.0 ${double_xhi} units box
+region supercell block 0.0 12.575135 0.0 12.575135 0.0 12.575135 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (12.575135 12.575135 12.575135)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 37.96 | 37.96 | 37.96 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -13757.486      0             -13757.486     -296812.56    
+         1   0             -13757.486      0             -13757.486     -296812.56    
+Loop time of 0.0237474 on 1 procs for 1 steps with 96 atoms
+
+87.6% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -13757.4862161203  -13757.4862161203  -13757.4862161203
+  Force two-norm initial, final = 6.5699316e-12 1.1124144e-07
+  Force max component initial, final = 1.6013857e-12 2.2758208e-08
+  Final line search alpha, max atom move = 1 2.2758208e-08
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.022557   | 0.022557   | 0.022557   |   0.0 | 94.99
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.8916e-05 | 1.8916e-05 | 1.8916e-05 |   0.0 |  0.08
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.0010439  | 0.0010439  | 0.0010439  |   0.0 |  4.40
+Other   |            | 0.0001272  |            |       |  0.54
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1569 ave        1569 max        1569 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          15171 ave       15171 max       15171 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 15171
+Ave neighs/atom = 158.03125
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.16.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.342242 6.342242 6.342242)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.342242
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.684484 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.684484 0.0 12.684484 0.0 ${double_xhi} units box
+region supercell block 0.0 12.684484 0.0 12.684484 0.0 12.684484 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (12.684484 12.684484 12.684484)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 32.2 | 32.2 | 32.2 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -13537.639      0             -13537.639     -277520.85    
+         1   0             -13537.639      0             -13537.639     -277520.85    
+Loop time of 0.023651 on 1 procs for 1 steps with 96 atoms
+
+89.1% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -13537.6389495929  -13537.6389495929  -13537.6389495929
+  Force two-norm initial, final = 1.4513024e-11 4.6891562e-07
+  Force max component initial, final = 2.0730084e-12 7.3041385e-08
+  Final line search alpha, max atom move = 0.5 3.6520692e-08
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.022515   | 0.022515   | 0.022515   |   0.0 | 95.20
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 2.1916e-05 | 2.1916e-05 | 2.1916e-05 |   0.0 |  0.09
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.00095054 | 0.00095054 | 0.00095054 |   0.0 |  4.02
+Other   |            | 0.0001637  |            |       |  0.69
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1269 ave        1269 max        1269 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          13443 ave       13443 max       13443 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 13443
+Ave neighs/atom = 140.03125
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.17.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.3969165 6.3969165 6.3969165)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.3969165
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.793833 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.793833 0.0 12.793833 0.0 ${double_xhi} units box
+region supercell block 0.0 12.793833 0.0 12.793833 0.0 12.793833 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (12.793833 12.793833 12.793833)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 32.2 | 32.2 | 32.2 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -13331.256      0             -13331.256     -256823.96    
+         1   0             -13331.256      0             -13331.256     -256823.96    
+Loop time of 0.0211383 on 1 procs for 1 steps with 96 atoms
+
+89.2% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -13331.2557538288  -13331.2557538288  -13331.2557538288
+  Force two-norm initial, final = 1.1890417e-11 4.6367379e-07
+  Force max component initial, final = 2.1177213e-12 9.7420634e-08
+  Final line search alpha, max atom move = 0.5 4.8710317e-08
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.019892   | 0.019892   | 0.019892   |   0.0 | 94.10
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 2.3374e-05 | 2.3374e-05 | 2.3374e-05 |   0.0 |  0.11
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.001099   | 0.001099   | 0.001099   |   0.0 |  5.20
+Other   |            | 0.0001245  |            |       |  0.59
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1269 ave        1269 max        1269 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          13443 ave       13443 max       13443 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 13443
+Ave neighs/atom = 140.03125
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.18.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.451591 6.451591 6.451591)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.451591
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.903182 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 12.903182 0.0 12.903182 0.0 ${double_xhi} units box
+region supercell block 0.0 12.903182 0.0 12.903182 0.0 12.903182 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (12.903182 12.903182 12.903182)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 32.16 | 32.16 | 32.16 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -13139.046      0             -13139.046     -237517.3     
+         1   0             -13139.046      0             -13139.046     -237517.3     
+Loop time of 0.0151841 on 1 procs for 1 steps with 96 atoms
+
+86.4% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -13139.0456535753  -13139.0456535753  -13139.0456535762
+  Force two-norm initial, final = 4.2423295e-12 1.4351273e-08
+  Force max component initial, final = 8.1001872e-13 2.6030875e-09
+  Final line search alpha, max atom move = 1 2.6030875e-09
+  Iterations, force evaluations = 1 1
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.014389   | 0.014389   | 0.014389   |   0.0 | 94.76
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.3375e-05 | 1.3375e-05 | 1.3375e-05 |   0.0 |  0.09
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.00055892 | 0.00055892 | 0.00055892 |   0.0 |  3.68
+Other   |            | 0.0002231  |            |       |  1.47
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1269 ave        1269 max        1269 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          10689 ave       10689 max       10689 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 10689
+Ave neighs/atom = 111.34375
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.19.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.5062655 6.5062655 6.5062655)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.5062655
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.012531 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.012531 0.0 13.012531 0.0 ${double_xhi} units box
+region supercell block 0.0 13.012531 0.0 13.012531 0.0 13.012531 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (13.012531 13.012531 13.012531)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 32.16 | 32.16 | 32.16 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -12957.976      0             -12957.976     -223539.59    
+         1   0             -12957.976      0             -12957.976     -223539.59    
+Loop time of 0.0195922 on 1 procs for 1 steps with 96 atoms
+
+90.7% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -12957.9757626005  -12957.9757626005  -12957.9757626006
+  Force two-norm initial, final = 2.0891845e-11 4.8319769e-07
+  Force max component initial, final = 4.1029333e-12 7.7432646e-08
+  Final line search alpha, max atom move = 0.5 3.8716323e-08
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.01868    | 0.01868    | 0.01868    |   0.0 | 95.34
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.6209e-05 | 1.6209e-05 | 1.6209e-05 |   0.0 |  0.08
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.00077675 | 0.00077675 | 0.00077675 |   0.0 |  3.96
+Other   |            | 0.0001195  |            |       |  0.61
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1269 ave        1269 max        1269 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          10689 ave       10689 max       10689 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 10689
+Ave neighs/atom = 111.34375
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.20.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.56094 6.56094 6.56094)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.56094
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.12188 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.12188 0.0 13.12188 0.0 ${double_xhi} units box
+region supercell block 0.0 13.12188 0.0 13.12188 0.0 13.12188 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (13.12188 13.12188 13.12188)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 32.16 | 32.16 | 32.16 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -12783.803      0             -12783.803     -216812.19    
+         1   0             -12783.803      0             -12783.803     -216812.19    
+Loop time of 0.0210859 on 1 procs for 1 steps with 96 atoms
+
+90.9% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -12783.8031152672  -12783.8031152672  -12783.8031152671
+  Force two-norm initial, final = 2.1368153e-11 3.402891e-07
+  Force max component initial, final = 4.4195758e-12 7.4930366e-08
+  Final line search alpha, max atom move = 0.5 3.7465183e-08
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.020154   | 0.020154   | 0.020154   |   0.0 | 95.58
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 2.0375e-05 | 2.0375e-05 | 2.0375e-05 |   0.0 |  0.10
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.00078837 | 0.00078837 | 0.00078837 |   0.0 |  3.74
+Other   |            | 0.0001231  |            |       |  0.58
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1269 ave        1269 max        1269 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          10689 ave       10689 max       10689 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 10689
+Ave neighs/atom = 111.34375
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.21.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.6156145 6.6156145 6.6156145)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.6156145
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.231229 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.231229 0.0 13.231229 0.0 ${double_xhi} units box
+region supercell block 0.0 13.231229 0.0 13.231229 0.0 13.231229 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (13.231229 13.231229 13.231229)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 32.16 | 32.16 | 32.16 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -12610.297      0             -12610.297     -218066.3     
+         1   0             -12610.297      0             -12610.297     -218066.3     
+Loop time of 0.0148686 on 1 procs for 1 steps with 96 atoms
+
+86.7% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -12610.2967814732  -12610.2967814732  -12610.2967814736
+  Force two-norm initial, final = 1.9880127e-11 3.0571259e-08
+  Force max component initial, final = 4.6049375e-12 5.7177658e-09
+  Final line search alpha, max atom move = 1 5.7177658e-09
+  Iterations, force evaluations = 1 1
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.014178   | 0.014178   | 0.014178   |   0.0 | 95.36
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.1459e-05 | 1.1459e-05 | 1.1459e-05 |   0.0 |  0.08
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.00055696 | 0.00055696 | 0.00055696 |   0.0 |  3.75
+Other   |            | 0.000122   |            |       |  0.82
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1269 ave        1269 max        1269 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          10689 ave       10689 max       10689 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 10689
+Ave neighs/atom = 111.34375
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.22.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.670289 6.670289 6.670289)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.670289
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.340578 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.340578 0.0 13.340578 0.0 ${double_xhi} units box
+region supercell block 0.0 13.340578 0.0 13.340578 0.0 13.340578 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (13.340578 13.340578 13.340578)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 32.16 | 32.16 | 32.16 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -12430.933      0             -12430.933     -226589.34    
+         1   0             -12430.933      0             -12430.933     -226589.34    
+Loop time of 0.020785 on 1 procs for 1 steps with 96 atoms
+
+89.1% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -12430.9333659973  -12430.9333659973  -12430.9333659973
+  Force two-norm initial, final = 2.1445356e-11 4.1572593e-07
+  Force max component initial, final = 5.2295945e-12 7.7905767e-08
+  Final line search alpha, max atom move = 0.5 3.8952884e-08
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.019792   | 0.019792   | 0.019792   |   0.0 | 95.22
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.8833e-05 | 1.8833e-05 | 1.8833e-05 |   0.0 |  0.09
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.00084542 | 0.00084542 | 0.00084542 |   0.0 |  4.07
+Other   |            | 0.0001283  |            |       |  0.62
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1269 ave        1269 max        1269 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          10689 ave       10689 max       10689 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 10689
+Ave neighs/atom = 111.34375
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.23.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.7249635 6.7249635 6.7249635)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.7249635
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.449927 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.449927 0.0 13.449927 0.0 ${double_xhi} units box
+region supercell block 0.0 13.449927 0.0 13.449927 0.0 13.449927 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (13.449927 13.449927 13.449927)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 32.15 | 32.15 | 32.15 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -12239.436      0             -12239.436     -240805.01    
+         1   0             -12239.436      0             -12239.436     -240805.01    
+Loop time of 0.0247836 on 1 procs for 1 steps with 96 atoms
+
+82.4% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+     -12239.4357834673  -12239.4357834673  -12239.4357834673
+  Force two-norm initial, final = 1.2091654e-11 1.5187225e-07
+  Force max component initial, final = 2.5615066e-12 3.3265758e-08
+  Final line search alpha, max atom move = 0.5 1.6632879e-08
+  Iterations, force evaluations = 1 2
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.023062   | 0.023062   | 0.023062   |   0.0 | 93.05
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.9626e-05 | 1.9626e-05 | 1.9626e-05 |   0.0 |  0.08
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.00090996 | 0.00090996 | 0.00090996 |   0.0 |  3.67
+Other   |            | 0.0007918  |            |       |  3.19
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1269 ave        1269 max        1269 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           9681 ave        9681 max        9681 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 9681
+Ave neighs/atom = 100.84375
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.24.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.779638 6.779638 6.779638)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.779638
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.559276 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.559276 0.0 13.559276 0.0 ${double_xhi} units box
+region supercell block 0.0 13.559276 0.0 13.559276 0.0 13.559276 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (13.559276 13.559276 13.559276)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 32.15 | 32.15 | 32.15 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -12033.593      0             -12033.593     -255078.29    
+         1   0             -12033.593      0             -12033.593     -255078.29    
+Loop time of 0.0154162 on 1 procs for 1 steps with 96 atoms
+
+89.4% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -12033.5931322554  -12033.5931322554  -12033.5931322556
+  Force two-norm initial, final = 2.0913819e-12 4.9500801e-09
+  Force max component initial, final = 3.2862602e-13 7.9906165e-10
+  Final line search alpha, max atom move = 1 7.9906165e-10
+  Iterations, force evaluations = 1 1
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.014766   | 0.014766   | 0.014766   |   0.0 | 95.79
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.3375e-05 | 1.3375e-05 | 1.3375e-05 |   0.0 |  0.09
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.00051196 | 0.00051196 | 0.00051196 |   0.0 |  3.32
+Other   |            | 0.0001244  |            |       |  0.81
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1269 ave        1269 max        1269 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           9681 ave        9681 max        9681 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 9681
+Ave neighs/atom = 100.84375
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+clear
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data_1.25.CeO2
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.8343125 6.8343125 6.8343125)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.000 seconds
+
+# Access and print the value of xhi
+variable xhi equal "xhi"
+#print "xhi = ${xhi}"
+
+# Calculate 2*xhi
+variable double_xhi equal 2*${xhi}
+variable double_xhi equal 2*6.8343125
+#print "2 * xhi = ${double_xhi}"
+
+# Define dimensions of the supercell using 2*xhi
+region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.668625 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 13.668625 0.0 13.668625 0.0 ${double_xhi} units box
+region supercell block 0.0 13.668625 0.0 13.668625 0.0 13.668625 units box
+
+# Define dimensions of the supercell
+#region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+Replication is creating a 2x2x2 = 8 times larger system...
+  orthogonal box = (0 0 0) to (13.668625 13.668625 13.668625)
+  1 by 1 by 1 MPI processor grid
+  96 atoms
+  replicate CPU = 0.000 seconds
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 3 3 3
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 32.15 | 32.15 | 32.15 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -11815.072      0             -11815.072     -262670.7     
+         1   0             -11815.072      0             -11815.072     -262670.7     
+Loop time of 0.0208703 on 1 procs for 1 steps with 96 atoms
+
+69.8% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -11815.0722528155  -11815.0722528155   -11815.072252816
+  Force two-norm initial, final = 2.8213491e-11 4.626235e-08
+  Force max component initial, final = 5.087486e-12 8.3504915e-09
+  Final line search alpha, max atom move = 1 8.3504915e-09
+  Iterations, force evaluations = 1 1
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.02021    | 0.02021    | 0.02021    |   0.0 | 96.83
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 1.3291e-05 | 1.3291e-05 | 1.3291e-05 |   0.0 |  0.06
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.00051504 | 0.00051504 | 0.00051504 |   0.0 |  2.47
+Other   |            | 0.0001324  |            |       |  0.63
+
+Nlocal:             96 ave          96 max          96 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1269 ave        1269 max        1269 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           9681 ave        9681 max        9681 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 9681
+Ave neighs/atom = 100.84375
+Neighbor list builds = 0
+Dangerous builds = 0
+
+thermo          100
+Total wall time: 0:01:23

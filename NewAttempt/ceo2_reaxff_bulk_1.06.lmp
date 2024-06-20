@@ -10,7 +10,7 @@ boundary p p p
 atom_style charge
 
 #Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
-read_data data.CeO2
+read_data data_1.06.CeO2
 
 # Access and print the value of xhi
 variable xhi equal "xhi"
