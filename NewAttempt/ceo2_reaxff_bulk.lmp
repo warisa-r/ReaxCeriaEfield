@@ -1,0 +1,42 @@
+#ReaxFF for CeO2
+
+#Real units, see LAMMPS documentation
+units real
+
+#Periodic boundary
+boundary p p p
+
+#Specifies that atoms will have a charge
+atom_style charge
+
+#Reads data from file. Formatting of file alligns with examples from LAMMPS github repository
+read_data data.CeO2
+
+# Define dimensions of the supercell
+region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+
+# Create the supercell
+replicate 2 2 2
+
+#Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used. 
+#Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius
+pair_style reaxff NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
+
+neighbor        2.0 bin
+neigh_modify every 10 delay 0 check yes
+
+#Only relevant for MD, not minimization
+#fix             1 all nve
+
+#Allows for charge equilibration
+fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+dump mydmp all atom 1 dump.lammpstrj
+
+# Perform minimization
+min_style       cg
+minimize        1.0e-4 1.0e-6 100 1000
+
+thermo          100

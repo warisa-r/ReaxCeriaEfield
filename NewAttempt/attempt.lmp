@@ -1,0 +1,41 @@
+# LAMMPS input script for CeO2 with ReaxFF
+
+# Initialization
+clear
+units real
+dimension 3
+boundary p p p
+atom_style charge
+
+# Read data file
+read_data ceo2_flourite.lmp
+
+# Define settings
+pair_style reax/c NULL
+pair_coeff * * field.reax Ce O
+
+# Define settings for simulation
+compute peratom all pe/atom
+thermo_style custom step temp pe ke etotal press vol
+
+# Force field settings
+fix 1 all qeq/reax 1 0.0 10.0 1e-6 reax/c
+
+# Simulation parameters
+timestep 1.0  # Adjust as needed based on stability
+thermo 1000   # Output thermo data every 1000 steps
+thermo_modify flush yes
+
+# Output
+dump 1 all custom 1000 ceo2.lammpstrj id type x y z vx vy vz
+
+# Run MD
+run 10000  # Adjust the number of steps as needed
+
+# Calculate and output final lattice constant
+variable vol equal vol
+variable a equal ${vol}^(1.0/3.0)
+print "Final lattice constant (a): ${a}"
+
+# Clean up
+write_data ceo2_final.lmp
