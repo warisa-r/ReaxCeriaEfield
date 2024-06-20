@@ -2,76 +2,44 @@ LAMMPS (2 Aug 2023 - Update 3)
 OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
   using 1 OpenMP thread(s) per MPI task
 Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
-# Find minimum energy fcc configuration
-
-# ---------- Initialize Simulation ---------------------
-clear
-OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
-  using 1 OpenMP thread(s) per MPI task
-Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
-units real
-dimension 3
-boundary p p p
-atom_style charge
-atom_modify map array
-
-# ---------- Create Atoms ---------------------
-# Define supercell parameters
 variable nx equal 2
-variable ny equal 2
-variable nz equal 2
-variable total_cells equal ${nx}*${ny}*${nz}
-variable total_cells equal 2*${ny}*${nz}
-variable total_cells equal 2*2*${nz}
-variable total_cells equal 2*2*2
 
-region box block 0 ${nx} 0 ${ny} 0 ${nz}
-region box block 0 2 0 ${ny} 0 ${nz}
-region box block 0 2 0 2 0 ${nz}
+region box block 0 ${nx} 0 ${nx} 0 ${nx}
+region box block 0 2 0 ${nx} 0 ${nx}
+region box block 0 2 0 2 0 ${nx}
 region box block 0 2 0 2 0 2
 
-# Data from https://materials.springer.com/isp/crystallographic/docs/sd_1923902
-# use atomsk 'ceo2_structure.cif lammps' to convert the file
-read_data C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ceo2_reaxff\geometry_file\rutile_scaled\ceO2_rutile_1.690.lmp
+dimension       3
+boundary        p p p
+
+units           real
+
+atom_style      charge
+read_data       C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ceo2_reaxff\geometry_file\fluorite_scaled\ceO2_fluorite_1.000.lmp
 Reading data file ...
-  orthogonal box = (0 0 0) to (8.58182 8.58182 6.02823)
+  orthogonal box = (0 0 0) to (5.46745 5.46745 5.46745)
   1 by 1 by 1 MPI processor grid
   reading atoms ...
-  6 atoms
+  12 atoms
   read_data CPU = 0.002 seconds
-group Ce type 1
-2 atoms in group Ce
 
-# ---------- Define Interatomic Potential ---------------------
-pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
-pair_coeff * * C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ffield.reax O Ce
-fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
-neighbor 2.0 bin
-neigh_modify every 1 delay 0 check yes
+pair_style      reaxff lmp_control
+pair_coeff      * * C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ffield.reax O Ce
 
-# Increase buffer size for bonds
-comm_modify vel yes
+neighbor        2 bin
+neigh_modify    every 10 delay 0 check no
 
-# ---------- Set Temperature to 0K ---------------------
-velocity all create 0.0 12345 mom yes rot yes
+fix             1 all nve
+fix             2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+fix             3 all temp/berendsen 500.0 500.0 100.0 #Every body seems to be using it
 
-# ---------- Define Settings ---------------------
-compute eng all pe/atom
-compute eatoms all reduce sum c_eng
+timestep        0.25
+thermo_style custom step pe lx ly lz vol press pxx pyy pzz
+thermo 100
 
-# ---------- Add Electric Field ---------------------
-# Apply force to all atoms in the direction of the electric field
-#fix efield all efield 5.0 0.0 0.0 region box
+#dump           1 all atom 30 dump.reax.feoh -1751.4783
 
-# ---------- Run Minimization ---------------------
-reset_timestep 0
-# fix 1 all box/relax iso 1.0 vmax 5
-thermo 10
-thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms
-dump mydmp all custom 1 dump_rutile_1.690.lammpstrj id type x y z
-WARNING: Detected non-ASCII characters in input. Will try to continue by replacing with ASCII equivalents where known. (src/input.cpp:463)
-min_style cg
-minimize 1e-25 1e-25 5000 10000
+run             2000
 
 CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
 
@@ -102,128 +70,71 @@ Your simulation uses code contributions which should be cited:
 
 CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
 
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
-  update: every = 1 steps, delay = 0 steps, check = yes
+  update: every = 10 steps, delay = 0 steps, check = no
   max neighbors/atom: 2000, page size: 100000
   master list distance cutoff = 12
   ghost atom cutoff = 12
-  binsize = 6, bins = 2 2 2
+  binsize = 6, bins = 1 1 1
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
       pair build: half/bin/newtoff/ghost
       stencil: full/ghost/bin/3d
       bin: standard
-  (2) fix qeq/reaxff, perpetual, copy from (1)
+  (2) fix qeq/reax, perpetual, copy from (1)
       attributes: half, newton off
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 12.56 | 12.56 | 12.56 Mbytes
-   Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
-         0  -194.38612      8.58182        8.58182        6.02823       -18581.751     -20017.68      -20017.68      -15709.893     -194.38612    
-        10  -476.15509      8.58182        8.58182        6.02823       -28676.72      -12911.26      -12911.26      -60207.64      -476.15509    
-        20  -669.24294      8.58182        8.58182        6.02823       -5817.6231     -4701.4169     -4701.4169     -8050.0357     -669.24294    
-        30  -702.78153      8.58182        8.58182        6.02823       -22236.348     -32841.018     -32841.018     -1027.0076     -702.78153    
-        40  -761.5897       8.58182        8.58182        6.02823       -17298.05      -25973.56      -25973.56       52.96815      -761.5897     
-        50  -783.21822      8.58182        8.58182        6.02823       -13443.665     -20502.585     -20502.585      674.17303     -783.21822    
-        60  -784.22238      8.58182        8.58182        6.02823       -12515.327     -19226.979     -19226.98       907.97604     -784.22238    
-        70  -784.30759      8.58182        8.58182        6.02823       -13532.051     -20785.625     -20785.405      974.8774      -784.30759    
-        80  -784.70955      8.58182        8.58182        6.02823       -14687.556     -22416.538     -22352.57       706.44162     -784.70955    
-        90  -785.06834      8.58182        8.58182        6.02823       -13769.167     -20866.564     -21579.791      1138.8537     -785.06834    
-       100  -785.88871      8.58182        8.58182        6.02823       -14950.132     -22795.011     -22755.428      700.04221     -785.88871    
-       110  -816.26626      8.58182        8.58182        6.02823       -6495.4371     -8381.9718     -11707.156      602.81647     -816.26626    
-       120  -818.84041      8.58182        8.58182        6.02823       -5311.0659     -5533.8894     -9781.8604     -617.44776     -818.84041    
-       130  -819.72219      8.58182        8.58182        6.02823       -957.8361      -1611.3525     -1501.0878      238.93204     -819.72219    
-       140  -820.90716      8.58182        8.58182        6.02823       -1871.9565     -3112.0025     -3003.1787      499.31165     -820.90716    
-       150  -821.10701      8.58182        8.58182        6.02823       -2566.6604     -2976.6888     -4863.9901      140.69779     -821.10701    
-       160  -821.43368      8.58182        8.58182        6.02823       -2821.0765     -3001.3789     -5560.2129      98.362285     -821.43368    
-       170  -821.46564      8.58182        8.58182        6.02823       -2748.8969     -2694.9368     -5529.5679     -22.18621      -821.46564    
-       180  -821.48004      8.58182        8.58182        6.02823       -2546.6866     -2592.6924     -5199.0781      151.71062     -821.48004    
-       190  -821.54931      8.58182        8.58182        6.02823       -2800.3948     -2490.5431     -5781.7465     -128.8949      -821.54931    
-       200  -821.5633       8.58182        8.58182        6.02823       -2539.6815     -2555.9042     -5208.5055      145.36537     -821.5633     
-       210  -821.62973      8.58182        8.58182        6.02823       -2587.4122     -2534.1356     -5288.5718      60.47086      -821.62973    
-       213  -821.63816      8.58182        8.58182        6.02823       -2454.4183     -2282.813      -5048.9467     -31.495299     -821.63816    
-Loop time of 0.245773 on 1 procs for 213 steps with 6 atoms
+Per MPI rank memory allocation (min/avg/max) = 43.07 | 43.07 | 43.07 Mbytes
+   Step         PotEng           Lx             Ly             Lz           Volume         Press           Pxx            Pyy            Pzz      
+         0  -903.36095      5.46745        5.46745        5.46745        163.43853      1626827.5      1626827.5      1626827.5      1626827.5    
+       100  -902.14778      5.46745        5.46745        5.46745        163.43853      1629599.8      1629887.7      1629167.2      1629744.5    
+       200  -897.85015      5.46745        5.46745        5.46745        163.43853      1637280.7      1635094.2      1636949.3      1639798.7    
+       300  -893.23368      5.46745        5.46745        5.46745        163.43853      1645110.9      1640278.2      1644414        1650640.4    
+       400  -898.2444       5.46745        5.46745        5.46745        163.43853      1640563.8      1638316.3      1637603.4      1645771.8    
+       500  -901.35384      5.46745        5.46745        5.46745        163.43853      1644150.8      1643983        1638103.5      1650365.9    
+       600  -895.62094      5.46745        5.46745        5.46745        163.43853      1647285        1643681.1      1644387        1653786.9    
+       700  -889.97688      5.46745        5.46745        5.46745        163.43853      1655451.1      1648482.2      1651227.2      1666644.1    
+       800  -894.63413      5.46745        5.46745        5.46745        163.43853      1647918.2      1649611.9      1642898.6      1651244.2    
+       900  -893.32788      5.46745        5.46745        5.46745        163.43853      1653713.2      1654633.4      1645793.2      1660713.1    
+      1000  -887.35327      5.46745        5.46745        5.46745        163.43853      1666216.5      1657727.3      1653590.2      1687332      
+      1100  -887.21048      5.46745        5.46745        5.46745        163.43853      1667841.4      1659840.1      1656835.4      1686848.6    
+      1200  -898.61279      5.46745        5.46745        5.46745        163.43853      1661924.8      1655474.9      1649389.5      1680910      
+      1300  -895.43956      5.46745        5.46745        5.46745        163.43853      1648989.8      1652920.7      1646667.7      1647381      
+      1400  -887.75094      5.46745        5.46745        5.46745        163.43853      1664912.3      1661491.6      1660197.7      1673047.5    
+      1500  -888.38657      5.46745        5.46745        5.46745        163.43853      1662228.8      1655728.1      1657299.7      1673658.5    
+      1600  -887.11445      5.46745        5.46745        5.46745        163.43853      1677925        1674801        1669828.1      1689146      
+      1700  -890.00344      5.46745        5.46745        5.46745        163.43853      1674724.2      1665404.5      1660946.2      1697821.8    
+      1800  -884.28783      5.46745        5.46745        5.46745        163.43853      1671001.5      1660383.2      1669076.3      1683545      
+      1900  -892.72518      5.46745        5.46745        5.46745        163.43853      1664156.5      1651051.2      1666611.2      1674807.1    
+      2000  -896.97862      5.46745        5.46745        5.46745        163.43853      1658540        1658616.2      1657952.1      1659051.8    
+Loop time of 29.6015 on 1 procs for 2000 steps with 12 atoms
 
-6.4% CPU use with 1 MPI tasks x 1 OpenMP threads
-
-Minimization stats:
-  Stopping criterion = linesearch alpha is zero
-  Energy initial, next-to-last, final = 
-     -194.386120674246  -821.638164829468  -821.638164979634
-  Force two-norm initial, final = 24.753635 3.1508664
-  Force max component initial, final = 10.614712 1.7595303
-  Final line search alpha, max atom move = 2.8181091e-08 4.9585485e-08
-  Iterations, force evaluations = 213 466
+Performance: 1.459 ns/day, 16.445 hours/ns, 67.564 timesteps/s, 810.769 atom-step/s
+94.4% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.20881    | 0.20881    | 0.20881    |   0.0 | 84.96
-Neigh   | 0.001429   | 0.001429   | 0.001429   |   0.0 |  0.58
-Comm    | 0.001625   | 0.001625   | 0.001625   |   0.0 |  0.66
-Output  | 0.01837    | 0.01837    | 0.01837    |   0.0 |  7.47
-Modify  | 0.014188   | 0.014188   | 0.014188   |   0.0 |  5.77
-Other   |            | 0.00135    |            |       |  0.55
+Pair    | 28.371     | 28.371     | 28.371     |   0.0 | 95.84
+Neigh   | 0.7593     | 0.7593     | 0.7593     |   0.0 |  2.57
+Comm    | 0.024688   | 0.024688   | 0.024688   |   0.0 |  0.08
+Output  | 0.01259    | 0.01259    | 0.01259    |   0.0 |  0.04
+Modify  | 0.4238     | 0.4238     | 0.4238     |   0.0 |  1.43
+Other   |            | 0.01053    |            |       |  0.04
 
-Nlocal:              6 ave           6 max           6 min
+Nlocal:             12 ave          12 max          12 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:            419 ave         419 max         419 min
+Nghost:           1654 ave        1654 max        1654 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:            539 ave         539 max         539 min
+Neighs:           6382 ave        6382 max        6382 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 539
-Ave neighs/atom = 89.833333
-Neighbor list builds = 4
-Dangerous builds = 0
-
-variable natoms equal "count(all)"
-variable teng equal pe
-variable length equal "lx"
-variable ecoh equal "v_teng/v_natoms"
-variable v_vol equal vol
-
-# Calculate the number of Cerium atoms
-variable nCe equal "count(Ce)"
-
-# Calculate lattice parameter a (assuming cubic lattice)
-variable a0 equal "lx"
-
-# Calculate lattice parameter c (for non-cubic systems, e.g., hexagonal)
-variable c0 equal "lz"
-
-# Conversion factor from kcal/mol to eV
-variable conv equal 0.0433641
-
-# Calculate the energy per Cerium atom in eV
-variable energy_eV equal ${teng}*${conv} #eV/atom
-variable energy_eV equal -821.638164979634*${conv} 
-variable energy_eV equal -821.638164979634*0.0433641 
-
-# Calculate the energy per Cerium atom
-variable energy_eV_per_CeO2 equal ${energy_eV}/${nCe}
-variable energy_eV_per_CeO2 equal -35.6295995499934/${nCe}
-variable energy_eV_per_CeO2 equal -35.6295995499934/2
-
-# Print the results
-print "Total energy (kcal/mol) = ${teng};"
-Total energy (kcal/mol) = -821.638164979634;
-print "Number of atoms = ${natoms};"
-Number of atoms = 6;
-print "Lattice constant a_0 (Angstroms) = ${a0};"
-Lattice constant a_0 (Angstroms) = 8.58182;
-print "Lattice constant c_0 (Angstroms) = ${c0};"
-Lattice constant c_0 (Angstroms) = 6.02823;
-print "Cohesive energy (eV) = ${ecoh};"
-Cohesive energy (eV) = -136.939694163272;
-print "Volume = ${v_vol}"
-Volume = 443.964879796686
-print "Energy (eV) = ${energy_eV}"
-Energy (eV) = -35.6295995499934
-print "Energy per Ceriumoxide atom (eV) = ${energy_eV_per_CeO2}"
-Energy per Ceriumoxide atom (eV) = -17.8147997749967
-print "All done!"
-All done!
-Total wall time: 0:00:00
+Total # of neighbors = 6382
+Ave neighs/atom = 531.83333
+Neighbor list builds = 200
+Dangerous builds not checked
+Total wall time: 0:00:29
