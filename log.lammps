@@ -220,4 +220,1776 @@ units real
 dimension 3
 boundary p p p
 atom_style charge
-read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_0
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_0.990.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.4127755 5.4127755 5.4127755)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.003 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=69100 allocated=68414
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.000.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.46745 5.46745 5.46745)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.002 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 24.12 | 24.12 | 24.12 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1703.3642      0             -1703.3642      921678.65    
+       100   5.2563856e-12 -1703.3642      0             -1703.3642      921678.65    
+       200   5.6666298e-10 -1703.3642      0             -1703.3642      921678.64    
+       300   9.5458425e-09 -1703.3642      0             -1703.3642      921678.61    
+       400   4.6014682e-09 -1703.3639      0             -1703.3639      921678.91    
+       500   1.1198556e-08 -1703.364       0             -1703.364       921678.78    
+       600   2.8078856e-08 -1703.3638      0             -1703.3638      921678.96    
+       700   1.7658264e-08 -1703.3642      0             -1703.3642      921678.67    
+       800   1.1263773e-08 -1703.3645      0             -1703.3645      921678.37    
+       900   1.1681063e-08 -1703.3636      0             -1703.3636      921679.1     
+      1000   2.4433215e-08 -1703.3642      0             -1703.3642      921678.63    
+Loop time of 7.84913 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 2.752 ns/day, 8.721 hours/ns, 127.403 timesteps/s, 1.529 katom-step/s
+97.7% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 7.6917     | 7.6917     | 7.6917     |   0.0 | 97.99
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.008445   | 0.008445   | 0.008445   |   0.0 |  0.11
+Output  | 0.00023    | 0.00023    | 0.00023    |   0.0 |  0.00
+Modify  | 0.14689    | 0.14689    | 0.14689    |   0.0 |  1.87
+Other   |            | 0.001813   |            |       |  0.02
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2982 ave        2982 max        2982 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2982
+Ave neighs/atom = 248.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.010.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.5221245 5.5221245 5.5221245)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.003 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 24.12 | 24.12 | 24.12 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1759.2999      0             -1759.2999      753089.84    
+       100   6.192293e-12  -1759.2999      0             -1759.2999      753089.84    
+       200   7.1030498e-10 -1759.2999      0             -1759.2999      753089.84    
+       300   1.24744e-08   -1759.2999      0             -1759.2999      753089.84    
+       400   6.1806327e-09 -1759.2999      0             -1759.2999      753089.84    
+       500   1.3349582e-08 -1759.2999      0             -1759.2999      753089.86    
+       600   2.4113865e-08 -1759.3         0             -1759.3         753089.74    
+       700   3.3296048e-08 -1759.2999      0             -1759.2999      753089.81    
+       800   6.0933216e-09 -1759.2999      0             -1759.2999      753089.85    
+       900   1.1092115e-08 -1759.2996      0             -1759.2996      753090.11    
+      1000   2.2106809e-08 -1759.2999      0             -1759.2999      753089.83    
+Loop time of 7.4199 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 2.911 ns/day, 8.244 hours/ns, 134.773 timesteps/s, 1.617 katom-step/s
+97.7% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 7.2724     | 7.2724     | 7.2724     |   0.0 | 98.01
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.007615   | 0.007615   | 0.007615   |   0.0 |  0.10
+Output  | 0.000234   | 0.000234   | 0.000234   |   0.0 |  0.00
+Modify  | 0.13816    | 0.13816    | 0.13816    |   0.0 |  1.86
+Other   |            | 0.001462   |            |       |  0.02
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2886 ave        2886 max        2886 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2886
+Ave neighs/atom = 240.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.020.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.576799 5.576799 5.576799)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.007 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 24.12 | 24.12 | 24.12 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1805.1277      0             -1805.1277      609032.85    
+       100   4.8016898e-13 -1805.1277      0             -1805.1277      609032.84    
+       200   4.7611824e-11 -1805.1277      0             -1805.1277      609032.83    
+       300   8.3569692e-10 -1805.1277      0             -1805.1277      609032.78    
+       400   5.4138489e-09 -1805.1278      0             -1805.1278      609032.69    
+       500   1.6934741e-08 -1805.1279      0             -1805.1279      609032.66    
+       600   1.2817356e-08 -1805.128       0             -1805.128       609032.48    
+       700   1.4248776e-08 -1805.1273      0             -1805.1273      609033.22    
+       800   4.1075037e-08 -1805.128       0             -1805.128       609032.51    
+       900   2.6935304e-08 -1805.1273      0             -1805.1273      609033.18    
+      1000   4.6386657e-09 -1805.1278      0             -1805.1278      609032.68    
+Loop time of 7.68648 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 2.810 ns/day, 8.541 hours/ns, 130.099 timesteps/s, 1.561 katom-step/s
+98.4% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 7.5344     | 7.5344     | 7.5344     |   0.0 | 98.02
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.008248   | 0.008248   | 0.008248   |   0.0 |  0.11
+Output  | 0.0002     | 0.0002     | 0.0002     |   0.0 |  0.00
+Modify  | 0.14154    | 0.14154    | 0.14154    |   0.0 |  1.84
+Other   |            | 0.002086   |            |       |  0.03
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2886 ave        2886 max        2886 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2886
+Ave neighs/atom = 240.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.030.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.6314735 5.6314735 5.6314735)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.002 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 24.12 | 24.12 | 24.12 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1842.2004      0             -1842.2004      484251.65    
+       100   1.8895309e-12 -1842.2004      0             -1842.2004      484251.65    
+       200   1.5602332e-10 -1842.2005      0             -1842.2005      484251.64    
+       300   2.659925e-09  -1842.2005      0             -1842.2005      484251.62    
+       400   1.4270097e-08 -1842.2005      0             -1842.2005      484251.55    
+       500   1.3421622e-08 -1842.2002      0             -1842.2002      484251.96    
+       600   1.148363e-08  -1842.2006      0             -1842.2006      484251.54    
+       700   2.1228209e-08 -1842.2004      0             -1842.2004      484251.65    
+       800   3.1142407e-08 -1842.2002      0             -1842.2002      484251.94    
+       900   7.7228367e-09 -1842.2005      0             -1842.2005      484251.56    
+      1000   4.6618488e-09 -1842.2005      0             -1842.2005      484251.61    
+Loop time of 7.93827 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 2.721 ns/day, 8.820 hours/ns, 125.972 timesteps/s, 1.512 katom-step/s
+98.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 7.7822     | 7.7822     | 7.7822     |   0.0 | 98.03
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.008492   | 0.008492   | 0.008492   |   0.0 |  0.11
+Output  | 0.000214   | 0.000214   | 0.000214   |   0.0 |  0.00
+Modify  | 0.14519    | 0.14519    | 0.14519    |   0.0 |  1.83
+Other   |            | 0.002182   |            |       |  0.03
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2886 ave        2886 max        2886 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2886
+Ave neighs/atom = 240.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.040.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.686148 5.686148 5.686148)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.002 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 24.12 | 24.12 | 24.12 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1871.4624      0             -1871.4624      374901.72    
+       100   1.1198385e-12 -1871.4624      0             -1871.4624      374901.72    
+       200   4.5482889e-11 -1871.4623      0             -1871.4623      374901.74    
+       300   5.5601823e-10 -1871.4623      0             -1871.4623      374901.8     
+       400   3.3390777e-09 -1871.4622      0             -1871.4622      374901.9     
+       500   1.1095902e-09 -1871.4623      0             -1871.4623      374901.8     
+       600   8.6499631e-09 -1871.4621      0             -1871.4621      374902.08    
+       700   1.8918312e-08 -1871.4626      0             -1871.4626      374901.46    
+       800   1.1619921e-08 -1871.462       0             -1871.462       374902.14    
+       900   5.8339323e-09 -1871.4629      0             -1871.4629      374901.02    
+      1000   1.403159e-08  -1871.4629      0             -1871.4629      374901.03    
+Loop time of 7.3864 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 2.924 ns/day, 8.207 hours/ns, 135.384 timesteps/s, 1.625 katom-step/s
+99.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 7.2381     | 7.2381     | 7.2381     |   0.0 | 97.99
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.0076     | 0.0076     | 0.0076     |   0.0 |  0.10
+Output  | 0.00019    | 0.00019    | 0.00019    |   0.0 |  0.00
+Modify  | 0.13878    | 0.13878    | 0.13878    |   0.0 |  1.88
+Other   |            | 0.001716   |            |       |  0.02
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2886 ave        2886 max        2886 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2886
+Ave neighs/atom = 240.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.050.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.7408225 5.7408225 5.7408225)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.002 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 24.12 | 24.12 | 24.12 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1893.7425      0             -1893.7425      278123.27    
+       100   4.8130184e-12 -1893.7425      0             -1893.7425      278123.28    
+       200   8.3295059e-10 -1893.7425      0             -1893.7425      278123.32    
+       300   1.6221963e-08 -1893.7424      0             -1893.7424      278123.42    
+       400   3.1943486e-08 -1893.7427      0             -1893.7427      278122.96    
+       500   3.1849026e-09 -1893.7426      0             -1893.7426      278123.14    
+       600   2.1060582e-08 -1893.7425      0             -1893.7425      278123.26    
+       700   6.4014106e-08 -1893.7423      0             -1893.7423      278123.51    
+       800   5.7057221e-08 -1893.7425      0             -1893.7425      278123.3     
+       900   1.5777993e-08 -1893.7425      0             -1893.7425      278123.28    
+      1000   5.786502e-09  -1893.7425      0             -1893.7425      278123.31    
+Loop time of 6.78676 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 3.183 ns/day, 7.541 hours/ns, 147.346 timesteps/s, 1.768 katom-step/s
+98.1% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 6.6483     | 6.6483     | 6.6483     |   0.0 | 97.96
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.007307   | 0.007307   | 0.007307   |   0.0 |  0.11
+Output  | 0.000199   | 0.000199   | 0.000199   |   0.0 |  0.00
+Modify  | 0.12952    | 0.12952    | 0.12952    |   0.0 |  1.91
+Other   |            | 0.001429   |            |       |  0.02
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2694 ave        2694 max        2694 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2694
+Ave neighs/atom = 224.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.060.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.795497 5.795497 5.795497)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.002 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 21.22 | 21.22 | 21.22 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1909.3189      0             -1909.3189      193897.83    
+       100   1.0509364e-12 -1909.3189      0             -1909.3189      193897.83    
+       200   1.7004363e-10 -1909.3189      0             -1909.3189      193897.85    
+       300   3.2900325e-09 -1909.3188      0             -1909.3188      193897.88    
+       400   2.339912e-08  -1909.3188      0             -1909.3188      193897.95    
+       500   3.6414653e-08 -1909.3185      0             -1909.3185      193898.34    
+       600   7.9929868e-09 -1909.3189      0             -1909.3189      193897.79    
+       700   3.5740592e-08 -1909.319       0             -1909.319       193897.68    
+       800   7.2219719e-08 -1909.3184      0             -1909.3184      193898.53    
+       900   5.7398943e-08 -1909.3188      0             -1909.3188      193898       
+      1000   1.3832791e-08 -1909.319       0             -1909.319       193897.66    
+Loop time of 5.66815 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 3.811 ns/day, 6.298 hours/ns, 176.425 timesteps/s, 2.117 katom-step/s
+98.7% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 5.5388     | 5.5388     | 5.5388     |   0.0 | 97.72
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.007308   | 0.007308   | 0.007308   |   0.0 |  0.13
+Output  | 0.000194   | 0.000194   | 0.000194   |   0.0 |  0.00
+Modify  | 0.12043    | 0.12043    | 0.12043    |   0.0 |  2.12
+Other   |            | 0.001382   |            |       |  0.02
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2502 ave        2502 max        2502 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2502
+Ave neighs/atom = 208.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.070.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.8501715 5.8501715 5.8501715)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.003 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 21.22 | 21.22 | 21.22 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1920.116       0             -1920.116       148869.4     
+       100   4.009703e-12  -1920.116       0             -1920.116       148869.4     
+       200   5.3812452e-10 -1920.116       0             -1920.116       148869.38    
+       300   5.318972e-09  -1920.116       0             -1920.116       148869.34    
+       400   6.2554767e-09 -1920.1161      0             -1920.1161      148869.22    
+       500   5.4067871e-08 -1920.1156      0             -1920.1156      148870.06    
+       600   1.325483e-08  -1920.116       0             -1920.116       148869.44    
+       700   3.5883978e-08 -1920.1162      0             -1920.1162      148869.06    
+       800   5.1993816e-08 -1920.1161      0             -1920.1161      148869.27    
+       900   9.228158e-09  -1920.1158      0             -1920.1158      148869.7     
+      1000   5.5743666e-08 -1920.1165      0             -1920.1165      148868.56    
+Loop time of 5.61038 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 3.850 ns/day, 6.234 hours/ns, 178.241 timesteps/s, 2.139 katom-step/s
+99.1% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 5.48       | 5.48       | 5.48       |   0.0 | 97.68
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.007268   | 0.007268   | 0.007268   |   0.0 |  0.13
+Output  | 0.000239   | 0.000239   | 0.000239   |   0.0 |  0.00
+Modify  | 0.12145    | 0.12145    | 0.12145    |   0.0 |  2.16
+Other   |            | 0.001409   |            |       |  0.03
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2502 ave        2502 max        2502 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2502
+Ave neighs/atom = 208.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.080.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.904846 5.904846 5.904846)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.009 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 21.22 | 21.22 | 21.22 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1921.3296      0             -1921.3296     -220972.48    
+       100   1.9029674e-12 -1921.3296      0             -1921.3296     -220972.48    
+       200   4.3280512e-10 -1921.3296      0             -1921.3296     -220972.47    
+       300   8.6687631e-09 -1921.3296      0             -1921.3296     -220972.46    
+       400   5.7058312e-08 -1921.3296      0             -1921.3296     -220972.51    
+       500   4.4302233e-09 -1921.3296      0             -1921.3296     -220972.43    
+       600   1.9703534e-08 -1921.33        0             -1921.33       -220973.14    
+       700   7.6968445e-08 -1921.3297      0             -1921.3297     -220972.65    
+       800   6.9024044e-08 -1921.3295      0             -1921.3295     -220972.34    
+       900   1.2736418e-08 -1921.3294      0             -1921.3294     -220972.09    
+      1000   8.4824319e-09 -1921.3295      0             -1921.3295     -220972.19    
+Loop time of 5.60148 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 3.856 ns/day, 6.224 hours/ns, 178.524 timesteps/s, 2.142 katom-step/s
+99.3% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 5.4711     | 5.4711     | 5.4711     |   0.0 | 97.67
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.007271   | 0.007271   | 0.007271   |   0.0 |  0.13
+Output  | 0.000226   | 0.000226   | 0.000226   |   0.0 |  0.00
+Modify  | 0.12157    | 0.12157    | 0.12157    |   0.0 |  2.17
+Other   |            | 0.001339   |            |       |  0.02
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2502 ave        2502 max        2502 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2502
+Ave neighs/atom = 208.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.090.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.9595205 5.9595205 5.9595205)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.007 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 21.22 | 21.22 | 21.22 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1895.7136      0             -1895.7136     -293618.29    
+       100   1.8437749e-12 -1895.7136      0             -1895.7136     -293618.29    
+       200   2.7117777e-10 -1895.7136      0             -1895.7136     -293618.29    
+       300   4.4492433e-09 -1895.7136      0             -1895.7136     -293618.27    
+       400   3.0663434e-08 -1895.7136      0             -1895.7136     -293618.25    
+       500   1.1961713e-08 -1895.7137      0             -1895.7137     -293618.38    
+       600   2.0587731e-08 -1895.7136      0             -1895.7136     -293618.33    
+       700   4.2666932e-08 -1895.7135      0             -1895.7135     -293618.01    
+       800   4.3047622e-08 -1895.7136      0             -1895.7136     -293618.26    
+       900   1.4642128e-08 -1895.7138      0             -1895.7138     -293618.65    
+      1000   3.7121317e-09 -1895.7133      0             -1895.7133     -293617.64    
+Loop time of 5.62274 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 3.842 ns/day, 6.247 hours/ns, 177.849 timesteps/s, 2.134 katom-step/s
+99.8% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 5.4928     | 5.4928     | 5.4928     |   0.0 | 97.69
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.007194   | 0.007194   | 0.007194   |   0.0 |  0.13
+Output  | 0.000193   | 0.000193   | 0.000193   |   0.0 |  0.00
+Modify  | 0.12124    | 0.12124    | 0.12124    |   0.0 |  2.16
+Other   |            | 0.001357   |            |       |  0.02
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2502 ave        2502 max        2502 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2502
+Ave neighs/atom = 208.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.100.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.014195 6.014195 6.014195)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.002 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 21.22 | 21.22 | 21.22 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1868.2561      0             -1868.2561     -313155.46    
+       100   2.8359562e-12 -1868.2561      0             -1868.2561     -313155.45    
+       200   6.5130192e-10 -1868.2561      0             -1868.2561     -313155.42    
+       300   1.3573905e-08 -1868.2561      0             -1868.2561     -313155.32    
+       400   3.8451093e-08 -1868.2565      0             -1868.2565     -313156.41    
+       500   3.5097633e-09 -1868.2561      0             -1868.2561     -313155.33    
+       600   1.0020157e-08 -1868.2561      0             -1868.2561     -313155.35    
+       700   4.7810073e-08 -1868.256       0             -1868.256      -313155.07    
+       800   6.3342519e-08 -1868.256       0             -1868.256      -313155.12    
+       900   3.5492241e-08 -1868.2561      0             -1868.2561     -313155.42    
+      1000   2.5056871e-09 -1868.2559      0             -1868.2559     -313154.87    
+Loop time of 5.70674 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 3.785 ns/day, 6.341 hours/ns, 175.231 timesteps/s, 2.103 katom-step/s
+99.7% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 5.5867     | 5.5867     | 5.5867     |   0.0 | 97.90
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.007732   | 0.007732   | 0.007732   |   0.0 |  0.14
+Output  | 0.000203   | 0.000203   | 0.000203   |   0.0 |  0.00
+Modify  | 0.11054    | 0.11054    | 0.11054    |   0.0 |  1.94
+Other   |            | 0.001562   |            |       |  0.03
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2214 ave        2214 max        2214 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2214
+Ave neighs/atom = 184.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.110.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.0688695 6.0688695 6.0688695)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.007 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 21.22 | 21.22 | 21.22 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1838.9601      0             -1838.9601     -325221.7     
+       100   1.8531334e-12 -1838.9601      0             -1838.9601     -325221.69    
+       200   2.4549518e-10 -1838.9601      0             -1838.9601     -325221.67    
+       300   3.2527812e-09 -1838.9601      0             -1838.9601     -325221.62    
+       400   2.1442771e-08 -1838.9601      0             -1838.9601     -325221.52    
+       500   2.7568131e-08 -1838.96        0             -1838.96       -325221.41    
+       600   1.6636723e-08 -1838.9604      0             -1838.9604     -325222.45    
+       700   8.784599e-09  -1838.9598      0             -1838.9598     -325220.67    
+       800   3.4470886e-08 -1838.9601      0             -1838.9601     -325221.66    
+       900   4.7707897e-08 -1838.9602      0             -1838.9602     -325221.75    
+      1000   1.8939596e-08 -1838.96        0             -1838.96       -325221.25    
+Loop time of 4.93971 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 4.373 ns/day, 5.489 hours/ns, 202.441 timesteps/s, 2.429 katom-step/s
+98.7% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 4.818      | 4.818      | 4.818      |   0.0 | 97.54
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.007776   | 0.007776   | 0.007776   |   0.0 |  0.16
+Output  | 0.000207   | 0.000207   | 0.000207   |   0.0 |  0.00
+Modify  | 0.1121     | 0.1121     | 0.1121     |   0.0 |  2.27
+Other   |            | 0.00158    |            |       |  0.03
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2214 ave        2214 max        2214 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2214
+Ave neighs/atom = 184.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.120.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.123544 6.123544 6.123544)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.008 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 21.22 | 21.22 | 21.22 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1808.7986      0             -1808.7986     -328386.06    
+       100   3.297682e-12  -1808.7986      0             -1808.7986     -328386.06    
+       200   4.0339137e-10 -1808.7986      0             -1808.7986     -328386.08    
+       300   3.2556436e-09 -1808.7987      0             -1808.7987     -328386.13    
+       400   1.3978853e-09 -1808.7986      0             -1808.7986     -328385.88    
+       500   3.1776605e-08 -1808.7987      0             -1808.7987     -328386.21    
+       600   2.4747343e-08 -1808.7987      0             -1808.7987     -328386.1     
+       700   4.3676336e-09 -1808.7986      0             -1808.7986     -328385.72    
+       800   4.1795415e-08 -1808.7987      0             -1808.7987     -328386.47    
+       900   6.8166309e-09 -1808.7987      0             -1808.7987     -328386.15    
+      1000   2.1370155e-08 -1808.7986      0             -1808.7986     -328386.08    
+Loop time of 4.93244 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 4.379 ns/day, 5.480 hours/ns, 202.739 timesteps/s, 2.433 katom-step/s
+98.8% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 4.8114     | 4.8114     | 4.8114     |   0.0 | 97.55
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.007939   | 0.007939   | 0.007939   |   0.0 |  0.16
+Output  | 0.000228   | 0.000228   | 0.000228   |   0.0 |  0.00
+Modify  | 0.11128    | 0.11128    | 0.11128    |   0.0 |  2.26
+Other   |            | 0.001541   |            |       |  0.03
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2214 ave        2214 max        2214 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2214
+Ave neighs/atom = 184.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.130.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.1782185 6.1782185 6.1782185)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.006 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 21.22 | 21.22 | 21.22 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1778.4646      0             -1778.4646     -323829.93    
+       100   1.8142679e-12 -1778.4646      0             -1778.4646     -323829.93    
+       200   3.1093538e-10 -1778.4646      0             -1778.4646     -323829.91    
+       300   4.4241966e-09 -1778.4646      0             -1778.4646     -323829.87    
+       400   2.5894542e-08 -1778.4646      0             -1778.4646     -323829.79    
+       500   4.1311173e-08 -1778.4646      0             -1778.4646     -323829.9     
+       600   1.1379625e-08 -1778.4646      0             -1778.4646     -323830       
+       700   3.2455905e-08 -1778.4646      0             -1778.4646     -323829.98    
+       800   7.6497624e-09 -1778.4646      0             -1778.4646     -323830.01    
+       900   4.3924156e-08 -1778.4646      0             -1778.4646     -323830.1     
+      1000   2.2291434e-08 -1778.4647      0             -1778.4647     -323830.65    
+Loop time of 4.68822 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 4.607 ns/day, 5.209 hours/ns, 213.300 timesteps/s, 2.560 katom-step/s
+99.7% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 4.5691     | 4.5691     | 4.5691     |   0.0 | 97.46
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.007413   | 0.007413   | 0.007413   |   0.0 |  0.16
+Output  | 0.000234   | 0.000234   | 0.000234   |   0.0 |  0.00
+Modify  | 0.11       | 0.11       | 0.11       |   0.0 |  2.35
+Other   |            | 0.001475   |            |       |  0.03
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2214 ave        2214 max        2214 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2214
+Ave neighs/atom = 184.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.140.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.232893 6.232893 6.232893)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.007 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 21.22 | 21.22 | 21.22 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1748.581       0             -1748.581      -312840.73    
+       100   2.3326021e-14 -1748.581       0             -1748.581      -312840.73    
+       200   5.5955341e-12 -1748.581       0             -1748.581      -312840.69    
+       300   1.2431614e-10 -1748.581       0             -1748.581      -312840.6     
+       400   1.0478568e-09 -1748.581       0             -1748.581      -312840.41    
+       500   5.1963492e-09 -1748.581       0             -1748.581      -312840.09    
+       600   1.021251e-08  -1748.581       0             -1748.581      -312840.47    
+       700   9.0749371e-09 -1748.5811      0             -1748.5811     -312841.05    
+       800   3.905485e-09  -1748.581       0             -1748.581      -312840.4     
+       900   1.1475498e-09 -1748.581       0             -1748.581      -312840.49    
+      1000   1.1924352e-09 -1748.581       0             -1748.581      -312840.49    
+Loop time of 4.88969 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 4.417 ns/day, 5.433 hours/ns, 204.512 timesteps/s, 2.454 katom-step/s
+98.4% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 4.7708     | 4.7708     | 4.7708     |   0.0 | 97.57
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.007709   | 0.007709   | 0.007709   |   0.0 |  0.16
+Output  | 0.000204   | 0.000204   | 0.000204   |   0.0 |  0.00
+Modify  | 0.10934    | 0.10934    | 0.10934    |   0.0 |  2.24
+Other   |            | 0.001629   |            |       |  0.03
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2214 ave        2214 max        2214 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2214
+Ave neighs/atom = 184.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.150.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.2875675 6.2875675 6.2875675)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.008 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 21.22 | 21.22 | 21.22 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -1719.6858      0             -1719.6858     -296812.56    
+       100   5.204316e-13  -1719.6858      0             -1719.6858     -296812.56    
+       200   1.2587366e-10 -1719.6858      0             -1719.6858     -296812.54    
+       300   2.7862527e-09 -1719.6858      0             -1719.6858     -296812.5     
+       400   2.3016247e-08 -1719.6858      0             -1719.6858     -296812.41    
+       500   8.2245912e-08 -1719.6857      0             -1719.6857     -296811.92    
+       600   6.8233411e-08 -1719.6858      0             -1719.6858     -296812.94    
+       700   8.8142184e-08 -1719.6858      0             -1719.6858     -296812.69    
+       800   9.5629037e-08 -1719.6858      0             -1719.6858     -296812.56    
+       900   6.3103799e-08 -1719.6858      0             -1719.6858     -296812.78    
+      1000   5.3104954e-08 -1719.6858      0             -1719.6858     -296813.23    
+Loop time of 4.85212 on 1 procs for 1000 steps with 12 atoms
+
+Performance: 4.452 ns/day, 5.391 hours/ns, 206.095 timesteps/s, 2.473 katom-step/s
+98.9% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 4.7325     | 4.7325     | 4.7325     |   0.0 | 97.54
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.007931   | 0.007931   | 0.007931   |   0.0 |  0.16
+Output  | 0.000197   | 0.000197   | 0.000197   |   0.0 |  0.00
+Modify  | 0.10986    | 0.10986    | 0.10986    |   0.0 |  2.26
+Other   |            | 0.001587   |            |       |  0.03
+
+Nlocal:             12 ave          12 max          12 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            864 ave         864 max         864 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           2214 ave        2214 max        2214 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 2214
+Ave neighs/atom = 184.5
+Neighbor list builds = 0
+Dangerous builds = 0
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.160.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.342242 6.342242 6.342242)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.007 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=26828 allocated=26740
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.170.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.3969165 6.3969165 6.3969165)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.007 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=26828 allocated=26740
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.180.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.451591 6.451591 6.451591)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.008 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=26828 allocated=26740
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.190.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.5062655 6.5062655 6.5062655)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.007 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=26828 allocated=26740
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.200.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.56094 6.56094 6.56094)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.008 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=26828 allocated=26740
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.210.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.6156145 6.6156145 6.6156145)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.008 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=26828 allocated=26740
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.220.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.670289 6.670289 6.670289)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.013 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=26828 allocated=26740
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.230.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.7249635 6.7249635 6.7249635)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.008 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=26828 allocated=26740
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.240.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.779638 6.779638 6.779638)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.008 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=26828 allocated=26740
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_1.250.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (6.8343125 6.8343125 6.8343125)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.008 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+ 
