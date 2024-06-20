@@ -16,11 +16,11 @@ Reading data file ...
   1 by 1 by 1 MPI processor grid
   reading atoms ...
   12 atoms
-  read_data CPU = 0.009 seconds
-pair_style reaxff reax_ff_sim/ceo2_reaxff/lmp_control
+  read_data CPU = 0.003 seconds
+pair_style reaxff NULL checkqeq yes
 pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
 neighbor 2 bin
-neigh_modify every 10 delay 0 check no
+neigh_modify every 10 delay 0 check yes
 fix 1 all nve
 fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
 timestep 0.25
@@ -58,11 +58,11 @@ CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
 
 WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
-  update: every = 10 steps, delay = 0 steps, check = no
+  update: every = 10 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 12
-  ghost atom cutoff = 12
-  binsize = 6, bins = 1 1 1
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -74,42 +74,150 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 64.03 | 64.03 | 64.03 Mbytes
-   Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -96.977158      0             -96.977158      3394763.3    
-       100   2.3142413e-11 -96.977158      0             -96.977158      3394763.3    
-       200   3.917627e-09  -96.977158      0             -96.977158      3394763.4    
-       300   9.2918168e-10 -96.977159      0             -96.977159      3394763.3    
-       400   5.1303865e-09 -96.977167      0             -96.977167      3394762.6    
-       500   1.7926884e-09 -96.977159      0             -96.977159      3394763.3    
-       600   2.7200258e-09 -96.977159      0             -96.977159      3394763.2    
-       700   4.9067443e-09 -96.977159      0             -96.977159      3394763.3    
-       800   4.3915727e-10 -96.97716       0             -96.97716       3394763.2    
-       900   5.1292185e-09 -96.977164      0             -96.977164      3394762.8    
-      1000   1.4675833e-09 -96.97716       0             -96.97716       3394763.2    
-Loop time of 24.0628 on 1 procs for 1000 steps with 12 atoms
-
-Performance: 0.898 ns/day, 26.736 hours/ns, 41.558 timesteps/s, 498.694 atom-step/s
-90.4% CPU use with 1 MPI tasks x 1 OpenMP threads
-
-MPI task timing breakdown:
-Section |  min time  |  avg time  |  max time  |%varavg| %total
----------------------------------------------------------------
-Pair    | 23.041     | 23.041     | 23.041     |   0.0 | 95.75
-Neigh   | 0.75069    | 0.75069    | 0.75069    |   0.0 |  3.12
-Comm    | 0.016026   | 0.016026   | 0.016026   |   0.0 |  0.07
-Output  | 0.000261   | 0.000261   | 0.000261   |   0.0 |  0.00
-Modify  | 0.2486     | 0.2486     | 0.2486     |   0.0 |  1.03
-Other   |            | 0.005988   |            |       |  0.02
-
-Nlocal:             12 ave          12 max          12 min
-Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           2382 ave        2382 max        2382 min
-Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:           7678 ave        7678 max        7678 min
-Histogram: 1 0 0 0 0 0 0 0 0 0
-
-Total # of neighbors = 7678
-Ave neighs/atom = 639.83333
-Neighbor list builds = 100
-Dangerous builds not checked
+ERROR on proc 0: Not enough space for bonds! total=69100 allocated=68414
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_0.960.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.248752 5.248752 5.248752)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.002 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=69100 allocated=68414
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_0.970.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.3034265 5.3034265 5.3034265)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.008 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=69100 allocated=68414
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_0.980.lmp
+Reading data file ...
+  orthogonal box = (0 0 0) to (5.358101 5.358101 5.358101)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  12 atoms
+  read_data CPU = 0.003 seconds
+pair_style reaxff NULL checkqeq yes
+pair_coeff * * C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ffield.reax O Ce
+neighbor 2 bin
+neigh_modify every 10 delay 0 check yes
+fix 1 all nve
+fix 2 all qeq/reax 1 0.0 10.0 1e-6 reaxff
+timestep 0.25
+thermo 100
+run 1000
+WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/REAXFF/pair_reaxff.cpp:365)
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 9.5
+  ghost atom cutoff = 9.5
+  binsize = 4.75, bins = 2 2 2
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+ERROR on proc 0: Not enough space for bonds! total=69100 allocated=68414
+ (src/REAXFF/reaxff_reset_tools.cpp:88)
+Last command: run 1000
+clear
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+units real
+dimension 3
+boundary p p p
+atom_style charge
+read_data C:/Users/user/Documents/School/FFparamOpt/reax_ff_sim/ceo2_reaxff/geometry_file/fluorite_scaled/ceO2_fluorite_0
