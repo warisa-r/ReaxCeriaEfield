@@ -17,32 +17,32 @@ Reading data file ...
   1 by 1 by 1 MPI processor grid
   reading atoms ...
   12 atoms
-  read_data CPU = 0.000 seconds
+  read_data CPU = 0.001 seconds
 
 # Access and print the value of xhi
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.46745
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.46745
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.9349 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.9349 0.0 10.9349 0.0 ${double_xhi} units box
-region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.8698 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.8698 0.0 21.8698 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.8698 0.0 21.8698 0.0 21.8698 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (10.9349 10.9349 10.9349)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (21.8698 21.8698 21.8698)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -96,13 +96,12 @@ Your simulation uses code contributions which should be cited:
 CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
 
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -114,42 +113,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 44.22 | 44.22 | 44.22 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 173 | 173 | 173 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -13626.913      0             -13626.913      921678.65    
-         1   0             -13626.913      0             -13626.913      921678.65    
-Loop time of 0.0352127 on 1 procs for 1 steps with 96 atoms
+         0   0             -57815.101      0             -57815.101      1626827.5    
+         1   0             -57815.101      0             -57815.101      1626827.5    
+Loop time of 0.567546 on 1 procs for 1 steps with 768 atoms
 
-92.2% CPU use with 1 MPI tasks x no OpenMP threads
+88.4% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = energy tolerance
+  Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -13626.9133696668  -13626.9133696668  -13626.9133696669
-  Force two-norm initial, final = 1.5333721e-11 1.6359039e-05
-  Force max component initial, final = 2.0605739e-12 1.6749089e-06
-  Final line search alpha, max atom move = 1 1.6749089e-06
-  Iterations, force evaluations = 1 2
+     -57815.1005337374  -57815.1005337374  -57815.1005337361
+  Force two-norm initial, final = 4.0596296e-11 0.00020249701
+  Force max component initial, final = 2.7835512e-12 2.3010619e-05
+  Final line search alpha, max atom move = 0.5 1.150531e-05
+  Iterations, force evaluations = 1 3
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.033638   | 0.033638   | 0.033638   |   0.0 | 95.53
+Pair    | 0.53108    | 0.53108    | 0.53108    |   0.0 | 93.58
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.7501e-05 | 1.7501e-05 | 1.7501e-05 |   0.0 |  0.05
+Comm    | 0.00010238 | 0.00010238 | 0.00010238 |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0014191  | 0.0014191  | 0.0014191  |   0.0 |  4.03
-Other   |            | 0.0001382  |            |       |  0.39
+Modify  | 0.035766   | 0.035766   | 0.035766   |   0.0 |  6.30
+Other   |            | 0.0005944  |            |       |  0.10
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          20832 ave       20832 max       20832 min
+Neighs:         314027 ave      314027 max      314027 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 20832
-Ave neighs/atom = 217
+Total # of neighbors = 314027
+Ave neighs/atom = 408.88932
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -179,26 +178,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.1940775
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.1940775
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.388155 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.388155 0.0 10.388155 0.0 ${double_xhi} units box
-region supercell block 0.0 10.388155 0.0 10.388155 0.0 10.388155 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 20.77631 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 20.77631 0.0 20.77631 0.0 ${n_times_xhi} units box
+region supercell block 0.0 20.77631 0.0 20.77631 0.0 20.77631 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (10.388155 10.388155 10.388155)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (20.77631 20.77631 20.77631)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -222,13 +221,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -240,42 +238,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 64.5 | 64.5 | 64.5 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 226.9 | 226.9 | 226.9 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -9651.5106      0             -9651.5106      2408063.5    
-         1   0             -9651.5106      0             -9651.5106      2408063.5    
-Loop time of 0.0454612 on 1 procs for 1 steps with 96 atoms
+         0   0             -6206.5381      0             -6206.5381      3394763.3    
+         1   0             -6206.5381      0             -6206.5381      3394763.3    
+Loop time of 0.6287 on 1 procs for 1 steps with 768 atoms
 
-92.8% CPU use with 1 MPI tasks x no OpenMP threads
+92.1% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = energy tolerance
+  Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -9651.51056246266  -9651.51056246266  -9651.51056246251
-  Force two-norm initial, final = 6.9660994e-11 9.9704588e-05
-  Force max component initial, final = 1.3571366e-11 1.5274398e-05
-  Final line search alpha, max atom move = 1 1.5274398e-05
-  Iterations, force evaluations = 1 2
+     -6206.53812799259  -6206.53812799259  -6206.53812797829
+  Force two-norm initial, final = 2.2158145e-10 0.0028607418
+  Force max component initial, final = 1.9340873e-11 0.00020546647
+  Final line search alpha, max atom move = 0.5 0.00010273324
+  Iterations, force evaluations = 1 3
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.043749   | 0.043749   | 0.043749   |   0.0 | 96.23
+Pair    | 0.58371    | 0.58371    | 0.58371    |   0.0 | 92.84
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.325e-05  | 2.325e-05  | 2.325e-05  |   0.0 |  0.05
+Comm    | 0.00015546 | 0.00015546 | 0.00015546 |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0015598  | 0.0015598  | 0.0015598  |   0.0 |  3.43
-Other   |            | 0.0001293  |            |       |  0.28
+Modify  | 0.044258   | 0.044258   | 0.044258   |   0.0 |  7.04
+Other   |            | 0.0005751  |            |       |  0.09
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           2297 ave        2297 max        2297 min
+Nghost:           7521 ave        7521 max        7521 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          25176 ave       25176 max       25176 min
+Neighs:         380192 ave      380192 max      380192 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 25176
-Ave neighs/atom = 262.25
+Total # of neighbors = 380192
+Ave neighs/atom = 495.04167
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -305,26 +303,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.248752
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.248752
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.497504 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.497504 0.0 10.497504 0.0 ${double_xhi} units box
-region supercell block 0.0 10.497504 0.0 10.497504 0.0 10.497504 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 20.995008 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 20.995008 0.0 20.995008 0.0 ${n_times_xhi} units box
+region supercell block 0.0 20.995008 0.0 20.995008 0.0 20.995008 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (10.497504 10.497504 10.497504)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (20.995008 20.995008 20.995008)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -348,13 +346,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -366,42 +363,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 64.5 | 64.5 | 64.5 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 225.9 | 225.9 | 225.9 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -10748.41       0             -10748.41       1993043.6    
-         1   0             -10748.41       0             -10748.41       1993043.6    
-Loop time of 0.0441513 on 1 procs for 1 steps with 96 atoms
+         0   0             -19332.062      0             -19332.062      2912060.1    
+         1   0             -19332.062      0             -19332.062      2912060.1    
+Loop time of 0.460355 on 1 procs for 1 steps with 768 atoms
 
-93.5% CPU use with 1 MPI tasks x no OpenMP threads
+91.3% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -10748.4102632757  -10748.4102632757   -10748.410263276
-  Force two-norm initial, final = 4.5283784e-11 4.1107069e-05
-  Force max component initial, final = 1.0359713e-11 5.9205862e-06
-  Final line search alpha, max atom move = 1 5.9205862e-06
+     -19332.0622737793  -19332.0622737793   -19332.062273789
+  Force two-norm initial, final = 1.5491553e-10 0.00037706298
+  Force max component initial, final = 1.0885515e-11 3.071265e-05
+  Final line search alpha, max atom move = 1 3.071265e-05
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.042348   | 0.042348   | 0.042348   |   0.0 | 95.92
+Pair    | 0.42816    | 0.42816    | 0.42816    |   0.0 | 93.01
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.2791e-05 | 2.2791e-05 | 2.2791e-05 |   0.0 |  0.05
+Comm    | 9.9668e-05 | 9.9668e-05 | 9.9668e-05 |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0015957  | 0.0015957  | 0.0015957  |   0.0 |  3.61
-Other   |            | 0.0001848  |            |       |  0.42
+Modify  | 0.031262   | 0.031262   | 0.031262   |   0.0 |  6.79
+Other   |            | 0.0008365  |            |       |  0.18
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           2297 ave        2297 max        2297 min
+Nghost:           7521 ave        7521 max        7521 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          25176 ave       25176 max       25176 min
+Neighs:         359648 ave      359648 max      359648 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 25176
-Ave neighs/atom = 262.25
+Total # of neighbors = 359648
+Ave neighs/atom = 468.29167
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -431,26 +428,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.3034265
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.3034265
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.606853 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.606853 0.0 10.606853 0.0 ${double_xhi} units box
-region supercell block 0.0 10.606853 0.0 10.606853 0.0 10.606853 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.213706 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.213706 0.0 21.213706 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.213706 0.0 21.213706 0.0 21.213706 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (10.606853 10.606853 10.606853)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (21.213706 21.213706 21.213706)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -474,13 +471,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -492,42 +488,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 64.48 | 64.48 | 64.48 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 224.7 | 224.7 | 224.7 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -11670.491      0             -11670.491      1646955.3    
-         1   0             -11670.491      0             -11670.491      1646955.3    
-Loop time of 0.0447605 on 1 procs for 1 steps with 96 atoms
+         0   0             -30843.457      0             -30843.457      2505231.1    
+         1   0             -30843.457      0             -30843.457      2505231.1    
+Loop time of 0.57146 on 1 procs for 1 steps with 768 atoms
 
-89.2% CPU use with 1 MPI tasks x no OpenMP threads
+96.0% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = energy tolerance
+  Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -11670.4911912294  -11670.4911912294  -11670.4911912294
-  Force two-norm initial, final = 1.5121656e-11 2.3504021e-05
-  Force max component initial, final = 2.692957e-12 3.0732856e-06
-  Final line search alpha, max atom move = 1 3.0732856e-06
-  Iterations, force evaluations = 1 2
+     -30843.4573855769  -30843.4573855769  -30843.4573855405
+  Force two-norm initial, final = 3.3511256e-11 0.00046832663
+  Force max component initial, final = 2.9945291e-12 4.9931586e-05
+  Final line search alpha, max atom move = 0.5 2.4965793e-05
+  Iterations, force evaluations = 1 3
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.043018   | 0.043018   | 0.043018   |   0.0 | 96.11
+Pair    | 0.5328     | 0.5328     | 0.5328     |   0.0 | 93.23
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.3083e-05 | 2.3083e-05 | 2.3083e-05 |   0.0 |  0.05
+Comm    | 0.00013271 | 0.00013271 | 0.00013271 |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0015927  | 0.0015927  | 0.0015927  |   0.0 |  3.56
-Other   |            | 0.000127   |            |       |  0.28
+Modify  | 0.038016   | 0.038016   | 0.038016   |   0.0 |  6.65
+Other   |            | 0.0005141  |            |       |  0.09
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           2297 ave        2297 max        2297 min
+Nghost:           7521 ave        7521 max        7521 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          23736 ave       23736 max       23736 min
+Neighs:         329003 ave      329003 max      329003 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 23736
-Ave neighs/atom = 247.25
+Total # of neighbors = 329003
+Ave neighs/atom = 428.38932
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -557,26 +553,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.358101
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.358101
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.716202 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.716202 0.0 10.716202 0.0 ${double_xhi} units box
-region supercell block 0.0 10.716202 0.0 10.716202 0.0 10.716202 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.432404 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.432404 0.0 21.432404 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.432404 0.0 21.432404 0.0 21.432404 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (10.716202 10.716202 10.716202)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (21.432404 21.432404 21.432404)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -600,13 +596,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -618,42 +613,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 64.44 | 64.44 | 64.44 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 173.2 | 173.2 | 173.2 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -12440.034      0             -12440.034      1360003.2    
-         1   0             -12440.034      0             -12440.034      1360003.2    
-Loop time of 0.0435237 on 1 procs for 1 steps with 96 atoms
+         0   0             -40969.74       0             -40969.74       2162669.7    
+         1   0             -40969.74       0             -40969.74       2162669.7    
+Loop time of 0.39571 on 1 procs for 1 steps with 768 atoms
 
-94.7% CPU use with 1 MPI tasks x no OpenMP threads
+93.6% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -12440.0340748432  -12440.0340748432  -12440.0340748432
-  Force two-norm initial, final = 2.7770087e-11 1.8280008e-05
-  Force max component initial, final = 3.6379788e-12 2.5336919e-06
-  Final line search alpha, max atom move = 1 2.5336919e-06
+     -40969.7399835147  -40969.7399835147  -40969.7399835255
+  Force two-norm initial, final = 9.0295054e-11 0.000131555
+  Force max component initial, final = 4.0474291e-12 7.97214e-06
+  Final line search alpha, max atom move = 1 7.97214e-06
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.042026   | 0.042026   | 0.042026   |   0.0 | 96.56
+Pair    | 0.36792    | 0.36792    | 0.36792    |   0.0 | 92.98
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.2125e-05 | 2.2125e-05 | 2.2125e-05 |   0.0 |  0.05
+Comm    | 7.5915e-05 | 7.5915e-05 | 7.5915e-05 |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0013485  | 0.0013485  | 0.0013485  |   0.0 |  3.10
-Other   |            | 0.0001273  |            |       |  0.29
+Modify  | 0.027134   | 0.027134   | 0.027134   |   0.0 |  6.86
+Other   |            | 0.0005831  |            |       |  0.15
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           2297 ave        2297 max        2297 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          20832 ave       20832 max       20832 min
+Neighs:         329003 ave      329003 max      329003 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 20832
-Ave neighs/atom = 217
+Total # of neighbors = 329003
+Ave neighs/atom = 428.38932
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -683,26 +678,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.4127755
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.4127755
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.825551 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.825551 0.0 10.825551 0.0 ${double_xhi} units box
-region supercell block 0.0 10.825551 0.0 10.825551 0.0 10.825551 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.651102 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.651102 0.0 21.651102 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.651102 0.0 21.651102 0.0 21.651102 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (10.825551 10.825551 10.825551)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (21.651102 21.651102 21.651102)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -726,13 +721,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -744,42 +738,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 64.44 | 64.44 | 64.44 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 173 | 173 | 173 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -13087.539      0             -13087.539      1121251.2    
-         1   0             -13087.539      0             -13087.539      1121251.2    
-Loop time of 0.0439745 on 1 procs for 1 steps with 96 atoms
+         0   0             -49906.138      0             -49906.138      1873123.4    
+         1   0             -49906.138      0             -49906.138      1873123.4    
+Loop time of 0.377867 on 1 procs for 1 steps with 768 atoms
 
-94.4% CPU use with 1 MPI tasks x no OpenMP threads
+96.4% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -13087.5391052035  -13087.5391052035  -13087.5391052036
-  Force two-norm initial, final = 1.2712312e-11 1.585316e-05
-  Force max component initial, final = 2.6535441e-12 2.2668154e-06
-  Final line search alpha, max atom move = 1 2.2668154e-06
+     -49906.1379086001  -49906.1379086001  -49906.1379086062
+  Force two-norm initial, final = 6.4309058e-11 0.00014353222
+  Force max component initial, final = 4.336087e-12 8.8655282e-06
+  Final line search alpha, max atom move = 1 8.8655282e-06
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.042457   | 0.042457   | 0.042457   |   0.0 | 96.55
+Pair    | 0.35054    | 0.35054    | 0.35054    |   0.0 | 92.77
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.2291e-05 | 2.2291e-05 | 2.2291e-05 |   0.0 |  0.05
+Comm    | 7.454e-05  | 7.454e-05  | 7.454e-05  |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0013498  | 0.0013498  | 0.0013498  |   0.0 |  3.07
-Other   |            | 0.0001454  |            |       |  0.33
+Modify  | 0.026577   | 0.026577   | 0.026577   |   0.0 |  7.03
+Other   |            | 0.0006725  |            |       |  0.18
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           2297 ave        2297 max        2297 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          20832 ave       20832 max       20832 min
+Neighs:         314027 ave      314027 max      314027 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 20832
-Ave neighs/atom = 217
+Total # of neighbors = 314027
+Ave neighs/atom = 408.88932
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -809,26 +803,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.46745
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.46745
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.9349 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 10.9349 0.0 10.9349 0.0 ${double_xhi} units box
-region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.8698 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.8698 0.0 21.8698 0.0 ${n_times_xhi} units box
+region supercell block 0.0 21.8698 0.0 21.8698 0.0 21.8698 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (10.9349 10.9349 10.9349)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (21.8698 21.8698 21.8698)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -852,13 +846,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -870,42 +863,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 44.22 | 44.22 | 44.22 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 173 | 173 | 173 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -13626.913      0             -13626.913      921678.65    
-         1   0             -13626.913      0             -13626.913      921678.65    
-Loop time of 0.0407078 on 1 procs for 1 steps with 96 atoms
+         0   0             -57815.101      0             -57815.101      1626827.5    
+         1   0             -57815.101      0             -57815.101      1626827.5    
+Loop time of 0.49578 on 1 procs for 1 steps with 768 atoms
 
-82.4% CPU use with 1 MPI tasks x no OpenMP threads
+97.4% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = energy tolerance
+  Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -13626.9133696668  -13626.9133696668  -13626.9133696669
-  Force two-norm initial, final = 1.5333721e-11 1.6359039e-05
-  Force max component initial, final = 2.0605739e-12 1.6749089e-06
-  Final line search alpha, max atom move = 1 1.6749089e-06
-  Iterations, force evaluations = 1 2
+     -57815.1005337374  -57815.1005337374  -57815.1005337361
+  Force two-norm initial, final = 4.0596296e-11 0.00020249701
+  Force max component initial, final = 2.7835512e-12 2.3010619e-05
+  Final line search alpha, max atom move = 0.5 1.150531e-05
+  Iterations, force evaluations = 1 3
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.038877   | 0.038877   | 0.038877   |   0.0 | 95.50
+Pair    | 0.46224    | 0.46224    | 0.46224    |   0.0 | 93.23
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.7708e-05 | 2.7708e-05 | 2.7708e-05 |   0.0 |  0.07
+Comm    | 0.00010025 | 0.00010025 | 0.00010025 |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0016604  | 0.0016604  | 0.0016604  |   0.0 |  4.08
-Other   |            | 0.0001423  |            |       |  0.35
+Modify  | 0.032811   | 0.032811   | 0.032811   |   0.0 |  6.62
+Other   |            | 0.0006299  |            |       |  0.13
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          20832 ave       20832 max       20832 min
+Neighs:         314027 ave      314027 max      314027 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 20832
-Ave neighs/atom = 217
+Total # of neighbors = 314027
+Ave neighs/atom = 408.88932
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -935,26 +928,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.5221245
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.5221245
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.044249 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.044249 0.0 11.044249 0.0 ${double_xhi} units box
-region supercell block 0.0 11.044249 0.0 11.044249 0.0 11.044249 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.088498 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.088498 0.0 22.088498 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.088498 0.0 22.088498 0.0 22.088498 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (11.044249 11.044249 11.044249)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (22.088498 22.088498 22.088498)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -978,13 +971,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -996,42 +988,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 44.21 | 44.21 | 44.21 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 172.1 | 172.1 | 172.1 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -14074.399      0             -14074.399      753089.84    
-         1   0             -14074.399      0             -14074.399      753089.84    
-Loop time of 0.0343112 on 1 procs for 1 steps with 96 atoms
+         0   0             -64829.537      0             -64829.537      1415436.6    
+         1   0             -64829.537      0             -64829.537      1415436.6    
+Loop time of 0.495968 on 1 procs for 1 steps with 768 atoms
 
-93.5% CPU use with 1 MPI tasks x no OpenMP threads
+97.1% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = energy tolerance
+  Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -14074.3992700197  -14074.3992700197  -14074.3992700199
-  Force two-norm initial, final = 1.1175828e-11 1.4892182e-06
-  Force max component initial, final = 1.1191048e-12 1.9770442e-07
-  Final line search alpha, max atom move = 1 1.9770442e-07
-  Iterations, force evaluations = 1 2
+      -64829.536811064   -64829.536811064   -64829.536811056
+  Force two-norm initial, final = 6.302306e-11 0.00018158432
+  Force max component initial, final = 3.3111291e-12 1.3707492e-05
+  Final line search alpha, max atom move = 0.5 6.8537461e-06
+  Iterations, force evaluations = 1 3
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.032778   | 0.032778   | 0.032778   |   0.0 | 95.53
+Pair    | 0.4625     | 0.4625     | 0.4625     |   0.0 | 93.25
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.7999e-05 | 1.7999e-05 | 1.7999e-05 |   0.0 |  0.05
+Comm    | 9.8667e-05 | 9.8667e-05 | 9.8667e-05 |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0013854  | 0.0013854  | 0.0013854  |   0.0 |  4.04
-Other   |            | 0.0001294  |            |       |  0.38
+Modify  | 0.032715   | 0.032715   | 0.032715   |   0.0 |  6.60
+Other   |            | 0.0006554  |            |       |  0.13
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          20112 ave       20112 max       20112 min
+Neighs:         303839 ave      303839 max      303839 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 20112
-Ave neighs/atom = 209.5
+Total # of neighbors = 303839
+Ave neighs/atom = 395.6237
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -1061,26 +1053,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.576799
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.576799
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.153598 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.153598 0.0 11.153598 0.0 ${double_xhi} units box
-region supercell block 0.0 11.153598 0.0 11.153598 0.0 11.153598 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.307196 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.307196 0.0 22.307196 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.307196 0.0 22.307196 0.0 22.307196 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (11.153598 11.153598 11.153598)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (22.307196 22.307196 22.307196)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -1104,13 +1096,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -1122,42 +1113,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 44.21 | 44.21 | 44.21 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 171 | 171 | 171 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -14441.021      0             -14441.021      609032.85    
-         1   0             -14441.021      0             -14441.021      609032.85    
-Loop time of 0.0343907 on 1 procs for 1 steps with 96 atoms
+         0   0             -71056.682      0             -71056.682      1232137      
+         1   0             -71056.682      0             -71056.682      1232137      
+Loop time of 0.408807 on 1 procs for 1 steps with 768 atoms
 
-92.4% CPU use with 1 MPI tasks x no OpenMP threads
+90.2% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -14441.0214284352  -14441.0214284352   -14441.021428435
-  Force two-norm initial, final = 1.4383995e-11 5.8445663e-06
-  Force max component initial, final = 2.0605739e-12 8.1231872e-07
-  Final line search alpha, max atom move = 1 8.1231872e-07
+     -71056.6824926534  -71056.6824926534  -71056.6824926774
+  Force two-norm initial, final = 4.7595945e-11 8.7004792e-05
+  Force max component initial, final = 4.0216719e-12 4.8484341e-06
+  Final line search alpha, max atom move = 1 4.8484341e-06
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.032935   | 0.032935   | 0.032935   |   0.0 | 95.77
+Pair    | 0.38333    | 0.38333    | 0.38333    |   0.0 | 93.77
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.9333e-05 | 1.9333e-05 | 1.9333e-05 |   0.0 |  0.06
+Comm    | 7.3833e-05 | 7.3833e-05 | 7.3833e-05 |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0012938  | 0.0012938  | 0.0012938  |   0.0 |  3.76
-Other   |            | 0.0001421  |            |       |  0.41
+Modify  | 0.024765   | 0.024765   | 0.024765   |   0.0 |  6.06
+Other   |            | 0.0006377  |            |       |  0.16
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          20112 ave       20112 max       20112 min
+Neighs:         280290 ave      280290 max      280290 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 20112
-Ave neighs/atom = 209.5
+Total # of neighbors = 280290
+Ave neighs/atom = 364.96094
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -1187,26 +1178,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.6314735
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.6314735
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.262947 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.262947 0.0 11.262947 0.0 ${double_xhi} units box
-region supercell block 0.0 11.262947 0.0 11.262947 0.0 11.262947 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.525894 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.525894 0.0 22.525894 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.525894 0.0 22.525894 0.0 22.525894 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (11.262947 11.262947 11.262947)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (22.525894 22.525894 22.525894)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -1230,13 +1221,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -1248,42 +1238,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 44.21 | 44.21 | 44.21 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 171 | 171 | 171 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -14737.604      0             -14737.604      484251.65    
-         1   0             -14737.604      0             -14737.604      484251.65    
-Loop time of 0.0346891 on 1 procs for 1 steps with 96 atoms
+         0   0             -76582.898      0             -76582.898      1071638.3    
+         1   0             -76582.898      0             -76582.898      1071638.3    
+Loop time of 0.362322 on 1 procs for 1 steps with 768 atoms
 
-92.5% CPU use with 1 MPI tasks x no OpenMP threads
+96.3% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -14737.6035905642  -14737.6035905642  -14737.6035905641
-  Force two-norm initial, final = 8.0651639e-12 2.1189686e-06
-  Force max component initial, final = 1.6452581e-12 3.1638841e-07
-  Final line search alpha, max atom move = 1 3.1638841e-07
+     -76582.8976864904  -76582.8976864904  -76582.8976864883
+  Force two-norm initial, final = 3.8353875e-11 3.6753622e-05
+  Force max component initial, final = 3.3142378e-12 2.2538119e-06
+  Final line search alpha, max atom move = 1 2.2538119e-06
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.033033   | 0.033033   | 0.033033   |   0.0 | 95.22
+Pair    | 0.33926    | 0.33926    | 0.33926    |   0.0 | 93.64
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 3.2501e-05 | 3.2501e-05 | 3.2501e-05 |   0.0 |  0.09
+Comm    | 7.4999e-05 | 7.4999e-05 | 7.4999e-05 |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0014024  | 0.0014024  | 0.0014024  |   0.0 |  4.04
-Other   |            | 0.0002216  |            |       |  0.64
+Modify  | 0.022299   | 0.022299   | 0.022299   |   0.0 |  6.15
+Other   |            | 0.0006838  |            |       |  0.19
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          20112 ave       20112 max       20112 min
+Neighs:         280290 ave      280290 max      280290 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 20112
-Ave neighs/atom = 209.5
+Total # of neighbors = 280290
+Ave neighs/atom = 364.96094
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -1313,26 +1303,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.686148
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.686148
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.372296 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.372296 0.0 11.372296 0.0 ${double_xhi} units box
-region supercell block 0.0 11.372296 0.0 11.372296 0.0 11.372296 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.744592 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.744592 0.0 22.744592 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.744592 0.0 22.744592 0.0 22.744592 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (11.372296 11.372296 11.372296)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (22.744592 22.744592 22.744592)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -1356,13 +1346,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -1374,42 +1363,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 44.21 | 44.21 | 44.21 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 170.7 | 170.7 | 170.7 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -14971.699      0             -14971.699      374901.72    
-         1   0             -14971.699      0             -14971.699      374901.72    
-Loop time of 0.0329835 on 1 procs for 1 steps with 96 atoms
+         0   0             -81478.24       0             -81478.24       929777.02    
+         1   0             -81478.24       0             -81478.24       929777.02    
+Loop time of 0.361811 on 1 procs for 1 steps with 768 atoms
 
-93.6% CPU use with 1 MPI tasks x no OpenMP threads
+96.2% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -14971.6989089502  -14971.6989089502  -14971.6989089499
-  Force two-norm initial, final = 9.5610282e-12 4.4181939e-06
-  Force max component initial, final = 1.7542252e-12 7.0125202e-07
-  Final line search alpha, max atom move = 1 7.0125202e-07
+     -81478.2404113072  -81478.2404113072  -81478.2404113122
+  Force two-norm initial, final = 3.1954196e-11 1.3272294e-05
+  Force max component initial, final = 2.6076918e-12 9.9517861e-07
+  Final line search alpha, max atom move = 1 9.9517861e-07
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.031436   | 0.031436   | 0.031436   |   0.0 | 95.31
+Pair    | 0.33865    | 0.33865    | 0.33865    |   0.0 | 93.60
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.1e-05    | 2.1e-05    | 2.1e-05    |   0.0 |  0.06
+Comm    | 7.5459e-05 | 7.5459e-05 | 7.5459e-05 |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0014029  | 0.0014029  | 0.0014029  |   0.0 |  4.25
-Other   |            | 0.0001239  |            |       |  0.38
+Modify  | 0.022452   | 0.022452   | 0.022452   |   0.0 |  6.21
+Other   |            | 0.000629   |            |       |  0.17
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          20112 ave       20112 max       20112 min
+Neighs:         257970 ave      257970 max      257970 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 20112
-Ave neighs/atom = 209.5
+Total # of neighbors = 257970
+Ave neighs/atom = 335.89844
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -1439,26 +1428,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.7408225
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.7408225
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.481645 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.481645 0.0 11.481645 0.0 ${double_xhi} units box
-region supercell block 0.0 11.481645 0.0 11.481645 0.0 11.481645 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.96329 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.96329 0.0 22.96329 0.0 ${n_times_xhi} units box
+region supercell block 0.0 22.96329 0.0 22.96329 0.0 22.96329 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (11.481645 11.481645 11.481645)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (22.96329 22.96329 22.96329)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -1482,13 +1471,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -1500,42 +1488,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 44.19 | 44.19 | 44.19 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 170.7 | 170.7 | 170.7 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -15149.94       0             -15149.94       278123.27    
-         1   0             -15149.94       0             -15149.94       278123.27    
-Loop time of 0.026618 on 1 procs for 1 steps with 96 atoms
+         0   0             -85799.656      0             -85799.656      803328.95    
+         1   0             -85799.656      0             -85799.656      803328.95    
+Loop time of 0.402523 on 1 procs for 1 steps with 768 atoms
 
-93.9% CPU use with 1 MPI tasks x no OpenMP threads
+97.2% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = energy tolerance
+  Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -15149.9401095477  -15149.9401095477  -15149.9401095475
-  Force two-norm initial, final = 1.2806323e-11 3.4179844e-06
-  Force max component initial, final = 2.0889956e-12 4.6812599e-07
-  Final line search alpha, max atom move = 1 4.6812599e-07
-  Iterations, force evaluations = 1 2
+     -85799.6562351838  -85799.6562351838  -85799.6562351799
+  Force two-norm initial, final = 2.1404241e-11 8.6493691e-05
+  Force max component initial, final = 1.8296475e-12 6.0744425e-06
+  Final line search alpha, max atom move = 0.5 3.0372213e-06
+  Iterations, force evaluations = 1 3
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.025284   | 0.025284   | 0.025284   |   0.0 | 94.99
+Pair    | 0.37447    | 0.37447    | 0.37447    |   0.0 | 93.03
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.7707e-05 | 1.7707e-05 | 1.7707e-05 |   0.0 |  0.07
+Comm    | 0.00010167 | 0.00010167 | 0.00010167 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0011967  | 0.0011967  | 0.0011967  |   0.0 |  4.50
-Other   |            | 0.0001194  |            |       |  0.45
+Modify  | 0.027402   | 0.027402   | 0.027402   |   0.0 |  6.81
+Other   |            | 0.0005462  |            |       |  0.14
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          18684 ave       18684 max       18684 min
+Neighs:         257970 ave      257970 max      257970 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 18684
-Ave neighs/atom = 194.625
+Total # of neighbors = 257970
+Ave neighs/atom = 335.89844
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -1565,26 +1553,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.795497
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.795497
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.590994 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.590994 0.0 11.590994 0.0 ${double_xhi} units box
-region supercell block 0.0 11.590994 0.0 11.590994 0.0 11.590994 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 23.181988 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 23.181988 0.0 23.181988 0.0 ${n_times_xhi} units box
+region supercell block 0.0 23.181988 0.0 23.181988 0.0 23.181988 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (11.590994 11.590994 11.590994)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (23.181988 23.181988 23.181988)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -1608,13 +1596,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -1626,42 +1613,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 37.99 | 37.99 | 37.99 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 142 | 142 | 142 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -15274.551      0             -15274.551      193897.83    
-         1   0             -15274.551      0             -15274.551      193897.83    
-Loop time of 0.0217457 on 1 procs for 1 steps with 96 atoms
+         0   0             -89594.826      0             -89594.826      691360.08    
+         1   0             -89594.826      0             -89594.826      691360.08    
+Loop time of 0.253798 on 1 procs for 1 steps with 768 atoms
 
-93.1% CPU use with 1 MPI tasks x no OpenMP threads
+99.5% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -15274.5510039486  -15274.5510039486  -15274.5510039486
-  Force two-norm initial, final = 6.3271931e-12 3.2471519e-07
-  Force max component initial, final = 1.1471424e-12 7.1609428e-08
-  Final line search alpha, max atom move = 0.5 3.5804714e-08
+     -89594.8261454702  -89594.8261454702  -89594.8261454692
+  Force two-norm initial, final = 3.948328e-11 3.2191831e-05
+  Force max component initial, final = 3.2830579e-12 2.1546291e-06
+  Final line search alpha, max atom move = 0.5 1.0773146e-06
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.020368   | 0.020368   | 0.020368   |   0.0 | 93.67
+Pair    | 0.23169    | 0.23169    | 0.23169    |   0.0 | 91.29
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 3.0458e-05 | 3.0458e-05 | 3.0458e-05 |   0.0 |  0.14
+Comm    | 7.475e-05  | 7.475e-05  | 7.475e-05  |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0011298  | 0.0011298  | 0.0011298  |   0.0 |  5.20
-Other   |            | 0.0002172  |            |       |  1.00
+Modify  | 0.021432   | 0.021432   | 0.021432   |   0.0 |  8.44
+Other   |            | 0.0006004  |            |       |  0.24
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          17259 ave       17259 max       17259 min
+Neighs:         257970 ave      257970 max      257970 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 17259
-Ave neighs/atom = 179.78125
+Total # of neighbors = 257970
+Ave neighs/atom = 335.89844
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -1691,26 +1678,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.8501715
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.8501715
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.700343 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.700343 0.0 11.700343 0.0 ${double_xhi} units box
-region supercell block 0.0 11.700343 0.0 11.700343 0.0 11.700343 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 23.400686 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 23.400686 0.0 23.400686 0.0 ${n_times_xhi} units box
+region supercell block 0.0 23.400686 0.0 23.400686 0.0 23.400686 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (11.700343 11.700343 11.700343)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (23.400686 23.400686 23.400686)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -1734,13 +1721,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -1752,42 +1738,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 37.99 | 37.99 | 37.99 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 141 | 141 | 141 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -15360.928      0             -15360.928      148869.4     
-         1   0             -15360.928      0             -15360.928      148869.4     
-Loop time of 0.0211474 on 1 procs for 1 steps with 96 atoms
+         0   0             -92957.67       0             -92957.67       620923.33    
+         1   0             -92957.67       0             -92957.67       620923.33    
+Loop time of 0.335302 on 1 procs for 1 steps with 768 atoms
 
-92.7% CPU use with 1 MPI tasks x no OpenMP threads
+99.4% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -15360.9278048594  -15360.9278048594  -15360.9278048594
-  Force two-norm initial, final = 1.0796639e-11 3.4004065e-06
-  Force max component initial, final = 1.7585933e-12 4.8944666e-07
-  Final line search alpha, max atom move = 0.5 2.4472333e-07
-  Iterations, force evaluations = 1 2
+     -92957.6699419559  -92957.6699419559   -92957.669941932
+  Force two-norm initial, final = 4.0797861e-11 9.417422e-05
+  Force max component initial, final = 3.0370151e-12 8.5271544e-06
+  Final line search alpha, max atom move = 0.5 4.2635772e-06
+  Iterations, force evaluations = 1 3
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.019898   | 0.019898   | 0.019898   |   0.0 | 94.09
+Pair    | 0.30822    | 0.30822    | 0.30822    |   0.0 | 91.92
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.7624e-05 | 1.7624e-05 | 1.7624e-05 |   0.0 |  0.08
+Comm    | 9.9667e-05 | 9.9667e-05 | 9.9667e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0011133  | 0.0011133  | 0.0011133  |   0.0 |  5.26
-Other   |            | 0.0001188  |            |       |  0.56
+Modify  | 0.026443   | 0.026443   | 0.026443   |   0.0 |  7.89
+Other   |            | 0.0005388  |            |       |  0.16
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          17259 ave       17259 max       17259 min
+Neighs:         238242 ave      238242 max      238242 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 17259
-Ave neighs/atom = 179.78125
+Total # of neighbors = 238242
+Ave neighs/atom = 310.21094
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -1817,26 +1803,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.904846
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.904846
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.809692 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.809692 0.0 11.809692 0.0 ${double_xhi} units box
-region supercell block 0.0 11.809692 0.0 11.809692 0.0 11.809692 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 23.619384 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 23.619384 0.0 23.619384 0.0 ${n_times_xhi} units box
+region supercell block 0.0 23.619384 0.0 23.619384 0.0 23.619384 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (11.809692 11.809692 11.809692)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (23.619384 23.619384 23.619384)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -1860,13 +1846,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -1878,42 +1863,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 37.99 | 37.99 | 37.99 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 140.9 | 140.9 | 140.9 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -15370.637      0             -15370.637     -220972.48    
-         1   0             -15370.637      0             -15370.637     -220972.48    
-Loop time of 0.0223277 on 1 procs for 1 steps with 96 atoms
+         0   0             -95605.761      0             -95605.761      227249.38    
+         1   0             -95605.761      0             -95605.761      227249.38    
+Loop time of 0.253937 on 1 procs for 1 steps with 768 atoms
 
-94.1% CPU use with 1 MPI tasks x no OpenMP threads
+99.5% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -15370.6369263194  -15370.6369263194  -15370.6369263192
-  Force two-norm initial, final = 1.9531574e-11 5.5361305e-06
-  Force max component initial, final = 3.8067587e-12 1.0776826e-06
-  Final line search alpha, max atom move = 1 1.0776826e-06
+     -95605.7611445719  -95605.7611445719  -95605.7611445667
+  Force two-norm initial, final = 5.948753e-11 3.3838691e-05
+  Force max component initial, final = 4.5670134e-12 2.2512171e-06
+  Final line search alpha, max atom move = 1 2.2512171e-06
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.021036   | 0.021036   | 0.021036   |   0.0 | 94.21
+Pair    | 0.23202    | 0.23202    | 0.23202    |   0.0 | 91.37
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.9625e-05 | 1.9625e-05 | 1.9625e-05 |   0.0 |  0.09
+Comm    | 7.4834e-05 | 7.4834e-05 | 7.4834e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0011398  | 0.0011398  | 0.0011398  |   0.0 |  5.10
-Other   |            | 0.0001326  |            |       |  0.59
+Modify  | 0.021239   | 0.021239   | 0.021239   |   0.0 |  8.36
+Other   |            | 0.000601   |            |       |  0.24
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          17259 ave       17259 max       17259 min
+Neighs:         228237 ave      228237 max      228237 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 17259
-Ave neighs/atom = 179.78125
+Total # of neighbors = 228237
+Ave neighs/atom = 297.18359
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -1943,26 +1928,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*5.9595205
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*5.9595205
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.919041 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 11.919041 0.0 11.919041 0.0 ${double_xhi} units box
-region supercell block 0.0 11.919041 0.0 11.919041 0.0 11.919041 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 23.838082 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 23.838082 0.0 23.838082 0.0 ${n_times_xhi} units box
+region supercell block 0.0 23.838082 0.0 23.838082 0.0 23.838082 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (11.919041 11.919041 11.919041)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (23.838082 23.838082 23.838082)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -1986,13 +1971,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -2004,42 +1988,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 37.99 | 37.99 | 37.99 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 140.9 | 140.9 | 140.9 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -15165.709      0             -15165.709     -293618.29    
-         1   0             -15165.709      0             -15165.709     -293618.29    
-Loop time of 0.015049 on 1 procs for 1 steps with 96 atoms
+         0   0             -96438.397      0             -96438.397      132059.67    
+         1   0             -96438.397      0             -96438.397      132059.67    
+Loop time of 0.252796 on 1 procs for 1 steps with 768 atoms
 
-90.2% CPU use with 1 MPI tasks x no OpenMP threads
+99.8% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -15165.7090039113  -15165.7090039113  -15165.7090039125
-  Force two-norm initial, final = 1.3701934e-11 1.4376732e-07
-  Force max component initial, final = 3.2943093e-12 3.3076539e-08
-  Final line search alpha, max atom move = 1 3.3076539e-08
-  Iterations, force evaluations = 1 1
+     -96438.3971300839  -96438.3971300839  -96438.3971300795
+  Force two-norm initial, final = 3.4727766e-11 9.5597691e-06
+  Force max component initial, final = 3.5536019e-12 1.2329629e-06
+  Final line search alpha, max atom move = 1 1.2329629e-06
+  Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.014107   | 0.014107   | 0.014107   |   0.0 | 93.74
+Pair    | 0.23102    | 0.23102    | 0.23102    |   0.0 | 91.39
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.0999e-05 | 1.0999e-05 | 1.0999e-05 |   0.0 |  0.07
+Comm    | 7.375e-05  | 7.375e-05  | 7.375e-05  |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.000797   | 0.000797   | 0.000797   |   0.0 |  5.30
-Other   |            | 0.0001343  |            |       |  0.89
+Modify  | 0.021051   | 0.021051   | 0.021051   |   0.0 |  8.33
+Other   |            | 0.0006518  |            |       |  0.26
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5785 ave        5785 max        5785 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          17259 ave       17259 max       17259 min
+Neighs:         228237 ave      228237 max      228237 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 17259
-Ave neighs/atom = 179.78125
+Total # of neighbors = 228237
+Ave neighs/atom = 297.18359
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -2069,26 +2053,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.014195
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.014195
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.02839 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.02839 0.0 12.02839 0.0 ${double_xhi} units box
-region supercell block 0.0 12.02839 0.0 12.02839 0.0 12.02839 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.05678 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.05678 0.0 24.05678 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.05678 0.0 24.05678 0.0 24.05678 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (12.02839 12.02839 12.02839)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (24.05678 24.05678 24.05678)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -2112,13 +2096,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -2130,42 +2113,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 37.96 | 37.96 | 37.96 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 126.2 | 126.2 | 126.2 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -14946.049      0             -14946.049     -313155.46    
-         1   0             -14946.049      0             -14946.049     -313155.46    
-Loop time of 0.0204643 on 1 procs for 1 steps with 96 atoms
+         0   0             -97048.634      0             -97048.634      91339.004    
+         1   0             -97048.634      0             -97048.634      91339.004    
+Loop time of 0.161024 on 1 procs for 1 steps with 768 atoms
 
-93.6% CPU use with 1 MPI tasks x no OpenMP threads
+95.5% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = linesearch alpha is zero
+  Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -14946.0490845442  -14946.0490845442  -14946.0490845442
-  Force two-norm initial, final = 2.1626915e-11 4.7902594e-06
-  Force max component initial, final = 3.6311253e-12 7.0911874e-07
-  Final line search alpha, max atom move = 0.5 3.5455937e-07
-  Iterations, force evaluations = 1 2
+      -97048.634246921   -97048.634246921  -97048.6342469574
+  Force two-norm initial, final = 4.2974824e-11 1.0281579e-06
+  Force max component initial, final = 3.7370107e-12 8.9108347e-08
+  Final line search alpha, max atom move = 1 8.9108347e-08
+  Iterations, force evaluations = 1 1
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.019327   | 0.019327   | 0.019327   |   0.0 | 94.44
+Pair    | 0.14775    | 0.14775    | 0.14775    |   0.0 | 91.76
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.7667e-05 | 1.7667e-05 | 1.7667e-05 |   0.0 |  0.09
+Comm    | 4.4252e-05 | 4.4252e-05 | 4.4252e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0010057  | 0.0010057  | 0.0010057  |   0.0 |  4.91
-Other   |            | 0.0001143  |            |       |  0.56
+Modify  | 0.012579   | 0.012579   | 0.012579   |   0.0 |  7.81
+Other   |            | 0.000647   |            |       |  0.40
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          15171 ave       15171 max       15171 min
+Neighs:         224781 ave      224781 max      224781 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 15171
-Ave neighs/atom = 158.03125
+Total # of neighbors = 224781
+Ave neighs/atom = 292.68359
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -2195,26 +2178,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.0688695
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.0688695
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.137739 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.137739 0.0 12.137739 0.0 ${double_xhi} units box
-region supercell block 0.0 12.137739 0.0 12.137739 0.0 12.137739 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.275478 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.275478 0.0 24.275478 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.275478 0.0 24.275478 0.0 24.275478 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (12.137739 12.137739 12.137739)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (24.275478 24.275478 24.275478)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -2238,13 +2221,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -2256,42 +2238,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 37.96 | 37.96 | 37.96 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 126.2 | 126.2 | 126.2 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -14711.681      0             -14711.681     -325221.7     
-         1   0             -14711.681      0             -14711.681     -325221.7     
-Loop time of 0.0166261 on 1 procs for 1 steps with 96 atoms
+         0   0             -97460.28       0             -97460.28       58354.721    
+         1   0             -97460.28       0             -97460.28       58354.721    
+Loop time of 0.22446 on 1 procs for 1 steps with 768 atoms
 
-87.6% CPU use with 1 MPI tasks x no OpenMP threads
+96.6% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -14711.6810726618  -14711.6810726618  -14711.6810726622
-  Force two-norm initial, final = 1.7656218e-11 1.2330249e-07
-  Force max component initial, final = 3.3217873e-12 2.1454952e-08
-  Final line search alpha, max atom move = 1 2.1454952e-08
-  Iterations, force evaluations = 1 1
+       -97460.28026827    -97460.28026827  -97460.2802682882
+  Force two-norm initial, final = 4.308817e-11 1.2556616e-05
+  Force max component initial, final = 3.4253989e-12 8.1086042e-07
+  Final line search alpha, max atom move = 1 8.1086042e-07
+  Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.015726   | 0.015726   | 0.015726   |   0.0 | 94.58
+Pair    | 0.20674    | 0.20674    | 0.20674    |   0.0 | 92.10
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.1833e-05 | 1.1833e-05 | 1.1833e-05 |   0.0 |  0.07
+Comm    | 6.7751e-05 | 6.7751e-05 | 6.7751e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.00077192 | 0.00077192 | 0.00077192 |   0.0 |  4.64
-Other   |            | 0.0001166  |            |       |  0.70
+Modify  | 0.016979   | 0.016979   | 0.016979   |   0.0 |  7.56
+Other   |            | 0.0006786  |            |       |  0.30
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          15171 ave       15171 max       15171 min
+Neighs:         224781 ave      224781 max      224781 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 15171
-Ave neighs/atom = 158.03125
+Total # of neighbors = 224781
+Ave neighs/atom = 292.68359
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -2321,26 +2303,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.123544
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.123544
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.247088 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.247088 0.0 12.247088 0.0 ${double_xhi} units box
-region supercell block 0.0 12.247088 0.0 12.247088 0.0 12.247088 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.494176 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.494176 0.0 24.494176 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.494176 0.0 24.494176 0.0 24.494176 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (12.247088 12.247088 12.247088)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (24.494176 24.494176 24.494176)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -2364,13 +2346,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -2382,42 +2363,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 37.96 | 37.96 | 37.96 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 126.2 | 126.2 | 126.2 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -14470.389      0             -14470.389     -328386.06    
-         1   0             -14470.389      0             -14470.389     -328386.06    
-Loop time of 0.0222462 on 1 procs for 1 steps with 96 atoms
+         0   0             -97720.076      0             -97720.076      35083.003    
+         1   0             -97720.076      0             -97720.076      35083.003    
+Loop time of 0.291787 on 1 procs for 1 steps with 768 atoms
 
-94.1% CPU use with 1 MPI tasks x no OpenMP threads
+97.6% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -14470.3891110455  -14470.3891110455  -14470.3891110455
-  Force two-norm initial, final = 1.6406326e-11 1.6277421e-06
-  Force max component initial, final = 3.0411229e-12 3.6621637e-07
-  Final line search alpha, max atom move = 0.5 1.8310818e-07
-  Iterations, force evaluations = 1 2
+     -97720.0763895477  -97720.0763895477  -97720.0763895338
+  Force two-norm initial, final = 4.920291e-11 5.2135072e-05
+  Force max component initial, final = 3.2351448e-12 4.327546e-06
+  Final line search alpha, max atom move = 0.5 2.163773e-06
+  Iterations, force evaluations = 1 3
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.02102    | 0.02102    | 0.02102    |   0.0 | 94.49
+Pair    | 0.26969    | 0.26969    | 0.26969    |   0.0 | 92.43
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.0248e-05 | 2.0248e-05 | 2.0248e-05 |   0.0 |  0.09
+Comm    | 8.8334e-05 | 8.8334e-05 | 8.8334e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0010909  | 0.0010909  | 0.0010909  |   0.0 |  4.90
-Other   |            | 0.000115   |            |       |  0.52
+Modify  | 0.021394   | 0.021394   | 0.021394   |   0.0 |  7.33
+Other   |            | 0.0006181  |            |       |  0.21
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          15171 ave       15171 max       15171 min
+Neighs:         224781 ave      224781 max      224781 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 15171
-Ave neighs/atom = 158.03125
+Total # of neighbors = 224781
+Ave neighs/atom = 292.68359
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -2447,26 +2428,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.1782185
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.1782185
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.356437 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.356437 0.0 12.356437 0.0 ${double_xhi} units box
-region supercell block 0.0 12.356437 0.0 12.356437 0.0 12.356437 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.712874 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.712874 0.0 24.712874 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.712874 0.0 24.712874 0.0 24.712874 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (12.356437 12.356437 12.356437)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (24.712874 24.712874 24.712874)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -2490,13 +2471,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -2508,42 +2488,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 37.96 | 37.96 | 37.96 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 126.2 | 126.2 | 126.2 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -14227.717      0             -14227.717     -323829.93    
-         1   0             -14227.717      0             -14227.717     -323829.93    
-Loop time of 0.0211713 on 1 procs for 1 steps with 96 atoms
+         0   0             -97875.172      0             -97875.172      20292.935    
+         1   0             -97875.172      0             -97875.172      20292.935    
+Loop time of 0.219984 on 1 procs for 1 steps with 768 atoms
 
-92.4% CPU use with 1 MPI tasks x no OpenMP threads
+96.6% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = linesearch alpha is zero
+  Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -14227.7166825294  -14227.7166825294  -14227.7166825293
-  Force two-norm initial, final = 1.487366e-11 1.0356542e-06
-  Force max component initial, final = 4.355627e-12 1.8520775e-07
-  Final line search alpha, max atom move = 0.5 9.2603877e-08
+     -97875.1715757445  -97875.1715757445  -97875.1715757641
+  Force two-norm initial, final = 4.1367679e-11 6.0925187e-06
+  Force max component initial, final = 3.6646242e-12 5.671819e-07
+  Final line search alpha, max atom move = 1 5.671819e-07
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.019983   | 0.019983   | 0.019983   |   0.0 | 94.39
+Pair    | 0.20339    | 0.20339    | 0.20339    |   0.0 | 92.46
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.9209e-05 | 1.9209e-05 | 1.9209e-05 |   0.0 |  0.09
+Comm    | 6.6957e-05 | 6.6957e-05 | 6.6957e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0010585  | 0.0010585  | 0.0010585  |   0.0 |  5.00
-Other   |            | 0.0001103  |            |       |  0.52
+Modify  | 0.015897   | 0.015897   | 0.015897   |   0.0 |  7.23
+Other   |            | 0.0006309  |            |       |  0.29
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          15171 ave       15171 max       15171 min
+Neighs:         224781 ave      224781 max      224781 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 15171
-Ave neighs/atom = 158.03125
+Total # of neighbors = 224781
+Ave neighs/atom = 292.68359
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -2573,26 +2553,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.232893
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.232893
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.465786 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.465786 0.0 12.465786 0.0 ${double_xhi} units box
-region supercell block 0.0 12.465786 0.0 12.465786 0.0 12.465786 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.931572 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.931572 0.0 24.931572 0.0 ${n_times_xhi} units box
+region supercell block 0.0 24.931572 0.0 24.931572 0.0 24.931572 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (12.465786 12.465786 12.465786)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (24.931572 24.931572 24.931572)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -2616,13 +2596,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -2634,42 +2613,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 37.96 | 37.96 | 37.96 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 126.2 | 126.2 | 126.2 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -13988.648      0             -13988.648     -312840.73    
-         1   0             -13988.648      0             -13988.648     -312840.73    
-Loop time of 0.0226978 on 1 procs for 1 steps with 96 atoms
+         0   0             -97967.629      0             -97967.629      12598.686    
+         1   0             -97967.629      0             -97967.629      12598.686    
+Loop time of 0.218117 on 1 procs for 1 steps with 768 atoms
 
-90.8% CPU use with 1 MPI tasks x no OpenMP threads
+96.8% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = linesearch alpha is zero
+  Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-      -13988.648339535   -13988.648339535   -13988.648339535
-  Force two-norm initial, final = 8.5860658e-12 6.6859738e-08
-  Force max component initial, final = 1.1510792e-12 1.1424369e-08
-  Final line search alpha, max atom move = 0.5 5.7121846e-09
+     -97967.6289338548  -97967.6289338548  -97967.6289338518
+  Force two-norm initial, final = 3.0230843e-11 3.8386471e-06
+  Force max component initial, final = 3.1477043e-12 2.7046079e-07
+  Final line search alpha, max atom move = 1 2.7046079e-07
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.021487   | 0.021487   | 0.021487   |   0.0 | 94.66
+Pair    | 0.20161    | 0.20161    | 0.20161    |   0.0 | 92.43
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.825e-05  | 1.825e-05  | 1.825e-05  |   0.0 |  0.08
+Comm    | 6.6374e-05 | 6.6374e-05 | 6.6374e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0010532  | 0.0010532  | 0.0010532  |   0.0 |  4.64
-Other   |            | 0.0001396  |            |       |  0.62
+Modify  | 0.015785   | 0.015785   | 0.015785   |   0.0 |  7.24
+Other   |            | 0.0006603  |            |       |  0.30
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          15171 ave       15171 max       15171 min
+Neighs:         224781 ave      224781 max      224781 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 15171
-Ave neighs/atom = 158.03125
+Total # of neighbors = 224781
+Ave neighs/atom = 292.68359
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -2699,26 +2678,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.2875675
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.2875675
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.575135 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.575135 0.0 12.575135 0.0 ${double_xhi} units box
-region supercell block 0.0 12.575135 0.0 12.575135 0.0 12.575135 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 25.15027 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 25.15027 0.0 25.15027 0.0 ${n_times_xhi} units box
+region supercell block 0.0 25.15027 0.0 25.15027 0.0 25.15027 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (12.575135 12.575135 12.575135)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (25.15027 25.15027 25.15027)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -2742,13 +2721,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -2760,42 +2738,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 37.96 | 37.96 | 37.96 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 125 | 125 | 125 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -13757.486      0             -13757.486     -296812.56    
-         1   0             -13757.486      0             -13757.486     -296812.56    
-Loop time of 0.0237474 on 1 procs for 1 steps with 96 atoms
+         0   0             -98033.316      0             -98033.316      10511.618    
+         1   0             -98033.316      0             -98033.316      10511.618    
+Loop time of 0.219529 on 1 procs for 1 steps with 768 atoms
 
-87.6% CPU use with 1 MPI tasks x no OpenMP threads
+96.3% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -13757.4862161203  -13757.4862161203  -13757.4862161203
-  Force two-norm initial, final = 6.5699316e-12 1.1124144e-07
-  Force max component initial, final = 1.6013857e-12 2.2758208e-08
-  Final line search alpha, max atom move = 1 2.2758208e-08
+     -98033.3160707291  -98033.3160707291  -98033.3160707388
+  Force two-norm initial, final = 3.3342743e-11 1.6265414e-06
+  Force max component initial, final = 3.3537617e-12 1.4129142e-07
+  Final line search alpha, max atom move = 1 1.4129142e-07
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.022557   | 0.022557   | 0.022557   |   0.0 | 94.99
+Pair    | 0.20324    | 0.20324    | 0.20324    |   0.0 | 92.58
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.8916e-05 | 1.8916e-05 | 1.8916e-05 |   0.0 |  0.08
+Comm    | 6.7834e-05 | 6.7834e-05 | 6.7834e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0010439  | 0.0010439  | 0.0010439  |   0.0 |  4.40
-Other   |            | 0.0001272  |            |       |  0.54
+Modify  | 0.015595   | 0.015595   | 0.015595   |   0.0 |  7.10
+Other   |            | 0.000621   |            |       |  0.28
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1569 ave        1569 max        1569 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          15171 ave       15171 max       15171 min
+Neighs:         195540 ave      195540 max      195540 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 15171
-Ave neighs/atom = 158.03125
+Total # of neighbors = 195540
+Ave neighs/atom = 254.60938
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -2825,26 +2803,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.342242
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.342242
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.684484 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.684484 0.0 12.684484 0.0 ${double_xhi} units box
-region supercell block 0.0 12.684484 0.0 12.684484 0.0 12.684484 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 25.368968 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 25.368968 0.0 25.368968 0.0 ${n_times_xhi} units box
+region supercell block 0.0 25.368968 0.0 25.368968 0.0 25.368968 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (12.684484 12.684484 12.684484)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (25.368968 25.368968 25.368968)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -2868,13 +2846,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -2886,42 +2863,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 32.2 | 32.2 | 32.2 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 125 | 125 | 125 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -13537.639      0             -13537.639     -277520.85    
-         1   0             -13537.639      0             -13537.639     -277520.85    
-Loop time of 0.023651 on 1 procs for 1 steps with 96 atoms
+         0   0             -98100.326      0             -98100.326      12291.798    
+         1   0             -98100.326      0             -98100.326      12291.798    
+Loop time of 0.211456 on 1 procs for 1 steps with 768 atoms
 
-89.1% CPU use with 1 MPI tasks x no OpenMP threads
+96.5% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = linesearch alpha is zero
+  Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -13537.6389495929  -13537.6389495929  -13537.6389495929
-  Force two-norm initial, final = 1.4513024e-11 4.6891562e-07
-  Force max component initial, final = 2.0730084e-12 7.3041385e-08
-  Final line search alpha, max atom move = 0.5 3.6520692e-08
+     -98100.3257491498  -98100.3257491498  -98100.3257491525
+  Force two-norm initial, final = 3.258755e-11 1.932281e-06
+  Force max component initial, final = 3.3686387e-12 2.2076355e-07
+  Final line search alpha, max atom move = 1 2.2076355e-07
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.022515   | 0.022515   | 0.022515   |   0.0 | 95.20
+Pair    | 0.19679    | 0.19679    | 0.19679    |   0.0 | 93.06
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.1916e-05 | 2.1916e-05 | 2.1916e-05 |   0.0 |  0.09
+Comm    | 6.5542e-05 | 6.5542e-05 | 6.5542e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.00095054 | 0.00095054 | 0.00095054 |   0.0 |  4.02
-Other   |            | 0.0001637  |            |       |  0.69
+Modify  | 0.013891   | 0.013891   | 0.013891   |   0.0 |  6.57
+Other   |            | 0.000709   |            |       |  0.34
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1269 ave        1269 max        1269 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          13443 ave       13443 max       13443 min
+Neighs:         195540 ave      195540 max      195540 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 13443
-Ave neighs/atom = 140.03125
+Total # of neighbors = 195540
+Ave neighs/atom = 254.60938
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -2951,26 +2928,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.3969165
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.3969165
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.793833 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.793833 0.0 12.793833 0.0 ${double_xhi} units box
-region supercell block 0.0 12.793833 0.0 12.793833 0.0 12.793833 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 25.587666 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 25.587666 0.0 25.587666 0.0 ${n_times_xhi} units box
+region supercell block 0.0 25.587666 0.0 25.587666 0.0 25.587666 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (12.793833 12.793833 12.793833)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (25.587666 25.587666 25.587666)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -2994,13 +2971,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -3012,42 +2988,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 32.2 | 32.2 | 32.2 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 125 | 125 | 125 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -13331.256      0             -13331.256     -256823.96    
-         1   0             -13331.256      0             -13331.256     -256823.96    
-Loop time of 0.0211383 on 1 procs for 1 steps with 96 atoms
+         0   0             -98186.105      0             -98186.105      15735.488    
+         1   0             -98186.105      0             -98186.105      15735.488    
+Loop time of 0.215705 on 1 procs for 1 steps with 768 atoms
 
-89.2% CPU use with 1 MPI tasks x no OpenMP threads
+96.3% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = linesearch alpha is zero
+  Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -13331.2557538288  -13331.2557538288  -13331.2557538288
-  Force two-norm initial, final = 1.1890417e-11 4.6367379e-07
-  Force max component initial, final = 2.1177213e-12 9.7420634e-08
-  Final line search alpha, max atom move = 0.5 4.8710317e-08
+     -98186.1047772063  -98186.1047772063  -98186.1047772268
+  Force two-norm initial, final = 3.3344897e-11 2.6462982e-06
+  Force max component initial, final = 3.4771183e-12 2.7230963e-07
+  Final line search alpha, max atom move = 1 2.7230963e-07
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.019892   | 0.019892   | 0.019892   |   0.0 | 94.10
+Pair    | 0.19975    | 0.19975    | 0.19975    |   0.0 | 92.60
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.3374e-05 | 2.3374e-05 | 2.3374e-05 |   0.0 |  0.11
+Comm    | 6.7123e-05 | 6.7123e-05 | 6.7123e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.001099   | 0.001099   | 0.001099   |   0.0 |  5.20
-Other   |            | 0.0001245  |            |       |  0.59
+Modify  | 0.015175   | 0.015175   | 0.015175   |   0.0 |  7.03
+Other   |            | 0.000716   |            |       |  0.33
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1269 ave        1269 max        1269 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          13443 ave       13443 max       13443 min
+Neighs:         195540 ave      195540 max      195540 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 13443
-Ave neighs/atom = 140.03125
+Total # of neighbors = 195540
+Ave neighs/atom = 254.60938
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -3077,26 +3053,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.451591
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.451591
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.903182 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 12.903182 0.0 12.903182 0.0 ${double_xhi} units box
-region supercell block 0.0 12.903182 0.0 12.903182 0.0 12.903182 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 25.806364 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 25.806364 0.0 25.806364 0.0 ${n_times_xhi} units box
+region supercell block 0.0 25.806364 0.0 25.806364 0.0 25.806364 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (12.903182 12.903182 12.903182)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (25.806364 25.806364 25.806364)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -3120,13 +3096,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -3138,42 +3113,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 32.16 | 32.16 | 32.16 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 123.9 | 123.9 | 123.9 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -13139.046      0             -13139.046     -237517.3     
-         1   0             -13139.046      0             -13139.046     -237517.3     
-Loop time of 0.0151841 on 1 procs for 1 steps with 96 atoms
+         0   0             -98293.133      0             -98293.133      18008.458    
+         1   0             -98293.133      0             -98293.133      18008.458    
+Loop time of 0.21893 on 1 procs for 1 steps with 768 atoms
 
-86.4% CPU use with 1 MPI tasks x no OpenMP threads
+96.0% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -13139.0456535753  -13139.0456535753  -13139.0456535762
-  Force two-norm initial, final = 4.2423295e-12 1.4351273e-08
-  Force max component initial, final = 8.1001872e-13 2.6030875e-09
-  Final line search alpha, max atom move = 1 2.6030875e-09
-  Iterations, force evaluations = 1 1
+      -98293.133139712   -98293.133139712  -98293.1331397132
+  Force two-norm initial, final = 4.7114947e-11 1.7798614e-06
+  Force max component initial, final = 5.2011798e-12 1.7641689e-07
+  Final line search alpha, max atom move = 1 1.7641689e-07
+  Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.014389   | 0.014389   | 0.014389   |   0.0 | 94.76
+Pair    | 0.20387    | 0.20387    | 0.20387    |   0.0 | 93.12
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.3375e-05 | 1.3375e-05 | 1.3375e-05 |   0.0 |  0.09
+Comm    | 6.8834e-05 | 6.8834e-05 | 6.8834e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.00055892 | 0.00055892 | 0.00055892 |   0.0 |  3.68
-Other   |            | 0.0002231  |            |       |  1.47
+Modify  | 0.014264   | 0.014264   | 0.014264   |   0.0 |  6.52
+Other   |            | 0.0007271  |            |       |  0.33
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1269 ave        1269 max        1269 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          10689 ave       10689 max       10689 min
+Neighs:         166236 ave      166236 max      166236 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 10689
-Ave neighs/atom = 111.34375
+Total # of neighbors = 166236
+Ave neighs/atom = 216.45312
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -3203,26 +3178,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.5062655
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.5062655
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.012531 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.012531 0.0 13.012531 0.0 ${double_xhi} units box
-region supercell block 0.0 13.012531 0.0 13.012531 0.0 13.012531 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.025062 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.025062 0.0 26.025062 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.025062 0.0 26.025062 0.0 26.025062 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (13.012531 13.012531 13.012531)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (26.025062 26.025062 26.025062)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -3246,13 +3221,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -3264,42 +3238,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 32.16 | 32.16 | 32.16 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 123.9 | 123.9 | 123.9 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -12957.976      0             -12957.976     -223539.59    
-         1   0             -12957.976      0             -12957.976     -223539.59    
-Loop time of 0.0195922 on 1 procs for 1 steps with 96 atoms
+         0   0             -98404.252      0             -98404.252      15925.228    
+         1   0             -98404.252      0             -98404.252      15925.228    
+Loop time of 0.145847 on 1 procs for 1 steps with 768 atoms
 
-90.7% CPU use with 1 MPI tasks x no OpenMP threads
+95.5% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = linesearch alpha is zero
+  Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -12957.9757626005  -12957.9757626005  -12957.9757626006
-  Force two-norm initial, final = 2.0891845e-11 4.8319769e-07
-  Force max component initial, final = 4.1029333e-12 7.7432646e-08
-  Final line search alpha, max atom move = 0.5 3.8716323e-08
-  Iterations, force evaluations = 1 2
+     -98404.2520111874  -98404.2520111874   -98404.252011206
+  Force two-norm initial, final = 4.5559214e-11 1.9194469e-07
+  Force max component initial, final = 4.3506448e-12 1.6995043e-08
+  Final line search alpha, max atom move = 1 1.6995043e-08
+  Iterations, force evaluations = 1 1
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.01868    | 0.01868    | 0.01868    |   0.0 | 95.34
+Pair    | 0.13438    | 0.13438    | 0.13438    |   0.0 | 92.14
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.6209e-05 | 1.6209e-05 | 1.6209e-05 |   0.0 |  0.08
+Comm    | 4.3418e-05 | 4.3418e-05 | 4.3418e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.00077675 | 0.00077675 | 0.00077675 |   0.0 |  3.96
-Other   |            | 0.0001195  |            |       |  0.61
+Modify  | 0.01072    | 0.01072    | 0.01072    |   0.0 |  7.35
+Other   |            | 0.000705   |            |       |  0.48
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1269 ave        1269 max        1269 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          10689 ave       10689 max       10689 min
+Neighs:         166236 ave      166236 max      166236 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 10689
-Ave neighs/atom = 111.34375
+Total # of neighbors = 166236
+Ave neighs/atom = 216.45312
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -3329,26 +3303,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.56094
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.56094
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.12188 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.12188 0.0 13.12188 0.0 ${double_xhi} units box
-region supercell block 0.0 13.12188 0.0 13.12188 0.0 13.12188 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.24376 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.24376 0.0 26.24376 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.24376 0.0 26.24376 0.0 26.24376 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (13.12188 13.12188 13.12188)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (26.24376 26.24376 26.24376)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -3372,13 +3346,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -3390,42 +3363,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 32.16 | 32.16 | 32.16 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 123.9 | 123.9 | 123.9 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -12783.803      0             -12783.803     -216812.19    
-         1   0             -12783.803      0             -12783.803     -216812.19    
-Loop time of 0.0210859 on 1 procs for 1 steps with 96 atoms
+         0   0             -98482.38       0             -98482.38       7071.3813    
+         1   0             -98482.38       0             -98482.38       7071.3813    
+Loop time of 0.212884 on 1 procs for 1 steps with 768 atoms
 
-90.9% CPU use with 1 MPI tasks x no OpenMP threads
+96.9% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -12783.8031152672  -12783.8031152672  -12783.8031152671
-  Force two-norm initial, final = 2.1368153e-11 3.402891e-07
-  Force max component initial, final = 4.4195758e-12 7.4930366e-08
-  Final line search alpha, max atom move = 0.5 3.7465183e-08
+       -98482.37971102    -98482.37971102   -98482.379711021
+  Force two-norm initial, final = 6.8243849e-11 3.2415585e-06
+  Force max component initial, final = 6.1280269e-12 3.1735117e-07
+  Final line search alpha, max atom move = 0.5 1.5867559e-07
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.020154   | 0.020154   | 0.020154   |   0.0 | 95.58
+Pair    | 0.19728    | 0.19728    | 0.19728    |   0.0 | 92.67
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 2.0375e-05 | 2.0375e-05 | 2.0375e-05 |   0.0 |  0.10
+Comm    | 6.6917e-05 | 6.6917e-05 | 6.6917e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.00078837 | 0.00078837 | 0.00078837 |   0.0 |  3.74
-Other   |            | 0.0001231  |            |       |  0.58
+Modify  | 0.015008   | 0.015008   | 0.015008   |   0.0 |  7.05
+Other   |            | 0.0005321  |            |       |  0.25
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1269 ave        1269 max        1269 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          10689 ave       10689 max       10689 min
+Neighs:         166236 ave      166236 max      166236 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 10689
-Ave neighs/atom = 111.34375
+Total # of neighbors = 166236
+Ave neighs/atom = 216.45312
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -3455,26 +3428,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.6156145
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.6156145
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.231229 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.231229 0.0 13.231229 0.0 ${double_xhi} units box
-region supercell block 0.0 13.231229 0.0 13.231229 0.0 13.231229 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.462458 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.462458 0.0 26.462458 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.462458 0.0 26.462458 0.0 26.462458 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (13.231229 13.231229 13.231229)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (26.462458 26.462458 26.462458)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -3498,13 +3471,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -3516,42 +3488,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 32.16 | 32.16 | 32.16 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 123.9 | 123.9 | 123.9 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -12610.297      0             -12610.297     -218066.3     
-         1   0             -12610.297      0             -12610.297     -218066.3     
-Loop time of 0.0148686 on 1 procs for 1 steps with 96 atoms
+         0   0             -98478.125      0             -98478.125     -9222.2143    
+         1   0             -98478.125      0             -98478.125     -9222.2143    
+Loop time of 0.235331 on 1 procs for 1 steps with 768 atoms
 
-86.7% CPU use with 1 MPI tasks x no OpenMP threads
+95.1% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = energy tolerance
+  Stopping criterion = linesearch alpha is zero
   Energy initial, next-to-last, final = 
-     -12610.2967814732  -12610.2967814732  -12610.2967814736
-  Force two-norm initial, final = 1.9880127e-11 3.0571259e-08
-  Force max component initial, final = 4.6049375e-12 5.7177658e-09
-  Final line search alpha, max atom move = 1 5.7177658e-09
-  Iterations, force evaluations = 1 1
+     -98478.1252392497  -98478.1252392497  -98478.1252392448
+  Force two-norm initial, final = 5.0280775e-11 3.0585618e-06
+  Force max component initial, final = 6.0396133e-12 2.4444229e-07
+  Final line search alpha, max atom move = 0.5 1.2222115e-07
+  Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.014178   | 0.014178   | 0.014178   |   0.0 | 95.36
+Pair    | 0.21836    | 0.21836    | 0.21836    |   0.0 | 92.79
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.1459e-05 | 1.1459e-05 | 1.1459e-05 |   0.0 |  0.08
+Comm    | 6.9375e-05 | 6.9375e-05 | 6.9375e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.00055696 | 0.00055696 | 0.00055696 |   0.0 |  3.75
-Other   |            | 0.000122   |            |       |  0.82
+Modify  | 0.016291   | 0.016291   | 0.016291   |   0.0 |  6.92
+Other   |            | 0.0006152  |            |       |  0.26
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1269 ave        1269 max        1269 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          10689 ave       10689 max       10689 min
+Neighs:         166236 ave      166236 max      166236 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 10689
-Ave neighs/atom = 111.34375
+Total # of neighbors = 166236
+Ave neighs/atom = 216.45312
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -3581,26 +3553,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.670289
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.670289
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.340578 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.340578 0.0 13.340578 0.0 ${double_xhi} units box
-region supercell block 0.0 13.340578 0.0 13.340578 0.0 13.340578 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.681156 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.681156 0.0 26.681156 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.681156 0.0 26.681156 0.0 26.681156 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (13.340578 13.340578 13.340578)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (26.681156 26.681156 26.681156)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -3624,13 +3596,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -3642,42 +3613,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 32.16 | 32.16 | 32.16 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 123.7 | 123.7 | 123.7 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -12430.933      0             -12430.933     -226589.34    
-         1   0             -12430.933      0             -12430.933     -226589.34    
-Loop time of 0.020785 on 1 procs for 1 steps with 96 atoms
+         0   0             -98340.458      0             -98340.458     -32186.157    
+         1   0             -98340.458      0             -98340.458     -32186.157    
+Loop time of 0.206311 on 1 procs for 1 steps with 768 atoms
 
-89.1% CPU use with 1 MPI tasks x no OpenMP threads
+96.4% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = linesearch alpha is zero
+  Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -12430.9333659973  -12430.9333659973  -12430.9333659973
-  Force two-norm initial, final = 2.1445356e-11 4.1572593e-07
-  Force max component initial, final = 5.2295945e-12 7.7905767e-08
-  Final line search alpha, max atom move = 0.5 3.8952884e-08
+     -98340.4577408256  -98340.4577408256    -98340.45774084
+  Force two-norm initial, final = 6.168261e-11 2.2490552e-06
+  Force max component initial, final = 5.5648819e-12 2.3614054e-07
+  Final line search alpha, max atom move = 1 2.3614054e-07
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.019792   | 0.019792   | 0.019792   |   0.0 | 95.22
+Pair    | 0.19291    | 0.19291    | 0.19291    |   0.0 | 93.51
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.8833e-05 | 1.8833e-05 | 1.8833e-05 |   0.0 |  0.09
+Comm    | 6.754e-05  | 6.754e-05  | 6.754e-05  |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.00084542 | 0.00084542 | 0.00084542 |   0.0 |  4.07
-Other   |            | 0.0001283  |            |       |  0.62
+Modify  | 0.012597   | 0.012597   | 0.012597   |   0.0 |  6.11
+Other   |            | 0.0007338  |            |       |  0.36
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1269 ave        1269 max        1269 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:          10689 ave       10689 max       10689 min
+Neighs:         156828 ave      156828 max      156828 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 10689
-Ave neighs/atom = 111.34375
+Total # of neighbors = 156828
+Ave neighs/atom = 204.20312
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -3707,26 +3678,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.7249635
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.7249635
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.449927 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.449927 0.0 13.449927 0.0 ${double_xhi} units box
-region supercell block 0.0 13.449927 0.0 13.449927 0.0 13.449927 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.899854 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.899854 0.0 26.899854 0.0 ${n_times_xhi} units box
+region supercell block 0.0 26.899854 0.0 26.899854 0.0 26.899854 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (13.449927 13.449927 13.449927)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (26.899854 26.899854 26.899854)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -3750,13 +3721,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -3768,42 +3738,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 32.15 | 32.15 | 32.15 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 122.7 | 122.7 | 122.7 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -12239.436      0             -12239.436     -240805.01    
-         1   0             -12239.436      0             -12239.436     -240805.01    
-Loop time of 0.0247836 on 1 procs for 1 steps with 96 atoms
+         0   0             -98025.131      0             -98025.131     -60075.13     
+         1   0             -98025.131      0             -98025.131     -60075.13     
+Loop time of 0.202114 on 1 procs for 1 steps with 768 atoms
 
-82.4% CPU use with 1 MPI tasks x no OpenMP threads
+96.7% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = linesearch alpha is zero
+  Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -12239.4357834673  -12239.4357834673  -12239.4357834673
-  Force two-norm initial, final = 1.2091654e-11 1.5187225e-07
-  Force max component initial, final = 2.5615066e-12 3.3265758e-08
-  Final line search alpha, max atom move = 0.5 1.6632879e-08
+     -98025.1309344952  -98025.1309344952  -98025.1309344934
+  Force two-norm initial, final = 1.7832247e-11 5.861516e-07
+  Force max component initial, final = 2.6152414e-12 6.720751e-08
+  Final line search alpha, max atom move = 1 6.720751e-08
   Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.023062   | 0.023062   | 0.023062   |   0.0 | 93.05
+Pair    | 0.18934    | 0.18934    | 0.18934    |   0.0 | 93.68
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.9626e-05 | 1.9626e-05 | 1.9626e-05 |   0.0 |  0.08
+Comm    | 6.7333e-05 | 6.7333e-05 | 6.7333e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.00090996 | 0.00090996 | 0.00090996 |   0.0 |  3.67
-Other   |            | 0.0007918  |            |       |  3.19
+Modify  | 0.012083   | 0.012083   | 0.012083   |   0.0 |  5.98
+Other   |            | 0.000621   |            |       |  0.31
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1269 ave        1269 max        1269 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:           9681 ave        9681 max        9681 min
+Neighs:         138012 ave      138012 max      138012 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 9681
-Ave neighs/atom = 100.84375
+Total # of neighbors = 138012
+Ave neighs/atom = 179.70312
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -3833,26 +3803,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.779638
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.779638
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.559276 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.559276 0.0 13.559276 0.0 ${double_xhi} units box
-region supercell block 0.0 13.559276 0.0 13.559276 0.0 13.559276 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 27.118552 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 27.118552 0.0 27.118552 0.0 ${n_times_xhi} units box
+region supercell block 0.0 27.118552 0.0 27.118552 0.0 27.118552 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (13.559276 13.559276 13.559276)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (27.118552 27.118552 27.118552)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -3876,13 +3846,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -3894,42 +3863,42 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 32.15 | 32.15 | 32.15 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 122.7 | 122.7 | 122.7 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -12033.593      0             -12033.593     -255078.29    
-         1   0             -12033.593      0             -12033.593     -255078.29    
-Loop time of 0.0154162 on 1 procs for 1 steps with 96 atoms
+         0   0             -97506.885      0             -97506.885     -87463.197    
+         1   0             -97506.885      0             -97506.885     -87463.197    
+Loop time of 0.19443 on 1 procs for 1 steps with 768 atoms
 
-89.4% CPU use with 1 MPI tasks x no OpenMP threads
+96.2% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -12033.5931322554  -12033.5931322554  -12033.5931322556
-  Force two-norm initial, final = 2.0913819e-12 4.9500801e-09
-  Force max component initial, final = 3.2862602e-13 7.9906165e-10
-  Final line search alpha, max atom move = 1 7.9906165e-10
-  Iterations, force evaluations = 1 1
+     -97506.8854007564  -97506.8854007564  -97506.8854007699
+  Force two-norm initial, final = 3.7466487e-11 1.3545845e-06
+  Force max component initial, final = 4.2916781e-12 1.3499936e-07
+  Final line search alpha, max atom move = 1 1.3499936e-07
+  Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.014766   | 0.014766   | 0.014766   |   0.0 | 95.79
+Pair    | 0.1835     | 0.1835     | 0.1835     |   0.0 | 94.38
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.3375e-05 | 1.3375e-05 | 1.3375e-05 |   0.0 |  0.09
+Comm    | 6.5626e-05 | 6.5626e-05 | 6.5626e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.00051196 | 0.00051196 | 0.00051196 |   0.0 |  3.32
-Other   |            | 0.0001244  |            |       |  0.81
+Modify  | 0.010226   | 0.010226   | 0.010226   |   0.0 |  5.26
+Other   |            | 0.0006412  |            |       |  0.33
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1269 ave        1269 max        1269 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:           9681 ave        9681 max        9681 min
+Neighs:         138012 ave      138012 max      138012 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 9681
-Ave neighs/atom = 100.84375
+Total # of neighbors = 138012
+Ave neighs/atom = 179.70312
 Neighbor list builds = 0
 Dangerous builds = 0
 
@@ -3959,26 +3928,26 @@ Reading data file ...
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-variable double_xhi equal 2*6.8343125
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+variable n_times_xhi equal 4*6.8343125
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.668625 0.0 ${double_xhi} 0.0 ${double_xhi} units box
-region supercell block 0.0 13.668625 0.0 13.668625 0.0 ${double_xhi} units box
-region supercell block 0.0 13.668625 0.0 13.668625 0.0 13.668625 units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 27.33725 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
+region supercell block 0.0 27.33725 0.0 27.33725 0.0 ${n_times_xhi} units box
+region supercell block 0.0 27.33725 0.0 27.33725 0.0 27.33725 units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
-Replication is creating a 2x2x2 = 8 times larger system...
-  orthogonal box = (0 0 0) to (13.668625 13.668625 13.668625)
+replicate 4 4 4
+Replication is creating a 4x4x4 = 64 times larger system...
+  orthogonal box = (0 0 0) to (27.33725 27.33725 27.33725)
   1 by 1 by 1 MPI processor grid
-  96 atoms
+  768 atoms
   replicate CPU = 0.000 seconds
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used.
@@ -4002,13 +3971,12 @@ dump mydmp all atom 1 dump.lammpstrj
 min_style       cg
 minimize        1.0e-4 1.0e-6 100 1000
 Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
-WARNING: Total cutoff < 2*bond cutoff. May need to use an increased neighbor list skin. (src/src/REAXFF/pair_reaxff.cpp:365)
 Neighbor list info ...
   update: every = 1 steps, delay = 0 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 9.5
-  ghost atom cutoff = 9.5
-  binsize = 4.75, bins = 3 3 3
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
   2 neighbor lists, perpetual/occasional/extra = 2 0 0
   (1) pair reaxff, perpetual
       attributes: half, newton off, ghost
@@ -4020,44 +3988,41 @@ Neighbor list info ...
       pair build: copy
       stencil: none
       bin: none
-Per MPI rank memory allocation (min/avg/max) = 32.15 | 32.15 | 32.15 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 122.7 | 122.7 | 122.7 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
-         0   0             -11815.072      0             -11815.072     -262670.7     
-         1   0             -11815.072      0             -11815.072     -262670.7     
-Loop time of 0.0208703 on 1 procs for 1 steps with 96 atoms
+         0   0             -96808.843      0             -96808.843     -107381.03    
+         1   0             -96808.843      0             -96808.843     -107381.03    
+Loop time of 0.136862 on 1 procs for 1 steps with 768 atoms
 
-69.8% CPU use with 1 MPI tasks x no OpenMP threads
+94.3% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-     -11815.0722528155  -11815.0722528155   -11815.072252816
-  Force two-norm initial, final = 2.8213491e-11 4.626235e-08
-  Force max component initial, final = 5.087486e-12 8.3504915e-09
-  Final line search alpha, max atom move = 1 8.3504915e-09
+     -96808.8431715849  -96808.8431715849  -96808.8431716052
+  Force two-norm initial, final = 7.1955026e-11 2.4073088e-07
+  Force max component initial, final = 5.4072302e-12 2.3119945e-08
+  Final line search alpha, max atom move = 1 2.3119945e-08
   Iterations, force evaluations = 1 1
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.02021    | 0.02021    | 0.02021    |   0.0 | 96.83
+Pair    | 0.12844    | 0.12844    | 0.12844    |   0.0 | 93.85
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 1.3291e-05 | 1.3291e-05 | 1.3291e-05 |   0.0 |  0.06
+Comm    | 4.4748e-05 | 4.4748e-05 | 4.4748e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.00051504 | 0.00051504 | 0.00051504 |   0.0 |  2.47
-Other   |            | 0.0001324  |            |       |  0.63
+Modify  | 0.0072683  | 0.0072683  | 0.0072683  |   0.0 |  5.31
+Other   |            | 0.001106   |            |       |  0.81
 
-Nlocal:             96 ave          96 max          96 min
+Nlocal:            768 ave         768 max         768 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:           1269 ave        1269 max        1269 min
+Nghost:           5015 ave        5015 max        5015 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:           9681 ave        9681 max        9681 min
+Neighs:         138012 ave      138012 max      138012 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 9681
-Ave neighs/atom = 100.84375
+Total # of neighbors = 138012
+Ave neighs/atom = 179.70312
 Neighbor list builds = 0
 Dangerous builds = 0
-
-thermo          100
-Total wall time: 0:01:23

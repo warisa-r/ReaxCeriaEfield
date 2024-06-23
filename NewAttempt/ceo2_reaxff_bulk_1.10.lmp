@@ -16,18 +16,18 @@ read_data data_1.10.CeO2
 variable xhi equal "xhi"
 #print "xhi = ${xhi}"
 
-# Calculate 2*xhi
-variable double_xhi equal 2*${xhi}
-#print "2 * xhi = ${double_xhi}"
+# Calculate n*xhi where n is the number of unit cells per side of the supercell
+variable n_times_xhi equal 4*${xhi}
+#print "4 * xhi = ${n_times_xhi}"
 
 # Define dimensions of the supercell using 2*xhi
-region supercell block 0.0 ${double_xhi} 0.0 ${double_xhi} 0.0 ${double_xhi} units box
+region supercell block 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} 0.0 ${n_times_xhi} units box
 
 # Define dimensions of the supercell
 #region supercell block 0.0 10.9349 0.0 10.9349 0.0 10.9349 units box
 
 # Create the supercell
-replicate 2 2 2
+replicate 4 4 4
 
 #Null indicates that the default ReaxFF parameters will be used. checkqeq yes allows charge equilibration method to be used. 
 #Relevant default parameter: Cutoff distance is found in field.reax: !Upper Taper-radius

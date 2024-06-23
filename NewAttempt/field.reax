@@ -12,7 +12,7 @@ Reactive force field: 2016-02-09 Ce/O.
    13.3056 !Undercoordination parameter                                         
   -70.5044 !Triple bond stabilization energy                                    
     0.0000 !Lower Taper-radius                                                  
-   5.000 !Upper Taper-radius                                                  
+   10.000 !Upper Taper-radius                                                  
     2.8793 !Not used                                                            
    33.8667 !Valency undercoordination                                           
     6.0891 !Valency angle/lone pair parameter                                   
