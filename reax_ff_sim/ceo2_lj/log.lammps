@@ -1,7 +1,6 @@
-LAMMPS (2 Aug 2023 - Update 3)
-OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
-  using 1 OpenMP thread(s) per MPI task
-Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
+LAMMPS (15 Jun 2023)
+  using 16 OpenMP thread(s) per MPI task
+Loaded 1 plugins from D:\LAMMPS 64-bit 15Jun2023\plugins
 # Initialize LAMMPS
 units           lj
 dimension       3
@@ -72,12 +71,12 @@ Neighbor list info ...
       pair build: half/bin/atomonly/newton
       stencil: half/bin/3d
       bin: standard
-Per MPI rank memory allocation (min/avg/max) = 3.058 | 3.058 | 3.058 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 16.28 | 16.28 | 16.28 Mbytes
    Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz      
          0   3.6997363e+10  3.331073       3.331073       3.331073       1.6015492e+10  1.6015492e+10  1.6015492e+10  1.6015492e+10
-Loop time of 1e-06 on 1 procs for 0 steps with 4 atoms
+Loop time of 0 on 16 procs for 0 steps with 4 atoms
 
-0.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+0.0% CPU use with 1 MPI tasks x 16 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
@@ -87,7 +86,7 @@ Neigh   | 0          | 0          | 0          |   0.0 |  0.00
 Comm    | 0          | 0          | 0          |   0.0 |  0.00
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 1e-06      |            |       |100.00
+Other   |            | 0          |            |       |  0.00
 
 Nlocal:              4 ave           4 max           4 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -105,13 +104,13 @@ Dangerous builds = 0
 min_style       cg
 minimize        1e-6 1e-6 1000 10000
 Generated 0 of 1 mixed pair_coeff terms from geometric mixing rule
-Per MPI rank memory allocation (min/avg/max) = 5.184 | 5.184 | 5.184 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 18.41 | 18.41 | 18.41 Mbytes
    Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz      
          0   3.6997363e+10  3.331073       3.331073       3.331073       1.6015492e+10  1.6015492e+10  1.6015492e+10  1.6015492e+10
         26  -0.77071218     3.331073       3.331073       3.331073       0.078539828    0.063214976    0.11079169     0.06161282   
-Loop time of 0.000671 on 1 procs for 26 steps with 4 atoms
+Loop time of 0.001982 on 16 procs for 26 steps with 4 atoms
 
-0.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+0.0% CPU use with 1 MPI tasks x 16 OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
@@ -125,12 +124,12 @@ Minimization stats:
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 1.6e-05    | 1.6e-05    | 1.6e-05    |   0.0 |  2.38
-Neigh   | 3.6e-05    | 3.6e-05    | 3.6e-05    |   0.0 |  5.37
-Comm    | 5.2e-05    | 5.2e-05    | 5.2e-05    |   0.0 |  7.75
+Pair    | 1.9e-05    | 1.9e-05    | 1.9e-05    |   0.0 |  0.96
+Neigh   | 4.4e-05    | 4.4e-05    | 4.4e-05    |   0.0 |  2.22
+Comm    | 5.1e-05    | 5.1e-05    | 5.1e-05    |   0.0 |  2.57
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 0.000567   |            |       | 84.50
+Other   |            | 0.001868   |            |       | 94.25
 
 Nlocal:              4 ave           4 max           4 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -148,5 +147,4 @@ Dangerous builds = 4
 write_data      final_config.data
 System init for write_data ...
 Generated 0 of 1 mixed pair_coeff terms from geometric mixing rule
-WARNING: Not all mixed pair coeffs generated from mixing. Use write_data with 'pair ij' option to store all pair coeffs. (src/write_data.cpp:331)
-Total wall time: 0:00:00
+WARNING: Not all mixed pair coeffs generated from mixing. Use write_data with 'pair ij' option to store all pair coeffs. (src/write_data.cpp:326)

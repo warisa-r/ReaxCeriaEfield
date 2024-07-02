@@ -1,0 +1,8 @@
+LAMMPS (15 Jun 2023)
+  using 16 OpenMP thread(s) per MPI task
+Loaded 1 plugins from D:\LAMMPS 64-bit 15Jun2023\plugins
+ # "Ce80 O160"
+
+         240  atoms
+ERROR: Unknown command:          240  atoms (src/input.cpp:303)
+Last command:          240  atoms
