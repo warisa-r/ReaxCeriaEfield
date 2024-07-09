@@ -15,10 +15,10 @@ neigh_modify	every 10 delay 0 check no
 # Calculate force components due to the electric field
 variable fx atom 0.0
 variable fy atom 0.0
-variable fz atom q*50.0
+variable fz atom q*39.0
  
 # Define the energy associated with the force (for minimization)
-variable efz atom q*z*50.0
+variable efz atom q*z*39.0
  
 # Apply the force due to the electric field
 fix 1 all addforce v_fx v_fy v_fz energy v_efz

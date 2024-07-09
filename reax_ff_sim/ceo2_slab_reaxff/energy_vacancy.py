@@ -13,13 +13,14 @@ if not os.path.exists(plot_directory):
 
 # Define the path to the shell script
 file_path = 'run-lammps.sh'
+file_path2 = 'run-lammps_vacancy.sh'
 
 conv = 0.0433641 # kcal/mol to eV
 D_e_O2 = 4.876615876761253 # in eV Dissociation energy of O2 molecule fromm running oxygen_dis_energy.py
 
 data_per_e_field = {}
 
-e_intensities = np.arange(0, 40, 10)
+e_intensities = np.arange(30, 40, 1)
 E_slab_values = []
 E_vacancy_values = []
 
@@ -27,18 +28,18 @@ for e_intensity in e_intensities:
 
     # change the magnitude of the electric field
     # Read the content of the file
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
+    with open(file_path, 'r') as file1:
+        lines1 = file1.readlines()
 
     # Modify the specific line
-    with open(file_path, 'w') as file:
-        for line in lines:
+    with open(file_path, 'w') as file1:
+        for line in lines1:
             if line.strip().startswith('variable fz'):
-                file.write(f'variable fz atom q*{e_intensity:.1f}\n')
+                file1.write(f'variable fz atom q*{e_intensity:.1f}\n')
             elif line.strip().startswith('variable efz'):
-                file.write(f'variable efz atom q*z*{e_intensity:.1f}\n')
+                file1.write(f'variable efz atom q*z*{e_intensity:.1f}\n')
             else:
-                file.write(line)
+                file1.write(line)
     
     try:
         lmp1 = lammps()
@@ -46,15 +47,18 @@ for e_intensity in e_intensities:
         E_slab = lmp1.get_thermo("pe") * conv
         E_slab_values.append(E_slab)
 
+        with open(file_path2, 'r') as file2:
+            lines2 = file2.readlines()
+
         # Modify the specific line
-        with open('run-lammps_vacancy', 'w') as file:
-            for line in lines:
+        with open(file_path2, 'w') as file2:
+            for line in lines2:
                 if line.strip().startswith('variable fz'):
-                    file.write(f'variable fz atom q*{e_intensity:.1f}\n')
+                    file2.write(f'variable fz atom q*{e_intensity:.1f}\n')
                 elif line.strip().startswith('variable efz'):
-                    file.write(f'variable efz atom q*z*{e_intensity:.1f}\n')
+                    file2.write(f'variable efz atom q*z*{e_intensity:.1f}\n')
                 else:
-                    file.write(line)
+                    file2.write(line)
 
         lmp2 = lammps()
         lmp2.file("run-lammps_vacancy.sh")
