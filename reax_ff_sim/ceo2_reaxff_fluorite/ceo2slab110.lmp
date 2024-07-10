@@ -3,7 +3,6 @@
 # ---------- Initialize Simulation --------------------- 
 clear 
 units real
-dimension 3 
 boundary p p p 
 atom_style charge
 
@@ -11,17 +10,12 @@ atom_style charge
 read_data geometry_file/110supercell.lmp
 
 # ---------- Define Interatomic Potential ---------------------
-pair_style reaxff NULL checkqeq yes
-pair_coeff * * ffield.reax Ce O
-fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
-neighbor 2.0 bin 
-neigh_modify every 10 delay 0 check yes
+pair_style	reax 10.0 0 1 1.0e-6
+pair_coeff	* * ffield.reax 2 1
 
-fix 1 all nve
-fix 3 all temp/berendsen 500.0 500.0 100.0
+neighbor	2 bin
+neigh_modify	every 10 delay 0 check no
 
-thermo 10
-thermo_style custom step pe
-dump mydmp all atom 10 dump_110.lammpstrj
-min_style cg 
-minimize        1.0e-4 1.0e-6 100 1000
+# dump    1 all atom 1 110dump.lammpstrj 
+
+minimize        1.0e-6 1.0e-8 1000 10000

@@ -1,25 +1,79 @@
-LAMMPS (16 Mar 2018)
-OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:90)
-  using 1 OpenMP thread(s) per MPI task
+LAMMPS (11 Aug 2017)
 # compare the surface energy with pbe+u
 
 # ---------- Initialize Simulation ---------------------
 clear
-OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:90)
-  using 1 OpenMP thread(s) per MPI task
 units real
-dimension 3
 boundary p p p
 atom_style charge
 
 # ---------- create atoms ------------------------------------
-read_data geometry_file/111supercell.lmp
-  triclinic box = (0 0 0) to (30.9286 26.785 79.717) with tilt (15.4643 0 0)
+read_data geometry_file/110supercell.lmp
+  orthogonal box = (0 0 0) to (30.9286 21.8698 105.388)
   1 by 1 by 1 MPI processor grid
   reading atoms ...
-  2688 atoms
+  3744 atoms
 
 # ---------- Define Interatomic Potential ---------------------
-pair_style reax 10.0 0 1 1.0e-6
-ERROR: Unknown pair style reax (../force.cpp:246)
-Last command: pair_style reax 10.0 0 1 1.0e-6
+pair_style	reax 10.0 0 1 1.0e-6
+WARNING: The pair_style reax command is unsupported. Please switch to pair_style reax/c instead (../pair_reax.cpp:49)
+pair_coeff	* * ffield.reax 2 1
+
+neighbor	2 bin
+neigh_modify	every 10 delay 0 check no
+
+# dump    1 all atom 1 110dump.lammpstrj
+
+minimize        1.0e-6 1.0e-8 1000 10000
+WARNING: Using 'neigh_modify every 1 delay 0 check yes' setting during minimization (../min.cpp:168)
+Neighbor list info ...
+  update every 1 steps, delay 0 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 6 4 18
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair reax, perpetual
+      attributes: half, newton off
+      pair build: half/bin/newtoff
+      stencil: half/bin/3d/newtoff
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 24.81 | 24.81 | 24.81 Mbytes
+Step Temp E_pair E_mol TotEng Press 
+       0            0   -9848.2378            0   -9848.2378    22470.068 
+      56            0   -72881.128            0   -72881.128    18079.133 
+Loop time of 42.2431 on 1 procs for 56 steps with 3744 atoms
+
+100.0% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+         -9848.2377996     -72881.1055265     -72881.1282473
+  Force two-norm initial, final = 56.0705 137.196
+  Force max component initial, final = 4.90716 14.3263
+  Final line search alpha, max atom move = 0.000279292 0.00400122
+  Iterations, force evaluations = 56 212
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 42.176     | 42.176     | 42.176     |   0.0 | 99.84
+Neigh   | 0.049279   | 0.049279   | 0.049279   |   0.0 |  0.12
+Comm    | 0.0077682  | 0.0077682  | 0.0077682  |   0.0 |  0.02
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 0.01035    |            |       |  0.02
+
+Nlocal:    3744 ave 3744 max 3744 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:    10244 ave 10244 max 10244 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:    1.23761e+06 ave 1.23761e+06 max 1.23761e+06 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 1237606
+Ave neighTotal wall time: 0:00:42
+ list builds = 2
+Dangerous builds not checked
+Total wall time: 0:00:42
