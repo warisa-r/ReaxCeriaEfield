@@ -1,0 +1,29 @@
+# u are already in ~/lammps-11Aug17/src
+module load gcc
+module load OpenMPI
+module load CMake
+module load Python/3.10
+make lib-reax args="-m mpi"
+
+find /usr/include -name rpc.h
+found at /usr/include/gssrpc/rpc.h
+
+edit Makefile.mpi by nano ~/lammps-11Aug17/src/MAKE/Makefile.mpi
+SHELL = /bin/sh
+INCLUDES += -I/usr/include/gssrpc -I/usr/include/event2
+LIBS += -lrpc
+# ---------------------------------------------------------------------
+# compiler/linker settings
+# specify flags and libraries needed for your compiler
+
+CC =            mpicxx
+CCFLAGS =       -g -O3 $(INCLUDES)
+SHFLAGS =       -fPIC
+DEPFLAGS =      -M
+
+LINK =          mpicxx
+LINKFLAGS =     -g -O $(LIBS)
+
+and nano ~/lammps-11Aug17/src/dump_xtc.h   
+#include <gssrpc/rpc.h> 
+#include <gssrpc/xdr.h>
