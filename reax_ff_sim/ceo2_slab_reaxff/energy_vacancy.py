@@ -20,7 +20,7 @@ D_e_O2 = 4.876615876761253 # in eV Dissociation energy of O2 molecule fromm runn
 
 data_per_e_field = {}
 
-e_intensities = np.arange(30, 40, 1)
+e_intensities = np.arange(0, 70, 10)
 E_slab_values = []
 E_vacancy_values = []
 
@@ -34,10 +34,8 @@ for e_intensity in e_intensities:
     # Modify the specific line
     with open(file_path, 'w') as file1:
         for line in lines1:
-            if line.strip().startswith('variable fz'):
-                file1.write(f'variable fz atom q*{e_intensity:.1f}\n')
-            elif line.strip().startswith('variable efz'):
-                file1.write(f'variable efz atom q*z*{e_intensity:.1f}\n')
+            if line.strip().startswith('fix 1'):
+                file1.write(f'fix 1 all efield 0.0 0.0 {e_intensity:.1f}\n')
             else:
                 file1.write(line)
     
@@ -53,10 +51,8 @@ for e_intensity in e_intensities:
         # Modify the specific line
         with open(file_path2, 'w') as file2:
             for line in lines2:
-                if line.strip().startswith('variable fz'):
-                    file2.write(f'variable fz atom q*{e_intensity:.1f}\n')
-                elif line.strip().startswith('variable efz'):
-                    file2.write(f'variable efz atom q*z*{e_intensity:.1f}\n')
+                if line.strip().startswith('fix 1'):
+                    file2.write(f'fix 1 all efield 0.0 0.0 {e_intensity:.1f}\n')
                 else:
                     file2.write(line)
 
