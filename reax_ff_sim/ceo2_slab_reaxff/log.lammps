@@ -1,132 +1,78 @@
-LAMMPS (2 Aug 2023 - Update 3)
-OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
-  using 1 OpenMP thread(s) per MPI task
-Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
-# Perform NVE simulation on a surface (111 slab)
+LAMMPS (11 Aug 2017)
+# REAX potential for CeO2 system
+# .....
+boundary       p p s
+units		real
 
-# ---------- Initialize Simulation ---------------------
-clear
-OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
-  using 1 OpenMP thread(s) per MPI task
-Loaded 1 plugins from C:\Users\user\AppData\Local\LAMMPS 64-bit 2Aug2023\plugins
-units real
-dimension 3
-boundary p p p  # Periodic boundary conditions
-atom_style charge
-atom_modify map array
-
-# ---------- Create Atoms ---------------------
-# Read the geometry data of the 111 slab
-read_data C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ceo2_slab_reaxff\geometry_files\111slab_with_charges_vacancy.lmp
-Reading data file ...
-  triclinic box = (0 0 0) to (7.73214 6.6962297 51.3073) with tilt (3.86607 0 0)
-WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (src/domain.cpp:220)
+atom_style	charge
+read_data geometry_files/111slab_with_charges_vacancy.lmp
+  triclinic box = (0 0 0) to (7.73214 6.69623 101.307) with tilt (3.86607 0 0)
   1 by 1 by 1 MPI processor grid
   reading atoms ...
   84 atoms
-  read_data CPU = 0.010 seconds
 
-# ---------- Define Interatomic Potential ---------------------
-pair_style reaxff NULL checkqeq yes # Enable charge equilibration (QEq)
-pair_coeff * * C:\Users\user\Documents\School\FFparamOpt\reax_ff_sim\ffield.reax O Ce # Adjust atom types as necessary
-fix qeq all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+pair_style	reax 10.0 0 1 1.0e-6
+WARNING: The pair_style reax command is unsupported. Please switch to pair_style reax/c instead (../pair_reax.cpp:49)
+pair_coeff	* * ffield.reax 2 1
 
-# ---------- Set Initial Velocities ---------------------
-# Initialize velocities to a specific temperature, e.g., 300K
-velocity all create 300.0 12345 mom yes rot yes dist gaussian
+neighbor	2 bin
+neigh_modify	every 10 delay 0 check no
 
-# ---------- Define Settings ---------------------
-compute eng all pe/atom
-compute eatoms all reduce sum c_eng
+# Apply the electric field
+fix 1 all efield 0.0 0.0 60.0
 
-# ---------- Run Minimization ---------------------
-reset_timestep 0
-thermo 10
-thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms
-min_style cg
+#dump            1 all custom 10000 steps-ut.xyz id xu yu zu
+#dump            2 all custom 10000 steps-ut.CeO2 id xu yu zu q
 
-# Dump the final positions of all atoms to a file
-# Use a large interval (e.g., 1000000) so that only the final positions are written
-#dump myDump all atom 651 final_positions.lammpstrj
-
-minimize 1e-25 1e-25 5000 10000
-
-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
-
-Your simulation uses code contributions which should be cited:
-
-- pair reaxff command: doi:10.1016/j.parco.2011.08.005
-
-@Article{Aktulga12,
- author = {H. M. Aktulga and J. C. Fogarty and S. A. Pandit and A. Y. Grama},
- title = {Parallel Reactive Molecular Dynamics: {N}umerical Methods and Algorithmic Techniques},
- journal = {Parallel Computing},
- year =    2012,
- volume =  38,
- number =  {4--5},
- pages =   {245--259}
-}
-
-- fix qeq/reaxff command: doi:10.1016/j.parco.2011.08.005
-
-@Article{Aktulga12,
- author = {H. M. Aktulga and J. C. Fogarty and S. A. Pandit and A. Y. Grama},
- title = {Parallel Reactive Molecular Dynamics: {N}umerical Methods and Algorithmic Techniques},
- journal = {Parallel Computing},
- year =    2012,
- volume =  38,
- pages =   {245--259}
-}
-
-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
-
+minimize        1.0e-6 1.0e-8 1000 10000
+WARNING: Using 'neigh_modify every 1 delay 0 check yes' setting during minimization (../min.cpp:168)
 Neighbor list info ...
-  update: every = 1 steps, delay = 0 steps, check = yes
+  update every 1 steps, delay 0 steps, check yes
   max neighbors/atom: 2000, page size: 100000
   master list distance cutoff = 12
   ghost atom cutoff = 12
   binsize = 6, bins = 2 2 9
-  2 neighbor lists, perpetual/occasional/extra = 2 0 0
-  (1) pair reaxff, perpetual
-      attributes: half, newton off, ghost
-      pair build: half/bin/newtoff/ghost
-      stencil: full/ghost/bin/3d
-      bin: standard
-  (2) fix qeq/reaxff, perpetual, copy from (1)
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair reax, perpetual
       attributes: half, newton off
-      pair build: copy
-      stencil: none
-      bin: none
-Per MPI rank memory allocation (min/avg/max) = 46.7 | 46.7 | 46.7 Mbytes
-   Step         PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
-         0  -5400.5353      7.73214        6.6962297      51.3073        686586.49      670564.39      670461         718734.08     -5400.5353    
-        10  -7514.226       7.73214        6.6962297      51.3073        569576.08      566769.59      566660.78      575297.86     -7514.226     
-        20  -8710.4882      7.73214        6.6962297      51.3073        473699.41      465965.44      465856.5       489276.29     -8710.4882    
-        30  -9841.8429      7.73214        6.6962297      51.3073        316427.54      307683.61      307574.55      334024.46     -9841.8429    
-        40  -10637.562      7.73214        6.6962297      51.3073        207364.05      197440.28      197333.34      227318.54     -10637.562    
-        50  -10949.738      7.73214        6.6962297      51.3073        126681.74      113479.13      113354.43      153211.67     -10949.738    
-        60  -11256.848      7.73214        6.6962297      51.3073        86206.363      65657.948      65535.1        127426.04     -11256.848    
-        70  -11563.453      7.73214        6.6962297      51.3073        60275.147      30162.185      30018.541      120644.71     -11563.453    
-        80  -11822.549      7.73214        6.6962297      51.3073        31645.31       2668.0615      2550.0587      89717.811     -11822.549    
-        90  -11956.357      7.73214        6.6962297      51.3073        3669.1664     -17146.678     -17257.112      45411.289     -11956.357    
-       100  -12003.199      7.73214        6.6962297      51.3073       -9103.5407     -24297.421     -24464.406      21451.205     -12003.199    
-       110  -12043.064      7.73214        6.6962297      51.3073       -6061.9492     -15944.556     -19448.728      17207.437     -12043.064    
-       120  -12109.111      7.73214        6.6962297      51.3073        4214.5687      244.6852      -7964.8506      20363.871     -12109.111    
-       130  -12203.291      7.73214        6.6962297      51.3073        14891.806      13727.595      2966.8439      27980.981     -12203.291    
-       140  -12309.792      7.73214        6.6962297      51.3073        20612.671      25752.957      10553.72       25531.337     -12309.792    
-       150  -12381.059      7.73214        6.6962297      51.3073        32315.14       42361.891      22207.312      32376.216     -12381.059    
-       160  -12429.954      7.73214        6.6962297      51.3073        32914.769      43417.437      22479.73       32847.139     -12429.954    
-       170  -12460.087      7.73214        6.6962297      51.3073        30723.7        41499.347      21435.848      29235.904     -12460.087    
-       180  -12540.805      7.73214        6.6962297      51.3073        27699.308      36257.925      18644.289      28195.711     -12540.805    
-       190  -12593.415      7.73214        6.6962297      51.3073        23221.978      28310.768      14084.425      27270.741     -12593.415    
-       200  -12625.563      7.73214        6.6962297      51.3073        22295.806      27003.05       15518.979      24365.388     -12625.563    
-       210  -12651.679      7.73214        6.6962297      51.3073        19973.406      25458.353      14630.032      19831.833     -12651.679    
-       220  -12686.481      7.73214        6.6962297      51.3073        19698.567      24981.093      16527.508      17587.099     -12686.481    
-       230  -12695.128      7.73214        6.6962297      51.3073        18674.158      24293.506      15806.413      15922.556     -12695.128    
-       240  -12716.266      7.73214        6.6962297      51.3073        21456.299      27747.924      19490.714      17130.258     -12716.266    
-       250  -12723.521      7.73214        6.6962297      51.3073        21446.937      27745.549      19692.381      16902.881     -12723.521    
-       260  -12732.259      7.73214        6.6962297      51.3073        21640.623      29058.424      20489.848      15373.595     -12732.259    
-       270  -12741.681      7.73214        6.6962297      51.3073        21452.253      29382.501      20730.442      14243.816     -12741.681    
-       280  -12752.601      7.73214        6.6962297      51.3073        18920.359      27787.188      19170.357      9803.533      -12752.601    
-       290  -12759.474      7.73214        6.6962297      51.3073        17743.453      26372.901      18376.579      8480.8778     -12759.474    
-       300  -12767.615      7.73214        6.6962297      51.3073        13352.322      20528.765      14551.482      4976.7189     -12767.615    
+      pair build: half/bin/newtoff
+      stencil: half/bin/3d/newtoff
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 5.313 | 5.313 | 5.313 Mbytes
+Step Temp E_pair E_mol TotEng Press Volume 
+       0            0   -10543.193            0   -10543.193   -15469.461    2684.9562 
+      13            0   -10595.461            0   -10595.461   -10380.488    2684.9562 
+Loop time of 2.32027 on 1 procs for 13 steps with 84 atoms
+
+100.0% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+         -10543.193075      -10672.745061     -10595.4610072
+  Force two-norm initial, final = 172.664 371.354
+  Force max component initial, final = 60.762 284.233
+  Final line search alpha, max atom move = 4.18652e-13 1.18995e-10
+  Iterations, force evaluations = 13 140
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 2.3166     | 2.3166     | 2.3166     |   0.0 | 99.84
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.0017936  | 0.0017936  | 0.0017936  |   0.0 |  0.08
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.00049329 | 0.00049329 | 0.00049329 |   0.0 |  0.02
+Other   |            | 0.001393   |            |       |  0.06
+
+Nlocal:    84 ave 84 max 84 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:    1617 ave 1617 max 1617 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:    32568 ave 32568 max 32568 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 32568
+Ave neighs/atom = 387.714
+Neighbor list builds = 0
+Dangerous builds not chTotal Total wall time: 0:00:02
