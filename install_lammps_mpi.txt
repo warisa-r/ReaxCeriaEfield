@@ -1,3 +1,6 @@
+#Open the hpc node
+ssh -l   nj616237 login23-1.hpc.itc.rwth-aachen.de  
+
 # u are already in ~/lammps-11Aug17/src
 module load gcc
 module load OpenMPI
