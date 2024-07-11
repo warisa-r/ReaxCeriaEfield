@@ -28,8 +28,8 @@ def get111():
     print(E_surf_111)
 
 def get110():
-    nBulk_110 = 312 #21/4 for 'new110slab', 312 for '110supercell'
-    A_110 = 676.4022963 #79.2658 for 'new110slab', 676.4022963 for '110supercell' A^2
+    nBulk_110 = 21/4 #21/4 for 'new110slab', 312 for '110supercell'
+    A_110 = 79.2658 #79.2658 for 'new110slab', 676.4022963 for '110supercell' A^2
     lmp110 = lammps()
     lmp110.file("ceo2slab110.lmp")
     E_slab = lmp110.get_thermo("pe")
