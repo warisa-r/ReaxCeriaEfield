@@ -6,7 +6,7 @@ units		real
 atom_style	charge
 read_data data_1.05.CeO2
 
-pair_style	pair_style reaxff NULL checkqeq yes
+pair_style reax/c NULL checkqeq yes
 
 pair_coeff * * field.reax O Ce
 

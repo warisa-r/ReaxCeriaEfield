@@ -12,7 +12,8 @@ if not os.path.exists(plot_directory):
     os.makedirs(plot_directory)
 
 # Define the path to the shell script
-input_file_path = 'run-lammps.sh'
+input_file_path = 'run-lammps-reax-c.sh'
+#input_file_path = 'run-lammps.sh' # For the original fortran/reax force field
 
 conv = 0.0433641 # eV to kcal/mol
 nCeO2 = 32 # Number of CeO2 in the simulation
@@ -56,4 +57,5 @@ plt.xlabel('Volume per CeO2 (Å³)', fontsize=14)
 plt.ylabel('Energy eV', fontsize=14)
 plt.title('Energy vs. Volume for CeO2', fontsize=16)
 plt.grid(True)
-plt.savefig(f'{plot_directory}energy_vs_volume.png')
+plt.savefig(f'{plot_directory}energy_vs_volume_reaxc.png')
+#plt.savefig(f'{plot_directory}energy_vs_volume.png')

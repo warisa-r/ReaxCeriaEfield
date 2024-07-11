@@ -11,12 +11,14 @@ read_data data_1.05.CeO2
   reading atoms ...
   96 atoms
 
-pair_style	reax 10.0 0 1 1.0e-6
-WARNING: The pair_style reax command is unsupported. Please switch to pair_style reax/c instead (../pair_reax.cpp:49)
-pair_coeff	* * ffield.reax 4 3
+pair_style reax/c NULL checkqeq yes
+
+pair_coeff * * field.reax O Ce
 
 neighbor	2 bin
 neigh_modify	every 10 delay 0 check no
+
+fix 1 all qeq/reax 1 0.0 10.0 1.0e-6 reax/c
 
 #dump            1 all custom 10000 steps-ut.xyz id xu yu zu
 #dump            2 all custom 10000 steps-ut.CeO2 id xu yu zu q
@@ -29,38 +31,43 @@ Neighbor list info ...
   master list distance cutoff = 12
   ghost atom cutoff = 12
   binsize = 6, bins = 2 2 2
-  1 neighbor lists, perpetual/occasional/extra = 1 0 0
-  (1) pair reax, perpetual
-      attributes: half, newton off
-      pair build: half/bin/newtoff
-      stencil: half/bin/3d/newtoff
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reax/c, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: half/ghost/bin/3d/newtoff
       bin: standard
-Per MPI rank memory allocation (min/avg/max) = 5.496 | 5.496 | 5.496 Mbytes
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off, ghost
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 89.97 | 89.97 | 89.97 Mbytes
 Step Temp E_pair E_mol TotEng Press 
-       0            0   -16223.808            0   -16223.808   -184216.87 
-       1            0   -16223.808            0   -16223.808   -184216.87 
-Loop time of 0.0575569 on 1 procs for 1 steps with 96 atoms
+       0            0   -10724.957            0   -10724.957     803147.3 
+       1            0   -10724.957            0   -10724.957     803147.3 
+Loop time of 0.138697 on 1 procs for 1 steps with 96 atoms
 
 100.0% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-         -16223.807704      -16223.807704     -16223.8077045
-  Force two-norm initial, final = 2.50706e-07 0.0129164
-  Force max component initial, final = 4.07992e-08 0.0024967
-  Final line search alpha, max atom move = 1 0.0024967
-  Iterations, force evaluations = 1 1
+        -10724.9570294     -10724.9570294     -10724.9570294
+  Force two-norm initial, final = 1.09085e-11 1.06169e-05
+  Force max component initial, final = 1.94689e-12 1.38118e-06
+  Final line search alpha, max atom move = 1 1.38118e-06
+  Iterations, force evaluations = 1 2
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.057399   | 0.057399   | 0.057399   |   0.0 | 99.73
+Pair    | 0.13652    | 0.13652    | 0.13652    |   0.0 | 98.43
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 3.5286e-05 | 3.5286e-05 | 3.5286e-05 |   0.0 |  0.06
+Comm    | 4.1723e-05 | 4.1723e-05 | 4.1723e-05 |   0.0 |  0.03
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 0.0001228  |            |       |  0.21
+Modify  | 0.0020077  | 0.0020077  | 0.0020077  |   0.0 |  1.45
+Other   |            | 0.0001252  |            |       |  0.09
 
 Nlocal:    96 ave 96 max 96 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -73,5 +80,8 @@ Total # of neighbors = 39102
 Ave neighs/atom = 407.312
 Neighbor list builds = 0
 Dangerous builds not checked
+
+Please see the log.cite file for references relevant to this simulation
+
 Total wall time: 0:00:00
-0
+ 0:00:00
