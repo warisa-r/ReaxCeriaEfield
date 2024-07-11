@@ -1,7 +1,7 @@
 LAMMPS (11 Aug 2017)
 # REAX potential for CeO2 system
 # .....
-boundary       p p s
+boundary       p p p
 units		real
 
 atom_style	charge
@@ -17,20 +17,6 @@ pair_coeff	* * ffield.reax 4 3
 
 neighbor	2 bin
 neigh_modify	every 10 delay 0 check no
-
-# Calculate force components due to the electric field
-variable fx atom 0.0
-variable fy atom 0.0
-variable fz atom q*90.0
-
-# Define the energy associated with the force (for minimization)
-variable efz atom q*z*90.0
-
-# Dump the charge (q) of each atom to a file
-#dump 1 all custom 1 charges.dat id q
-
-# Apply the force due to the electric field
-fix 1 all addforce v_fx v_fy v_fz energy v_efz
 
 #dump            1 all custom 10000 steps-ut.xyz id xu yu zu
 #dump            2 all custom 10000 steps-ut.CeO2 id xu yu zu q
@@ -49,43 +35,43 @@ Neighbor list info ...
       pair build: half/bin/newtoff
       stencil: half/bin/3d/newtoff
       bin: standard
-Per MPI rank memory allocation (min/avg/max) = 5.674 | 5.674 | 5.674 Mbytes
-Step Temp E_pair E_mol TotEng Press Volume 
-       0            0   -14886.484            0   -14886.484   -195534.06    1324.7065 
-       1            0   -14886.474            0   -14886.474   -195534.81    1324.7065 
-Loop time of 0.418841 on 1 procs for 1 steps with 96 atoms
+Per MPI rank memory allocation (min/avg/max) = 5.496 | 5.496 | 5.496 Mbytes
+Step Temp E_pair E_mol TotEng Press 
+       0            0   -16223.808            0   -16223.808   -184216.87 
+       1            0   -16223.808            0   -16223.808   -184216.87 
+Loop time of 0.056083 on 1 procs for 1 steps with 96 atoms
 
 100.0% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = linesearch alpha is zero
+  Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-        -14886.4838503     -14886.4838503      -14886.473964
-  Force two-norm initial, final = 964.76 964.762
-  Force max component initial, final = 170.077 170.076
-  Final line search alpha, max atom move = 8.5561e-15 1.45519e-12
-  Iterations, force evaluations = 1 37
+         -16223.807704      -16223.807704     -16223.8077045
+  Force two-norm initial, final = 2.50706e-07 0.0129164
+  Force max component initial, final = 4.07992e-08 0.0024967
+  Final line search alpha, max atom move = 1 0.0024967
+  Iterations, force evaluations = 1 1
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.41707    | 0.41707    | 0.41707    |   0.0 | 99.58
+Pair    | 0.055979   | 0.055979   | 0.055979   |   0.0 | 99.81
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0.00029445 | 0.00029445 | 0.00029445 |   0.0 |  0.07
+Comm    | 3.0041e-05 | 3.0041e-05 | 3.0041e-05 |   0.0 |  0.05
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0010159  | 0.0010159  | 0.0010159  |   0.0 |  0.24
-Other   |            | 0.0004582  |            |       |  0.11
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 7.391e-05  |            |       |  0.13
 
 Nlocal:    96 ave 96 max 96 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:    818 ave 818 max 818 min
+Nghost:    2731 ave 2731 max 2731 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:    22238 ave 22238 max 22238 min
+Neighs:    39102 ave 39102 max 39102 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 22238
-Ave neighs/atom = 231.646
+Total # of neighbors = 39102
+Ave neighs/atom = 407.312
 Neighbor list builds = 0
 Dangerous builds not checked
 Total wall time: 0:00:00
-
+0
