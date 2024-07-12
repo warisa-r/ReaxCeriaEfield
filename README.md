@@ -11,7 +11,7 @@
 Note: If you decide to install lammps in your os system, the instruction might not be applicable and you might have to find your own way around tackling with dependencies.
 
 # What is in this repository
-1. Module `geometry_utils` with functions to create, add charges to, scale, and visualizie lammps geometry files, You can import this module to use these functions in your simulation as you want. All functions have been documented with docstring.
+1. Module `geometry_utils` with functions to create, add charges to, scale, and visualizie lammps geometry files, You can import this module to use these functions in your simulation as you want. All functions have been documented with docstring. Any function that deals with geometry files should be written here.
 2. `literature` (incomplete) is an archive of the literatures professor Abihshek has sent to us and are relevent to the project.
 3. `simulations` contain folders of simulations in the following structure that should be kept. The idea is that we can run the simulation in that directory right away without having to worry about paths and each of these simulation can be zipped and run by others who have access to the module `geometry_utils`. This pattern should be strictly kept unless we agree on adjusting them:
   1. `run-lammps.sh` input file
