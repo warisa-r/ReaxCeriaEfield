@@ -1,16 +1,22 @@
 #Open the hpc node
-ssh -l   nj616237 login23-1.hpc.itc.rwth-aachen.de  
+1. ssh -l   nj616237 login23-1.hpc.itc.rwth-aachen.de  # Change this to ur TIM. Check this site to learn how to connect with the node https://help.itc.rwth-aachen.de/en/service/rhr4fjjutttf/article/598d0f7f78cb4ab8b81af1b3f68ba831/
 
+2. Use wget https://download.lammps.org/tars/lammps-11Aug2017.tar.gz to download the tar ball
+
+3. Extract it like u usually do
+
+4. Load these following modules
 # u are already in ~/lammps-11Aug17/src
 module load gcc
 module load OpenMPI
 module load CMake
 module load Python/3.10
-make lib-reax args="-m mpi"
 
+5. Run this command to find where rpc is located in cluster's os
 find /usr/include -name rpc.h
 found at /usr/include/gssrpc/rpc.h
 
+6.
 edit Makefile.mpi by nano ~/lammps-11Aug17/src/MAKE/Makefile.mpi
 SHELL = /bin/sh
 INCLUDES += -I/usr/include/gssrpc -I/usr/include/event2
@@ -30,3 +36,9 @@ LINKFLAGS =     -g -O $(LIBS)
 and nano ~/lammps-11Aug17/src/dump_xtc.h   
 #include <gssrpc/rpc.h> 
 #include <gssrpc/xdr.h>
+
+7. Follow lammps instruction make lib-reax args="-m mpi" -> make yes-reax
+8. make yes-misc
+9. make mpi mode=shlib
+10. make install-python
+11. Open python and check if lammps is there by trying to use "import lammps"
