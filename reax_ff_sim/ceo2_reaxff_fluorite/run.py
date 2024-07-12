@@ -23,19 +23,19 @@ def get111():
     lmp111.file("ceo2slab111.lmp")
     E_slab = lmp111.get_thermo("pe")
     E_surf_111 = (E_slab - nBulk_111 * E_bulk) * conv1 / (2 * A_111 * conv2 * mol) 
-    print(E_bulk)
-    print(E_slab)
+    #print(E_bulk)
+    #print(E_slab)
     print(E_surf_111)
 
 def get110():
-    nBulk_110 = 21/4 #21/4 for 'new110slab', 312 for '110supercell'
-    A_110 = 79.2658 #79.2658 for 'new110slab', 676.4022963 for '110supercell' A^2
+    nBulk_110 = 273 #21/4 for 'new110slab', 312 for '110supercell', 273 for 'new110supercell'
+    A_110 = 618.2739 #79.2658 for 'new110slab', 676.4022963 for '110supercell',  618.2739 for 'new110supercell'
     lmp110 = lammps()
     lmp110.file("ceo2slab110.lmp")
     E_slab = lmp110.get_thermo("pe")
     E_surf_110 = (E_slab - nBulk_110 * E_bulk) * conv1 / (2 * A_110 * conv2 * mol)
-    print(E_bulk)
-    print(E_slab)
+    #print(E_bulk)
+    #print(E_slab)
     print(E_surf_110)
 
 if __name__=="__main__":

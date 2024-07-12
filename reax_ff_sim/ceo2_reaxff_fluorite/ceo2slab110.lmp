@@ -7,7 +7,8 @@ boundary p p p
 atom_style charge
 
 # ---------- create atoms ------------------------------------
-read_data geometry_file/new110slab.lmp
+# read_data geometry_file/new110slab.lmp
+read_data new110supercell.lmp
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style	reax 10.0 0 1 1.0e-6
