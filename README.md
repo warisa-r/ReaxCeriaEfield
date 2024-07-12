@@ -14,11 +14,11 @@ Note: If you decide to install lammps in your os system, the instruction might n
 1. Module `geometry_utils` with functions to create, add charges to, scale, and visualizie lammps geometry files, You can import this module to use these functions in your simulation as you want. All functions have been documented with docstring. Any function that deals with geometry files should be written here.
 2. `literature` (incomplete) is an archive of the literatures professor Abihshek has sent to us and are relevent to the project.
 3. `simulations` contain folders of simulations in the following structure that should be kept. The idea is that we can run the simulation in that directory right away without having to worry about paths and each of these simulation can be zipped and run by others who have access to the module `geometry_utils`. This pattern should be strictly kept unless we agree on adjusting them:
-  1. `run-lammps.sh` input file
-  2. `run.py` python file that calls the input file
-  4. geometry files
-  5. `ffield.reax` force field parameter file
-  6. `generate_geometry.py`python script called in order to generate the geometry files (optional)
-  7. `process_result.py` python script called in order to process the simulation results (optional)
-  8. dump files (optional)
-  9. plot of the simulation results (optional)
+   1. `run-lammps.sh` input file
+   2. `run.py` python file that calls the input file
+   4. geometry files
+   5. `ffield.reax` force field parameter file
+   6. `generate_geometry.py`python script called in order to generate the geometry files (optional)
+   7. `process_result.py` python script called in order to process the simulation results (optional)
+   8. dump files (optional)
+   9. plot of the simulation results (optional)
