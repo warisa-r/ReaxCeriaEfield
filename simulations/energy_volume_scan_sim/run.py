@@ -15,7 +15,7 @@ if not os.path.exists(plot_directory):
 #input_file_path = 'run-lammps-reax-c.sh'
 input_file_path = 'run-lammps.sh' # For the original fortran/reax force field
 
-conv = 0.0433641 # eV to kcal/mol
+conv = 0.0433641 # kcal/mol to eV
 nCeO2 = 32 # Number of CeO2 in the simulation
 
 data_per_e_field = {}
