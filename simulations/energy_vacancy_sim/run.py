@@ -61,6 +61,22 @@ def calculate_O2_dis_energy(oxygen_input_file):
     return D_O2
 
 def calculate_CeO2_slab_energy(slab_input_file):
+    """
+    Calculates the energy of a CeO2 slab from a LAMMPS input file.
+
+    This function modifies the provided LAMMPS input file to ensure it reads the correct data file
+    for the CeO2 slab and outputs the trajectory in a specified format. It then runs the simulation
+    using the modified input file and calculates the slab's energy by extracting the potential energy
+    from the LAMMPS thermodynamic output. The calculated energy is adjusted by a predefined conversion
+    factor ('conv') to convert it to the desired units.
+
+    Parameters:
+    - slab_input_file (str): The path to the LAMMPS input file for the CeO2 slab simulation.
+
+    Returns:
+    - float: The calculated energy of the CeO2 slab, adjusted by the conversion factor.
+    """
+
     # Read the content of the file
     with open(slab_input_file, 'r') as file:
         lines = file.readlines()
@@ -137,3 +153,97 @@ print("Energy of CeO2 slab:", E_slab)
 print("Dissociation energy of O2:", D_O2)
 
 print("Vacancy formation energy:", E_vacancy)
+
+print("\n")
+
+### Calculate the structure deformation ###
+
+# Read the content of the file
+import math
+import itertools
+
+def read_last_timestep_data(filename, atom_ids):
+    """
+    Reads the last timestep data for specified atoms from a LAMMPS trajectory file.
+
+    This function opens a LAMMPS trajectory file, reads it in reverse to find the last timestep,
+    and extracts the data for specified atoms based on their IDs. It assumes the file format
+    includes an "ITEM: ATOMS" line followed by atom data lines, where each atom data line starts
+    with the atom ID.
+
+    Parameters:
+    - filename (str): The path to the LAMMPS trajectory file.
+    - atom_ids (list of int): A list of atom IDs for which data is to be extracted.
+
+    Returns:
+    - dict: A dictionary where each key is an atom ID (from the specified atom_ids list) and
+      the value is another dictionary with 'x', 'y', and 'z' keys representing the atom's
+      coordinates from the last timestep.
+    """
+
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+
+    # Reverse the file lines to find the last timestep from the end
+    lines.reverse()
+
+    # Variables to hold the data for the atoms of interest
+    atom_data = {}
+
+    # Flags to identify when we are reading the desired atoms
+    # When reversed lines are read, the first line read is atom index and coordinate
+    reading_atoms = True
+
+    for line in lines:
+        if line.startswith("ITEM: ATOMS"):
+            reading_atoms = False
+        elif reading_atoms:
+            parts = line.split()
+            atom_id = int(parts[0])
+            if atom_id in atom_ids:
+                # Store the atom data
+                atom_data[atom_id] = {
+                    'x': float(parts[1]),
+                    'y': float(parts[2]),
+                    'z': float(parts[3])
+                }
+                # Check if all desired atoms have been found
+                if all(id in atom_data for id in atom_ids):
+                    break  # Stop reading since we found all the needed data
+
+    return atom_data
+
+# Function to calculate Euclidean distance between two points
+def calculate_distance(point1, point2):
+    return math.sqrt((point1['x'] - point2['x'])**2 + (point1['y'] - point2['y'])**2 + (point1['z'] - point2['z'])**2)
+
+# Specify the file and the atom IDs of interest
+vacancy_trajectory = 'steps-ut-vacancy.lammpstrj'
+normal_trajectory = 'steps-ut.lammpstrj'
+
+# Atom IDs of Cerium surrounding the vacancy. I went into VESTA and found the coordinate of these Cerium atoms 
+# # and locate their indices in lammps geometry file.
+atom_ids = [121, 136, 219, 302]
+
+# Read the data
+atom_data_slab = read_last_timestep_data(normal_trajectory, atom_ids)
+atom_data_vacancy = read_last_timestep_data(vacancy_trajectory, atom_ids)
+
+# Ensure all atoms' data were found before calculating distances
+if all(id in atom_data_slab for id in atom_ids):
+    # Iterate through all unique pairs of atoms
+    for atom_id1, atom_id2 in itertools.combinations(atom_ids, 2):
+        distance_slab = calculate_distance(atom_data_slab[atom_id1], atom_data_slab[atom_id2])
+        print(f"Distance between Cerium atom {atom_id1} and {atom_id2}: {distance_slab}")
+else:
+    print("Data for one or more atoms not found.")
+
+print("\n After deformation: \n")
+# Ensure all atoms' data were found before calculating distances
+if all(id in atom_data_vacancy for id in atom_ids):
+    # Iterate through all unique pairs of atoms
+    for atom_id1, atom_id2 in itertools.combinations(atom_ids, 2):
+        distance_vacancy = calculate_distance(atom_data_vacancy[atom_id1], atom_data_vacancy[atom_id2])
+        print(f"Distance between Cerium atom {atom_id1} and {atom_id2}: {distance_vacancy}")
+else:
+    print("Data for one or more atoms not found.")
