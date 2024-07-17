@@ -43,8 +43,10 @@ for atom in supercell:
 
 # Print the coordinates of the closest oxygen atom to the middle point
 if middle_oxygen_atom:
+    # Get fractional coordinates
+    fractional_positions = supercell.get_scaled_positions()[middle_oxygen_atom.index]
     print("The oxygen atom closest to the middle point is:")
-    print(f"Index: {middle_oxygen_atom.index}, Position: {middle_oxygen_atom.position}")
+    print(f"Index: {middle_oxygen_atom.index}, Position: {middle_oxygen_atom.position}, Fractional Position: {fractional_positions}")
 else:
     print("No oxygen atoms found.")
 

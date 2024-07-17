@@ -5,7 +5,7 @@ import numpy as np
 import os
 
 # Directory where the plot will be saved
-plot_directory = 'energy_volume_with_efield/'
+plot_directory = 'energy_volume_scan_result/'
 
 # Check if the directory exists, and create it if it does not
 if not os.path.exists(plot_directory):
@@ -59,3 +59,12 @@ plt.title('Energy vs. Volume for CeO2', fontsize=16)
 plt.grid(True)
 #plt.savefig(f'{plot_directory}energy_vs_volume_reaxc.png')
 plt.savefig(f'{plot_directory}energy_vs_volume.png')
+
+min_energy = min(energies_per_CeO2)
+min_index = energies_per_CeO2.index(min_energy)
+min_scaling_factor = np.arange(0.95, 1.10, 0.01)[min_index]
+
+# Shift energies so that the minimum energy is '0'
+shifted_energies_per_CeO2 = [energy - min_energy for energy in energies_per_CeO2]
+
+print(f'Minimum energy at scaling factor: {min_scaling_factor:.2f}')

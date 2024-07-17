@@ -71,7 +71,7 @@ def calculate_CeO2_slab_energy(slab_input_file):
             if line.strip().startswith('read_data'):
                 file.write(f'read_data data.CeO2_111slab\n')
             elif line.strip().startswith('dump            1'):
-                file.write(f'#dump            1 all custom 10000 steps-ut.lammpstrj id xu yu zu  \n')
+                file.write(f'dump            1 all custom 10000 steps-ut.lammpstrj id xu yu zu  \n')
             else:
                 file.write(line)
     
@@ -107,8 +107,8 @@ def calculate_CeO2_slab_with_vacancy_energy(slab_input_file):
         for line in lines:
             if line.strip().startswith('read_data'):
                 file.write(f'read_data data_vacancy.CeO2_111slab\n')
-            elif line.strip().startswith('#dump            1'):
-                file.write(f'dump            1 all custom 10000 steps-ut.lammpstrj id xu yu zu  \n')
+            elif line.strip().startswith('dump            1'):
+                file.write(f'dump            1 all custom 10000 steps-ut-vacancy.lammpstrj id xu yu zu  \n')
             else:
                 file.write(line)
     
