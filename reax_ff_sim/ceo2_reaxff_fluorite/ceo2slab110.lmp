@@ -8,11 +8,12 @@ atom_style charge
 
 # ---------- create atoms ------------------------------------
 # read_data geometry_file/new110slab.lmp
-read_data geometry_file/new110supercell.lmp
+# read_data geometry_file/new110supercell.lmp
+read_data geometry_file/110supercell.lmp
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style	reax 10.0 0 1 1.0e-6
-pair_coeff	* * ffield.reax 2 1
+pair_coeff	* * ffield.reax 4 3
 
 neighbor	2 bin
 neigh_modify	every 10 delay 0 check no
