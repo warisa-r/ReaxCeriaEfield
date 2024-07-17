@@ -40,9 +40,9 @@ Per MPI rank memory allocation (min/avg/max) = 7.966 | 7.966 | 7.966 Mbytes
 Step Temp E_pair E_mol TotEng Press 
        0            0   -55063.835            0   -55063.835    720.31395 
       27            0   -55852.009            0   -55852.009    623.14323 
-Loop time of 7.34865 on 1 procs for 27 steps with 336 atoms
+Loop time of 6.22406 on 1 procs for 27 steps with 336 atoms
 
-100.0% CPU use with 1 MPI tasks x no OpenMP threads
+99.8% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = linesearch alpha is zero
@@ -56,12 +56,12 @@ Minimization stats:
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 7.3411     | 7.3411     | 7.3411     |   0.0 | 99.90
-Neigh   | 0.0027981  | 0.0027981  | 0.0027981  |   0.0 |  0.04
-Comm    | 0.0016096  | 0.0016096  | 0.0016096  |   0.0 |  0.02
+Pair    | 6.2167     | 6.2167     | 6.2167     |   0.0 | 99.88
+Neigh   | 0.0021269  | 0.0021269  | 0.0021269  |   0.0 |  0.03
+Comm    | 0.0012286  | 0.0012286  | 0.0012286  |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 0.003112   |            |       |  0.04
+Other   |            | 0.003989   |            |       |  0.06
 
 Nlocal:    336 ave 336 max 336 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -74,4 +74,4 @@ Total # of neighbors = 111917
 Ave neighs/atom = 333.086
 Neighbor list builds = 1
 Dangerous builds not checked
-Total wall time: 0:00:07
+Total wall time: 0:00:06
