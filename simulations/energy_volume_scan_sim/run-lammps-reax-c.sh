@@ -4,7 +4,7 @@ boundary       p p p
 units		real
 
 atom_style	charge
-read_data data_1.69.CeO2
+read_data data_1.10.CeO2
 
 pair_style reax/c NULL checkqeq yes
 
