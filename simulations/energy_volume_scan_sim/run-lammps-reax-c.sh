@@ -8,7 +8,7 @@ read_data data_1.69.CeO2
 
 pair_style reax/c NULL checkqeq yes
 
-pair_coeff * * ffield.reax O Ce
+pair_coeff * * ffield.reax Ce O
 
 neighbor	2 bin
 neigh_modify	every 10 delay 0 check no
