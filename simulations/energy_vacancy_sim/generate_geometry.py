@@ -6,7 +6,7 @@ import numpy as np
 #### 1. Generate a (111) slab geometry from the bulk geometry #### 
 structure = read("bulk.cif")
 slab = surface(structure, (1,1,1), layers=7, vacuum=120.0)
-supercell = make_supercell(slab,[[4,0,0],[0,4,0],[0,0,1]])
+supercell = make_supercell(slab,[[2,0,0],[0,2,0],[0,0,1]])
 write('111slab.cif', supercell, format='cif')
 
 #### 2. Locate the vacancy ####
@@ -45,7 +45,6 @@ for atom in supercell:
 if middle_oxygen_atom:
     print("The oxygen atom closest to the middle point is:")
     print(f"Index: {middle_oxygen_atom.index}, Position: {middle_oxygen_atom.position}")
-    # Result: Index: 124, Position: [11.598225    6.69623833 91.83743471]
 else:
     print("No oxygen atoms found.")
 

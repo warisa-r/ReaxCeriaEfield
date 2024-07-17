@@ -124,11 +124,8 @@ oxygen_input_file = "run-lammps-oxygen.sh"
 slab_input_file = "run-lammps-slab.sh"
 
 D_O2 = calculate_O2_dis_energy(oxygen_input_file)
-print(D_O2)
 
 E_slab = calculate_CeO2_slab_energy(slab_input_file)
-
-#print(E_slab)
 
 E_slab_with_vacancy = calculate_CeO2_slab_with_vacancy_energy(slab_input_file)
 print(E_slab_with_vacancy)
