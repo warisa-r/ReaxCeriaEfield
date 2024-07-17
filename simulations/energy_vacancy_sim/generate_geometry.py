@@ -5,8 +5,8 @@ import numpy as np
 
 #### 1. Generate a (111) slab geometry from the bulk geometry #### 
 structure = read("bulk.cif")
-slab = surface(structure, (1,1,1), layers=7, vacuum=80.0)
-supercell = make_supercell(slab,[[2,0,0],[0,2,0],[0,0,1]])
+slab = surface(structure, (1,1,1), layers=7, vacuum=120.0)
+supercell = make_supercell(slab,[[4,0,0],[0,4,0],[0,0,1]])
 write('111slab.cif', supercell, format='cif')
 
 #### 2. Locate the vacancy ####
@@ -59,7 +59,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 
 from geometry_utils import convert_lammps_to_cif, add_charges_to_atoms
 
-convert_lammps_to_cif('data_vacancy.CeO2_111slab', 'charge', '111slab_vacancy.cif')
+convert_lammps_to_cif('data_vacancy.CeO2_111slab', 'atomic', '111slab_vacancy.cif')
 
 #### 4. Add charges to both geometry files to prepare them for the simulation ####
 
