@@ -128,6 +128,6 @@ import os
 # Add the directory containing geometry_utils to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
-from geometry_utils import convert_lammps_to_cif, add_charges_to_atoms
+from geometry_utils import convert_lammps_to_cif
 
 convert_lammps_to_cif('data_vacancy.CeO2_111slab', 'charge', '111slab_vacancy.cif')
