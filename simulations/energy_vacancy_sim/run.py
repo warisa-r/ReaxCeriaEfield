@@ -221,8 +221,7 @@ def calculate_distance(point1, point2):
 vacancy_trajectory = 'steps-ut-vacancy.lammpstrj'
 normal_trajectory = 'steps-ut.lammpstrj'
 
-# Atom IDs of Cerium surrounding the vacancy. I went into VESTA and found the coordinate of these Cerium atoms 
-# # and locate their indices in lammps geometry file.
+# Atom IDs of Cerium surrounding the vacancy. The indices are one of the output from 'generate_geometry.py'
 atom_ids = [54, 55, 58, 74]
 
 # Read the data

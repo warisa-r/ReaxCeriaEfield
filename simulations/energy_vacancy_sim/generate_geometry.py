@@ -59,7 +59,7 @@ for i, slab in enumerate(slabs):
     else:
         print(f"Supercell Slab {i+1} does not have 336 atoms and was not saved.")
 
-#### 2. Locate the vacancy ####
+#### 2. Locate the vacancy and cerium atoms surrounding it ####
 
 # Read the slab
 supercell = read('111slab.cif')
@@ -111,7 +111,7 @@ if middle_oxygen_atom:
     # Select the top 4 closest cerium atoms
     closest_cerium_atoms = cerium_distances[:4]
 
-    print("Indices and positions of the 4 closest cerium atoms to the middle oxygen atom:") # This is to locate the cerium so that we can find the structure deformation
+    print("Indices and positions of the 4 closest cerium atoms to the middle oxygen atom:") # This is to locate the cerium atoms for structure deformation
     for distance, index, position in closest_cerium_atoms:
         print(f"Index: {index + 1}, Position: {position}, Distance: {distance}")
 
@@ -131,8 +131,3 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 from geometry_utils import convert_lammps_to_cif, add_charges_to_atoms
 
 convert_lammps_to_cif('data_vacancy.CeO2_111slab', 'charge', '111slab_vacancy.cif')
-
-#### 4. Add charges to both geometry files to prepare them for the simulation ####
-
-add_charges_to_atoms('data_vacancy.CeO2_111slab', 'data_vacancy.CeO2_111slab')
-add_charges_to_atoms('data.CeO2_111slab', 'data.CeO2_111slab')
