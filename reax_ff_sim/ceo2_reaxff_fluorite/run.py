@@ -8,30 +8,27 @@ from lammps import lammps
 import numpy as np
 
 # convertion factor
-conv1 = 4184 # kcal/mol to J/mol
-mol = 6.02214076e23 # J/mol to J
+conv = 6.94769546e-21
 conv2 = 1e-20 # A^2 to m^2
 lmp_bulk = lammps()
-lmp_bulk.file("ceo2fluorite.lmp")
+lmp_bulk.file("ceo2bulk.lmp")
 E_bulk = lmp_bulk.get_thermo("pe")
-
-conv = 6.94769546e-21
 
 
 def get111():
-    nBulk_111 = 224 #14 for 111slab
-    A_111 = 828.4211067 #51.7762 for 111slab  A^2
+    nBulk_111 = 672 #14 for 111slab
+    A_111 = 207.1048714 #51.7762 for 111slab  A^2
     lmp111 = lammps()
     lmp111.file("ceo2slab111.lmp")
     E_slab = lmp111.get_thermo("pe")
-    E_surf_111 = (E_slab - nBulk_111 * E_bulk) * conv1 / (2 * A_111 * conv2 * mol) 
+    E_surf_111 = (E_slab - nBulk_111 * E_bulk) * conv / (2 * A_111 * conv2) 
     #print(E_bulk)
     #print(E_slab)
     print(E_surf_111)
 
 def get110():
-    nBulk_110 = 312 #21/4 for 'new110slab', 312 for '110supercell', 273 for 'new110supercell'
-    A_110 = 676.4022963 #79.2658 for 'new110slab', 676.4022963 for '110supercell',  618.2739 for 'new110supercell'
+    nBulk_110 = 1920 #21/4 for 'new110slab', 312 for '110supercell', 273 for 'new110supercell'
+    A_110 = 338.2008389 #79.2658 for 'new110slab', 676.4022963 for '110supercell',  618.2739 for 'new110supercell'
     lmp110 = lammps()
     lmp110.file("ceo2slab110.lmp")
     E_slab = lmp110.get_thermo("pe")
