@@ -223,7 +223,7 @@ normal_trajectory = 'steps-ut.lammpstrj'
 
 # Atom IDs of Cerium surrounding the vacancy. I went into VESTA and found the coordinate of these Cerium atoms 
 # # and locate their indices in lammps geometry file.
-atom_ids = [121, 136, 219, 302]
+atom_ids = [54, 55, 58, 74]
 
 # Read the data
 atom_data_slab = read_last_timestep_data(normal_trajectory, atom_ids)

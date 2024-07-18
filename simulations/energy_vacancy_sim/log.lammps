@@ -6,7 +6,7 @@ units		real
 
 atom_style	charge
 read_data data_vacancy.CeO2_111slab
-  triclinic box = (0 0 0) to (15.4643 13.3925 261.307) with tilt (7.73215 0 0)
+  triclinic box = (0 0 0) to (15.4643 13.3925 145.205) with tilt (7.73214 1.93304 -1.11604)
   1 by 1 by 1 MPI processor grid
   reading atoms ...
   336 atoms
@@ -29,49 +29,49 @@ Neighbor list info ...
   max neighbors/atom: 2000, page size: 100000
   master list distance cutoff = 12
   ghost atom cutoff = 12
-  binsize = 6, bins = 4 3 44
+  binsize = 6, bins = 5 3 25
   1 neighbor lists, perpetual/occasional/extra = 1 0 0
   (1) pair reax, perpetual
       attributes: half, newton off
       pair build: half/bin/newtoff
       stencil: half/bin/3d/newtoff
       bin: standard
-Per MPI rank memory allocation (min/avg/max) = 7.966 | 7.966 | 7.966 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 8.08 | 8.08 | 8.08 Mbytes
 Step Temp E_pair E_mol TotEng Press 
-       0            0   -55063.835            0   -55063.835    720.31395 
-      27            0   -55852.009            0   -55852.009    623.14323 
-Loop time of 6.22406 on 1 procs for 27 steps with 336 atoms
+       0            0   -57137.281            0   -57137.281   -1008.8143 
+      16            0   -57163.704            0   -57163.704    -2658.306 
+Loop time of 2.47327 on 1 procs for 16 steps with 336 atoms
 
-99.8% CPU use with 1 MPI tasks x no OpenMP threads
+99.9% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
-  Stopping criterion = linesearch alpha is zero
+  Stopping criterion = energy tolerance
   Energy initial, next-to-last, final = 
-        -55063.8350935     -55852.0068209     -55852.0093208
-  Force two-norm initial, final = 395.378 32.2767
-  Force max component initial, final = 56.135 5.72237
-  Final line search alpha, max atom move = 1.30249e-11 7.45333e-11
-  Iterations, force evaluations = 27 105
+        -57137.2813495     -57163.6505595     -57163.7042342
+  Force two-norm initial, final = 92.5588 3.52754
+  Force max component initial, final = 35.2267 0.503581
+  Final line search alpha, max atom move = 0.118472 0.0596604
+  Iterations, force evaluations = 16 31
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 6.2167     | 6.2167     | 6.2167     |   0.0 | 99.88
-Neigh   | 0.0021269  | 0.0021269  | 0.0021269  |   0.0 |  0.03
-Comm    | 0.0012286  | 0.0012286  | 0.0012286  |   0.0 |  0.02
+Pair    | 2.4704     | 2.4704     | 2.4704     |   0.0 | 99.88
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.00059319 | 0.00059319 | 0.00059319 |   0.0 |  0.02
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 0.003989   |            |       |  0.06
+Other   |            | 0.002328   |            |       |  0.09
 
 Nlocal:    336 ave 336 max 336 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Nghost:    2205 ave 2205 max 2205 min
+Nghost:    3659 ave 3659 max 3659 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
-Neighs:    111917 ave 111917 max 111917 min
+Neighs:    113107 ave 113107 max 113107 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
-Total # of neighbors = 111917
-Ave neighs/atom = 333.086
-Neighbor list builds = 1
+Total # of neighbors = 113107
+Ave neighs/atom = 336.628
+Neighbor list builds = 0
 Dangerous builds not checked
-Total wall time: 0:00:06
+Total wall time: 0:00:02
