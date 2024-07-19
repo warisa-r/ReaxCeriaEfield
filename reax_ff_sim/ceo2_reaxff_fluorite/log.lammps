@@ -42,7 +42,7 @@ Per MPI rank memory allocation (min/avg/max) = 16.24 | 16.24 | 16.24 Mbytes
 Step Temp E_pair E_mol TotEng Press 
        0            0   -328913.02            0   -328913.02    5682.3098 
       21            0   -329132.09            0   -329132.09    4711.2421 
-Loop time of 10.0633 on 1 procs for 21 steps with 1920 atoms
+Loop time of 9.68706 on 1 procs for 21 steps with 1920 atoms
 
 99.9% CPU use with 1 MPI tasks x no OpenMP threads
 
@@ -58,12 +58,12 @@ Minimization stats:
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 10.06      | 10.06      | 10.06      |   0.0 | 99.97
+Pair    | 9.6844     | 9.6844     | 9.6844     |   0.0 | 99.97
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0.0013561  | 0.0013561  | 0.0013561  |   0.0 |  0.01
+Comm    | 0.001255   | 0.001255   | 0.001255   |   0.0 |  0.01
 Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 0.001447   |            |       |  0.01
+Other   |            | 0.001404   |            |       |  0.01
 
 Nlocal:    1920 ave 1920 max 1920 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -73,7 +73,7 @@ Neighs:    707476 ave 707476 max 707476 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
 Total # of neighbors = 707476
-Ave neighs/aTotal wall time: 0:00:10
-st builds = 0
-Dangerous builds not checked
-Total wall time: 0:00:10
+Ave neighs/atom = 368.477
+Neighbor list builds =Total wall time: 0:00:10
+hecked
+Total wall time: 0:00:09

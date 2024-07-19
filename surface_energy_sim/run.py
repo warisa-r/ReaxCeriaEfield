@@ -10,17 +10,15 @@ import numpy as np
 # convertion factor
 conv = 6.94769546e-21
 conv2 = 1e-20 # A^2 to m^2
+
 lmp_bulk = lammps()
 lmp_bulk.file("ceo2bulk.lmp")
 E_bulk = lmp_bulk.get_thermo("pe")
 E_bulk /= 4
 
-conv_metal = 1.60217663e-19
-
-
 def get111():
-    nBulk_111 = 224 #672 #14 for 111slab
-    A_111 = 207.1048714 #51.7762 for 111slab  A^2
+    nBulk_111 = 224 
+    A_111 = 207.1048714 # A^2
     lmp111 = lammps()
     lmp111.file("ceo2slab111.lmp")
     E_slab = lmp111.get_thermo("pe")
@@ -30,8 +28,8 @@ def get111():
     print(E_surf_111)
 
 def get110():
-    nBulk_110 = 640 #21/4 for 'new110slab', 312 for '110supercell', 273 for 'new110supercell'
-    A_110 = 338.2008389 #79.2658 for 'new110slab', 676.4022963 for '110supercell',  618.2739 for 'new110supercell'
+    nBulk_110 = 640 
+    A_110 = 338.2008389 # A^2
     lmp110 = lammps()
     lmp110.file("ceo2slab110.lmp")
     E_slab = lmp110.get_thermo("pe")
@@ -41,6 +39,6 @@ def get110():
     print(E_surf_110)
 
 if __name__=="__main__":
-    #get111()
+    get111()
     get110()
     pass
