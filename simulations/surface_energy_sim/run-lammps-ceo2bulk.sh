@@ -7,7 +7,7 @@ boundary p p p
 atom_style charge
 
 # ---------- create atoms ------------------------------------
-read_data CeO2_fluorite.lmp
+read_data bulk.lmp
 
 # ---------- Define Interatomic Potential ---------------------
 pair_style	reax 10.0 0 1 1.0e-6
