@@ -14,28 +14,24 @@ conv2 = 1e-20 # A^2 to m^2
 lmp_bulk = lammps()
 lmp_bulk.file("ceo2bulk.lmp")
 E_bulk = lmp_bulk.get_thermo("pe")
-E_bulk /= 4
+E_bulk /= 4 # Get energy of bulk per formula unit. Since there are 4 formula units in the bulk, divide by 4
 
 def get111():
-    nBulk_111 = 224 
-    A_111 = 207.1048714 # A^2
+    nBulk_111 = 224 # Number of formula units presence in the slab
+    A_111 = 207.1048714 # A^2 # This number is the multiple of lattice constant a and b (in x and y planes) from 111slab.lmp
     lmp111 = lammps()
     lmp111.file("ceo2slab111.lmp")
     E_slab = lmp111.get_thermo("pe")
     E_surf_111 = (E_slab - nBulk_111 * E_bulk) * conv / (2 * A_111 * conv2) 
-    #print(E_bulk)
-    #print(E_slab)
     print(E_surf_111)
 
 def get110():
-    nBulk_110 = 640 
-    A_110 = 338.2008389 # A^2
+    nBulk_110 = 640 # Number of formula units presence in the slab
+    A_110 = 338.2008389 # A^2 # This number is the multiple of lattice constant a and b (in x and y planes) from 111slab.lmp
     lmp110 = lammps()
     lmp110.file("ceo2slab110.lmp")
     E_slab = lmp110.get_thermo("pe")
     E_surf_110 = (E_slab - nBulk_110 * E_bulk) * conv / (2 * A_110 * conv2)
-    #print(E_bulk)
-    #print(E_slab)
     print(E_surf_110)
 
 if __name__=="__main__":
