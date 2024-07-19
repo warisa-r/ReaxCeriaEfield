@@ -1,0 +1,80 @@
+LAMMPS (11 Aug 2017)
+# compare the surface energy with pbe+u
+
+# ---------- Initialize Simulation ---------------------
+clear
+units real
+boundary p p p
+atom_style charge
+
+# ---------- create atoms ------------------------------------
+read_data 111slab.lmp
+  triclinic box = (0 0 0) to (15.4643 13.3925 167.302) with tilt (7.73214 1.93304 1.11604)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  672 atoms
+
+
+# ---------- Define Interatomic Potential ---------------------
+pair_style	reax 10.0 0 1 1.0e-6
+WARNING: The pair_style reax command is unsupported. Please switch to pair_style reax/c instead (../pair_reax.cpp:49)
+pair_coeff	* * ffield.reax 4 3
+
+neighbor	2 bin
+neigh_modify	every 10 delay 0 check no
+
+dump    1 all atom 1 111dump.lammpstrj
+
+minimize        1.0e-6 1.0e-8 1000 10000
+WARNING: Using 'neigh_modify every 1 delay 0 check yes' setting during minimization (../min.cpp:168)
+Neighbor list info ...
+  update every 1 steps, delay 0 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 3 28
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair reax, perpetual
+      attributes: half, newton off
+      pair build: half/bin/newtoff
+      stencil: half/bin/3d/newtoff
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 9.953 | 9.953 | 9.953 Mbytes
+Step Temp E_pair E_mol TotEng Press 
+       0            0   -115056.11            0   -115056.11    2488.3206 
+      24            0   -115073.26            0   -115073.26   -901.31293 
+Loop time of 4.33075 on 1 procs for 24 steps with 672 atoms
+
+99.4% CPU use with 1 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+        -115056.114929     -115073.150412     -115073.257267
+  Force two-norm initial, final = 20.9702 5.50283
+  Force max component initial, final = 2.39258 0.740485
+  Final line search alpha, max atom move = 0.186963 0.138443
+  Iterations, force evaluations = 24 48
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 4.2956     | 4.2956     | 4.2956     |   0.0 | 99.19
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.00097036 | 0.00097036 | 0.00097036 |   0.0 |  0.02
+Output  | 0.032253   | 0.032253   | 0.032253   |   0.0 |  0.74
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 0.001921   |            |       |  0.04
+
+Nlocal:    672 ave 672 max 672 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:    5885 ave 5885 max 5885 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:    256338 ave 256338 max 256338 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 256338
+Ave neigTotal wall time: 0:00:04
+r list builds = 0
+Dangerous builds not checked
+Total wall time: 0:00:04
