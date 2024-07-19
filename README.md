@@ -34,5 +34,8 @@ from geometry_utils import convert_lammps_to_cif
    9. plot of the simulation results (optional)
 
 # What to do next?
-1. [ ] Get surface energy correct
+1. [x] Get surface energy correct
 2. [ ] Idea: check [MDTraj](https://mdtraj.org/1.9.3/index.html) python library that can analyze each frame of the simulation
+3. [ ] Organize generate_geometry.py in the energy volume scan so that it produces the geometry files present in the energy volume scan simulation (Andres) -> between 13.08.2024 - 15.08.2024
+4. [ ] Add literature about diffusion and organize categories of literature
+5. [ ] Agree on how to start with more advanced simulations (TO BE DISCUSSED, probably with Prof. Abhishek after actually reading the literature provided)
