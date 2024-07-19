@@ -27,7 +27,7 @@ def get111():
 
 def get110():
     nBulk_110 = 640 # Number of formula units presence in the slab
-    A_110 = 338.2008389 # A^2 # This number is the multiple of lattice constant a and b (in x and y planes) from 111slab.lmp
+    A_110 = 338.2008389 # A^2 # This number is the multiple of lattice constant a and b (in x and y planes) from 110slab.lmp
     lmp110 = lammps()
     lmp110.file("run-lammps-ceo2slab110.sh")
     E_slab = lmp110.get_thermo("pe")
