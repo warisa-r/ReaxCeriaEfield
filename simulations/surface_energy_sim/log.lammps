@@ -22,9 +22,6 @@ pair_coeff	* * ffield.reax 4 3
 
 neighbor	2 bin
 neigh_modify	every 10 delay 0 check no
-
-dump    1 all atom 1 111dump.lammpstrj
-
 minimize        1.0e-6 1.0e-8 1000 10000
 WARNING: Using 'neigh_modify every 1 delay 0 check yes' setting during minimization (../min.cpp:168)
 Neighbor list info ...
@@ -39,13 +36,13 @@ Neighbor list info ...
       pair build: half/bin/newtoff
       stencil: half/bin/3d/newtoff
       bin: standard
-Per MPI rank memory allocation (min/avg/max) = 9.953 | 9.953 | 9.953 Mbytes
+Per MPI rank memory allocation (min/avg/max) = 8.927 | 8.927 | 8.927 Mbytes
 Step Temp E_pair E_mol TotEng Press 
        0            0   -115056.11            0   -115056.11    2488.3206 
       24            0   -115073.26            0   -115073.26   -901.31293 
-Loop time of 4.33075 on 1 procs for 24 steps with 672 atoms
+Loop time of 8.02305 on 1 procs for 24 steps with 672 atoms
 
-99.4% CPU use with 1 MPI tasks x no OpenMP threads
+99.9% CPU use with 1 MPI tasks x no OpenMP threads
 
 Minimization stats:
   Stopping criterion = energy tolerance
@@ -59,12 +56,12 @@ Minimization stats:
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 4.2956     | 4.2956     | 4.2956     |   0.0 | 99.19
+Pair    | 8.0205     | 8.0205     | 8.0205     |   0.0 | 99.97
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0.00097036 | 0.00097036 | 0.00097036 |   0.0 |  0.02
-Output  | 0.032253   | 0.032253   | 0.032253   |   0.0 |  0.74
+Comm    | 0.0013149  | 0.0013149  | 0.0013149  |   0.0 |  0.02
+Output  | 0          | 0          | 0          |   0.0 |  0.00
 Modify  | 0          | 0          | 0          |   0.0 |  0.00
-Other   |            | 0.001921   |            |       |  0.04
+Other   |            | 0.001223   |            |       |  0.02
 
 Nlocal:    672 ave 672 max 672 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -74,7 +71,7 @@ Neighs:    256338 ave 256338 max 256338 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
 
 Total # of neighbors = 256338
-Ave neigTotal wall time: 0:00:04
-r list builds = 0
-Dangerous builds not checked
-Total wall time: 0:00:04
+Ave neighs/atom = 381.455
+Neighbor liTotal wall time: 0:00:08
+uilds not checked
+Total wall time: 0:00:08
