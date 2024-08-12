@@ -16,4 +16,7 @@ pair_coeff	* * ffield.reax 4 3
 
 neighbor	2 bin
 neigh_modify	every 10 delay 0 check no
+
+dump    1 all atom 1 111dump.lammpstrj 
+
 minimize        1.0e-6 1.0e-8 1000 10000
