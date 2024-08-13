@@ -41,4 +41,3 @@ from geometry_utils import convert_lammps_to_cif
 5. [ ] Write a function that can convert the position in lammpstrj. file in a specific time step to cif file (Use atom type mapping from lammps geometry file)
 6. [ ] Add literature about diffusion and organize categories of literature
 7. [ ] Agree on how to start with more advanced simulations (TO BE DISCUSSED, probably with Prof. Abhishek after actually reading the literature provided)
-8. [ ] Calculating ionic conductivity https://www.scm.com/doc/Tutorials/MolecularDynamicsAndMonteCarlo/IonicConductivity.html
