@@ -37,7 +37,7 @@ from geometry_utils import convert_lammps_to_cif
 1. [x] Get surface energy correct
 2. [ ] Discuss: Avoid hardcoding numbers even though it is easier and more convenient.
 3. [ ] Idea: check [MDTraj](https://mdtraj.org/1.9.3/index.html) python library that can analyze each frame of the simulation
-4. [ ] Organize generate_geometry.py in the energy volume scan so that it produces the geometry files present in the energy volume scan simulation (Andres) -> between 13.08.2024 - 15.08.2024
+4. [x] Organize generate_geometry.py in the energy volume scan so that it produces the geometry files present in the energy volume scan simulation (Andres) -> between 13.08.2024 - 15.08.2024
 5. [x] Write a function that can convert the position in lammpstrj. file in a specific time step to cif file (Use atom type mapping from lammps geometry file)
 6. [ ] Add literature about diffusion and organize categories of literature
 7. [ ] Agree on how to start with more advanced simulations (TO BE DISCUSSED, probably with Prof. Abhishek after actually reading the literature provided)
