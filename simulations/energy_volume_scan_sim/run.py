@@ -4,6 +4,8 @@ import numpy as np
 
 import os
 
+##Important to run generate_geometry.py script before running this script. The geometry files need to be generated.
+
 # Directory where the plot will be saved
 plot_directory = 'energy_volume_scan_result/'
 
