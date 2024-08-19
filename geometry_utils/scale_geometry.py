@@ -63,7 +63,7 @@ def scale_lammps_geometry(input_file, scale_factor, output_file_dir, output_file
             lines[i] = f"{id} {type} {charge} {new_x} {new_y} {new_z}\n"
 
     # Determine the output file name
-    output_file_name = f"{output_file_template}_{scale_factor:.3f}.lmp"
+    output_file_name = f"{output_file_template}_{scale_factor:.2f}.lmp"
     output_file = os.path.join(output_file_dir, output_file_name)
 
     # Create the output directory if it doesn't exist

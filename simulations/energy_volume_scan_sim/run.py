@@ -4,6 +4,8 @@ import numpy as np
 
 import os
 
+##Important to run generate_geometry.py script before running this script. The geometry files need to be generated.
+
 # Directory where the plot will be saved
 plot_directory = 'energy_volume_scan_result/'
 
@@ -32,7 +34,7 @@ for i in np.arange(0.95, 1.10, 0.01):
     with open(input_file_path, 'w') as file:
         for line in lines:
             if line.strip().startswith('read_data'):
-                file.write(f'read_data data_{i:.2f}.CeO2\n')
+                file.write(f'read_data data_{i:.2f}.lmp\n')
             else:
                 file.write(line)
 
