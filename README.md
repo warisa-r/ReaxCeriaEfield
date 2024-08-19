@@ -43,4 +43,4 @@ from geometry_utils import convert_lammps_to_cif
 7. [ ] Handle the HPC slurm job submission. Try running NPT or NVT on cluster and plot the same function without certainty in how correct the simulation works: Warisa
 8. [ ] Set up HPC account and connect to a node in HPC cluster (no need to go further)
 9. [ ] Run NPT and NVT on cluster
-10. [ ] Observe heating behavior
+10. [ ] Observe heating behavior with and without vacancy
