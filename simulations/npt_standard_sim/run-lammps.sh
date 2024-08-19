@@ -20,5 +20,5 @@ timestep        1.0
 thermo          100
 thermo_style    custom step temp press lx ly lz
 
-dump            1 all atom 1000 dump.lammpstrj
+dump           1 all custom 1000 dump.lammpstrj id type x y z vx vy vz q
 #run             10000
