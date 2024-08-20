@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 lmp = lammps()
 
 # Define your input script (load it from a file)
-lmp.file("run-lammps.sh")  # Ensure this script doesn't include a final "run" command
+lmp.file("run-lammps.lmp")  # Ensure this script doesn't include a final "run" command
 
 # Total number of timesteps to run
 total_steps = 1000000
