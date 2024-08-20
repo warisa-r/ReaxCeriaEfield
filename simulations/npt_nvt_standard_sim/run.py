@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 lmp = lammps()
 
 # Define your input script (load it from a file)
-lmp.file("run-lammps.lmp")  # Ensure this script doesn't include a final "run" command
+lmp.file("run-lammps-npt.lmp")  # Ensure this script doesn't include a final "run" command
 
 # Total number of timesteps to run
-total_steps = 1000000
+total_steps = 10000
 steps_per_run = 500
 
 # Lists to store time (steps) and lattice constants
@@ -37,7 +37,7 @@ for i in range(0, total_steps, steps_per_run):
     
     # Check if the change in lattice constants is less than 0.01
     if lx_old is not None and ly_old is not None and lz_old is not None:
-        if abs(lx_new - lx_old) < 0.01 and abs(ly_new - ly_old) < 0.01 and abs(lz_new - lz_old) < 0.01:
+        if abs(lx_new - lx_old) < 0.0001 and abs(ly_new - ly_old) < 0.01 and abs(lz_new - lz_old) < 0.01:
             print("Convergence reached. Terminating the loop.")
             break
     
@@ -58,3 +58,11 @@ plt.grid(True)
 
 # Save the plot as a picture file
 plt.savefig('plot_of_lattice_constant.png')
+
+# Save the simulation results
+lmp.command("write_restart restart.NPT") # Save the restart file
+
+# Re-initialize lammps instance
+lmp = lammps()
+
+lmp.file("run-lammps-nvt.lmp")
