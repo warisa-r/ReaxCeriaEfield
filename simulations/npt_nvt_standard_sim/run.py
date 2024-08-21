@@ -7,8 +7,8 @@ lmp = lammps()
 # Define your input script (load it from a file)
 lmp.file("run-lammps-npt.lmp")  # Ensure this script doesn't include a final "run" command
 
-# Total number of timesteps to run
-total_steps = 10000
+# Total number of timesteps to run for NPT
+total_steps = 500000
 steps_per_run = 500
 
 # Lists to store time (steps) and lattice constants

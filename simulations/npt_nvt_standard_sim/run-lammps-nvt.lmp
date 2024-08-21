@@ -24,6 +24,6 @@ thermo_style    custom step temp press pe ke etotal
 dump            2 all custom 1000 dump_nvt.lammpstrj id type x y z vx vy vz q
 
 # Run the NVT simulation
-run             10000
+run             500000
 
 write_restart   restart.NVT
