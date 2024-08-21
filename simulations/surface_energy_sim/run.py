@@ -35,6 +35,6 @@ def get110():
     print(E_surf_110)
 
 if __name__=="__main__":
-    get111()
-    #get110()
+    #get111()
+    get110()
     pass
