@@ -136,8 +136,8 @@ def calculate_CeO2_slab_with_vacancy_energy(slab_input_file):
 
     return E_slab_with_vacancy
 
-oxygen_input_file = "run-lammps-oxygen.sh"
-slab_input_file = "run-lammps-slab.sh"
+oxygen_input_file = "run-lammps-oxygen.lmp"
+slab_input_file = "run-lammps-slab.lmp"
 
 D_O2 = calculate_O2_dis_energy(oxygen_input_file)
 
