@@ -25,4 +25,3 @@ thermo          100
 thermo_style    custom step temp press lx ly lz
 
 dump           1 all custom 1000 dump.lammpstrj id type x y z vx vy vz q
-#run             10000

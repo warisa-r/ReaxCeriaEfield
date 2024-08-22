@@ -1,11 +1,11 @@
-#!/usr/bin/zsh 
+#!/usr/bin/zsh
 #SBATCH --job-name=my_first_npt_job
 #SBATCH --output=output.txt
 #SBATCH --error=error.txt
-#SBATCH --time=01:00:00
+#SBATCH --time=08:00:00
 #SBATCH --partition=batch
 #SBATCH --nodes=1
-#SBATCH --ntasks=8
+#SBATCH --ntasks=4
 #SBATCH --cpus-per-task=1
 
 module load gcc
@@ -20,4 +20,4 @@ pip install mpi4py
 pip install matplotlib
 
 # Run the Python script
-srun python run.py
+srun --mpi=pmi2 python run.py
