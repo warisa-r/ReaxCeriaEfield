@@ -1,9 +1,9 @@
 #Open the hpc node
-1. ssh -l   nj616237 login23-1.hpc.itc.rwth-aachen.de  # Change this to ur TIM. Check this site to learn how to connect with the node https://help.itc.rwth-aachen.de/en/service/rhr4fjjutttf/article/598d0f7f78cb4ab8b81af1b3f68ba831/
+1. Check this site to learn how to connect with the node https://help.itc.rwth-aachen.de/en/service/rhr4fjjutttf/article/598d0f7f78cb4ab8b81af1b3f68ba831/
 
-2. Use wget https://download.lammps.org/tars/lammps-11Aug2017.tar.gz to download the tar ball
+2. Use wget to download the tarball from lammps stable release (at the time of this document, 2Aug2023)
 
-3. Extract it like u usually do
+3. Extract it like u usually do and follow the manual of installing, starting by extracting the tarball
 
 4. Load these following modules
 # u are already in ~/lammps-11Aug17/src
@@ -12,33 +12,9 @@ module load OpenMPI
 module load CMake
 module load Python/3.10
 
-5. Run this command to find where rpc is located in cluster's os
-find /usr/include -name rpc.h
-found at /usr/include/gssrpc/rpc.h
-
-6.
-edit Makefile.mpi by nano ~/lammps-11Aug17/src/MAKE/Makefile.mpi
-SHELL = /bin/sh
-INCLUDES += -I/usr/include/gssrpc -I/usr/include/event2
-LIBS += -lrpc
-# ---------------------------------------------------------------------
-# compiler/linker settings
-# specify flags and libraries needed for your compiler
-
-CC =            mpicxx
-CCFLAGS =       -g -O3 $(INCLUDES)
-SHFLAGS =       -fPIC
-DEPFLAGS =      -M
-
-LINK =          mpicxx
-LINKFLAGS =     -g -O $(LIBS)
-
-and nano ~/lammps-11Aug17/src/dump_xtc.h   
-#include <gssrpc/rpc.h> 
-#include <gssrpc/xdr.h>
-
-7. Follow lammps instruction make lib-reax args="-m mpi" -> make yes-reax
-8. make yes-misc
-9. make mpi mode=shlib
-10. make install-python
-11. Open python and check if lammps is there by trying to use "import lammps"
+7. Follow lammps instruction. cd src and  
+8. make yes-reaxff
+9. make yes-molecule # I assume that this is for applying the electric field but I'm not 100% sure
+10. make mode=shared mpi
+11. make install-python
+12. Open python and check if lammps is there by trying to use "import lammps" "lmp = lammps.lammps()"
