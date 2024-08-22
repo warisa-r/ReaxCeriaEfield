@@ -24,14 +24,15 @@ from geometry_utils import convert_lammps_to_cif
 ```
 2. `literature` (incomplete) is an archive of the literature professor Abhishek has sent to us and is relevant to the project.
 3. `simulations` contain folders of simulations in the following structure that should be kept. The idea is that we can run the simulation in that directory right away without having to worry about paths and each of these simulations can be zipped and run by others who have access to the module `geometry_utils`. This pattern should be strictly kept unless we agree on adjusting them:
-   1. `run-lammps.sh` input file
+   1. `run-lammps.lmp` lammps input file
    2. `run.py` python file that calls the input file
    4. geometry files
    5. `ffield.reax` force field parameter file
-   6. `generate_geometry.py` python script called in order to generate the geometry files (optional)
-   7. `process_result.py` python script called in order to process the simulation results (optional)
-   8. dump files (optional)
-   9. plot of the simulation results (optional)
+   6. `job_script.sh` shell script to submit job in the cluster (optional) If you have this please make sue that your python code's essential modules are included.
+   7. `generate_geometry.py` python script called in order to generate the geometry files (optional)
+   8. `process_result.py` python script called in order to process the simulation results (optional)
+   9. dump files (optional)
+   10. plot of the simulation results (optional)
 
 # What to do next?
 1. [x] Get surface energy correct

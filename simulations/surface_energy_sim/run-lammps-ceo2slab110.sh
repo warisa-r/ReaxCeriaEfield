@@ -10,8 +10,10 @@ atom_style charge
 read_data 110slab.lmp
 
 # ---------- Define Interatomic Potential ---------------------
-pair_style	reax 10.0 0 1 1.0e-6
-pair_coeff	* * ffield.reax 4 3
+pair_style	reax/c NULL
+pair_coeff	* * ffield.reax Ce O
+
+fix             1 all qeq/reax 1 0.0 10.0 1e-6 reaxff
 
 neighbor	2 bin
 neigh_modify	every 10 delay 0 check no
