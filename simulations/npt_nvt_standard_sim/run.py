@@ -64,6 +64,9 @@ if rank == 0:
     # Save the simulation results
     lmp.command("write_restart restart.NPT")  # Save the restart file
 
+# TODO: get the box dimensions after the NPT simulation and set the box dimensions for NVT simulation as constant
+# !!!!!!!! NVT doesn't fix volume !!!!!!!!
+
 # Re-initialize lammps instance for NVT (optional, for continuation)
 lmp = lammps(comm=comm)
 lmp.file("run-lammps-nvt.lmp")

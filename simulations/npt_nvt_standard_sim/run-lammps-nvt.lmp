@@ -5,6 +5,8 @@ atom_style      charge
 # Read the restart file from the NPT simulation
 read_restart    restart.NPT
 
+# This is wrong. I should find the way to obtain the dimensions at the end of NPT and make the box size rigid
+
 # Apply the ReaxFF potential
 pair_style	reaxff NULL checkqeq yes
 pair_coeff	* * ffield.reax Ce O
@@ -22,7 +24,7 @@ fix             3 all nvt temp 300.0 300.0 100.0   # Nose-Hoover thermostat for 
 # Output settings
 timestep        1.0
 thermo          100
-thermo_style    custom step temp press pe ke etotal
+thermo_style    custom step temp press lx ly lz
 
 dump            2 all custom 1000 dump_nvt.lammpstrj id type x y z vx vy vz q
 
