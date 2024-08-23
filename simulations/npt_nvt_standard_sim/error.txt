@@ -33,6 +33,3 @@ WARNING: You are using pip version 22.0.4; however, version 24.2 is available.
 You should consider upgrading via the '/cvmfs/software.hpc.rwth.de/Linux/RH8/x86_64/intel/sapphirerapids/software/Python/3.10.4-GCCcore-11.3.0/bin/python -m pip install --upgrade pip' command.
 WARNING: You are using pip version 22.0.4; however, version 24.2 is available.
 You should consider upgrading via the '/cvmfs/software.hpc.rwth.de/Linux/RH8/x86_64/intel/sapphirerapids/software/Python/3.10.4-GCCcore-11.3.0/bin/python -m pip install --upgrade pip' command.
-slurmstepd: error: *** STEP 48571256.0 ON n23m0262 CANCELLED AT 2024-08-22T06:36:52 DUE TO TIME LIMIT ***
-slurmstepd: error: *** JOB 48571256 ON n23m0262 CANCELLED AT 2024-08-22T06:36:52 DUE TO TIME LIMIT ***
-srun: Job step aborted: Waiting up to 62 seconds for job step to finish.

@@ -2,10 +2,10 @@
 #SBATCH --job-name=my_first_npt_job
 #SBATCH --output=output.txt
 #SBATCH --error=error.txt
-#SBATCH --time=08:00:00
+#SBATCH --time=72:00:00
 #SBATCH --partition=batch
 #SBATCH --nodes=1
-#SBATCH --ntasks=4
+#SBATCH --ntasks=8
 #SBATCH --cpus-per-task=1
 
 module load gcc
