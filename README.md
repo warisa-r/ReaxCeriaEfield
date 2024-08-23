@@ -43,5 +43,6 @@ from geometry_utils import convert_lammps_to_cif
 6. [ ] Set up an NPT and possibly NVT simulation and run them local on Andres's and Yiyang's computer and get a more or less OK function of lattice constant or temperature against time.
 7. [ ] Handle the HPC slurm job submission. Try running NPT or NVT on cluster and plot the same function without certainty in how correct the simulation works: Warisa
 8. [ ] Set up HPC account and connect to a node in HPC cluster (no need to go further)
-9. [ ] Run NPT and NVT on cluster
-10. [ ] Observe heating behavior with and without vacancy
+9. [ ] Function that randomly generates vacancy
+10. [ ] Run NPT and NVT on cluster
+11. [ ] Observe heating behavior with and without vacancy
