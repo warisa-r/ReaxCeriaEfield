@@ -38,8 +38,16 @@ thermo_style    custom step temp press lx ly lz
 
 dump            2 all custom 1000 dump_nvt.lammpstrj id type x y z vx vy vz q
 
-# Run the NVT simulation
-run             500000
+
+change_box all x final 0 15.4698835 y final 0 13.397312166666666 z final 0 167.36216833333333 remap
+Changing box ...
+WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (../domain.cpp:220)
+  triclinic box = (0 -0.0053960909 -0.067409154) to (15.469883 13.39786 167.36901) with tilt (7.7383733 1.9345933 1.116938)
+WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (../domain.cpp:220)
+  triclinic box = (0 0 -0.067409154) to (15.469883 13.397312 167.36901) with tilt (7.7383733 1.9345933 1.116938)
+WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (../domain.cpp:220)
+  triclinic box = (0 0 0) to (15.469883 13.397312 167.36217) with tilt (7.7383733 1.9345933 1.116938)
+run 500000
 
 CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
 
@@ -91,39 +99,38 @@ Neighbor list info ...
       bin: none
 Per MPI rank memory allocation (min/avg/max) = 6.066 | 28.95 | 75.29 Mbytes
    Step          Temp          Press            Lx             Ly             Lz      
-    500000   285.04863     -38.621423      15.476747      13.403256      167.43642    
-    600000   283.02063     -1039.7204      15.476747      13.403256      167.43642    
-    700000   307.57206     -545.67928      15.476747      13.403256      167.43642    
-    800000   288.78383     -1528.0552      15.476747      13.403256      167.43642    
-    900000   297.30788     -862.64785      15.476747      13.403256      167.43642    
-   1000000   301.03876     -100.38545      15.476747      13.403256      167.43642    
-Loop time of 18719.7 on 8 procs for 500000 steps with 672 atoms
+    500000   285.04863      672.62087      15.469883      13.397312      167.36217    
+    600000   302.79245      494.85517      15.469883      13.397312      167.36217    
+    700000   291.07315     -594.08051      15.469883      13.397312      167.36217    
+    800000   301.13339      309.27344      15.469883      13.397312      167.36217    
+    900000   300.57324     -528.49424      15.469883      13.397312      167.36217    
+   1000000   317.13921      671.39236      15.469883      13.397312      167.36217    
+Loop time of 18499 on 8 procs for 500000 steps with 672 atoms
 
-Performance: 2.308 ns/day, 10.400 hours/ns, 26.710 timesteps/s, 17.949 katom-step/s
+Performance: 2.335 ns/day, 10.277 hours/ns, 27.028 timesteps/s, 18.163 katom-step/s
 99.7% CPU use with 8 MPI tasks x no OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 0.43479    | 4681.4     | 15943      |9543.7 | 25.01
-Neigh   | 0.028753   | 218.95     | 729.75     |1933.0 |  1.17
-Comm    | 0.67072    | 1563.8     | 12067      |10043.2 |  8.35
-Output  | 0.26718    | 0.27698    | 0.30125    |   2.3 |  0.00
-Modify  | 1994.7     | 12255      | 18718      |7000.9 | 65.46
-Other   |            | 0.6164     |            |       |  0.00
+Pair    | 0.4912     | 4595.3     | 15701      |9438.7 | 24.84
+Neigh   | 0.029933   | 214.58     | 729.78     |1918.1 |  1.16
+Comm    | 0.70126    | 1618.8     | 12233      |9981.6 |  8.75
+Output  | 0.2631     | 0.27198    | 0.29482    |   2.1 |  0.00
+Modify  | 1949.1     | 12069      | 18497      |7005.7 | 65.24
+Other   |            | 0.6239     |            |       |  0.00
 
 Nlocal:             84 ave         320 max           0 min
 Histogram: 5 1 0 0 0 0 0 0 0 2
-Nghost:           1284 ave        3715 max           0 min
+Nghost:         1285.5 ave        3721 max           0 min
 Histogram: 4 0 0 1 1 0 0 0 0 2
-Neighs:        33160.5 ave      127891 max           0 min
+Neighs:        33149.9 ave      127666 max           0 min
 Histogram: 5 1 0 0 0 0 0 0 0 2
 
-Total # of neighbors = 265284
-Ave neighs/atom = 394.76786
+Total # of neighbors = 265199
+Ave neighs/atom = 394.64137
 Neighbor list builds = 50000
 Dangerous builds not checked
-
 write_restart   restart.NVT
 System init for write_restart ...
-Total wall time: 5:11:59
+Total wall time: 5:08:19
