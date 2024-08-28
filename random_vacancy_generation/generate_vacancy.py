@@ -7,7 +7,7 @@ import os
 import numpy as np
 import random
 
-# Prepare a slab geometry from the bulk geometry
+# Use the slab in npt_nvt_simulation as a base structure before vacancy generation
 
 structure = read("bulk.cif")
 slab = surface(structure, (1,1,1), layers=14, vacuum=0.0)
@@ -64,13 +64,7 @@ nearest_cerium_indices = [index for _, index in cerium_distances[:4]]
 # Print the indices of the 4 nearest cerium atoms
 print("Indices of the 4 nearest cerium atoms:", nearest_cerium_indices)
 
-# The vacancy is 120.0
-
-# TODO: place the random oxygen in the middle of the vacancy. The top of the slab is at z = min_slab_size
-# The z position of the vacancy oxygen is z = min_slab_size + 60.0
-# the oxygen should be placed in the middle of in the plane
-
-# Ise min_slab_size or the surface thickness without vacancy by generating a new supercell without vacuum
+# Use min_slab_size or the surface thickness without vacancy by generating a new supercell without vacuum
 
 # Extract the positions of all atoms
 positions = atoms.positions
@@ -85,3 +79,13 @@ y_middle = (y_min + y_max) / 2
 
 # Print the middle coordinates
 print("Middle of the x and y plane:", (x_middle, y_middle))
+
+# The vacancy is 120.0
+
+# TODO: place the random oxygen in the middle of the vacancy. The top of the slab is at z = min_slab_size
+# The z position of the vacancy oxygen is z = min_slab_size + 60.0
+# the oxygen should be placed in the middle of in the plane
+# This automated modification should be done in the cif file.
+
+#TODO: Turn the cif files to lammps geometry files
+# !! the index of the atoms in lammps file should start from 1 when cif index starts from 0 !!
