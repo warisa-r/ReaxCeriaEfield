@@ -86,6 +86,25 @@ print("Middle of the x and y plane:", (x_middle, y_middle))
 # The z position of the vacancy oxygen is z = min_slab_size + 60.0
 # the oxygen should be placed in the middle of in the plane
 # This automated modification should be done in the cif file.
+with open('111slab.cif','r') as file:
+    lines = file.readlines()
+
+cell = atoms.get_cell()
+a, b ,c = cell.lengths()
+
+keyword = "O" + str(random_oxygen_index)
+_z_new = round(60.0 / c, 8)
+
+for i, line in enumerate(lines):
+    if keyword in line:
+        lines[i] = "  O2-  " + keyword + "  1  " + "0.5  0.5  " + str(_z_new) + "  1.0 \n"
+        break
+
+with open('vacancy_slab.cif','w') as file:
+    file.writelines(lines)
 
 #TODO: Turn the cif files to lammps geometry files
 # !! the index of the atoms in lammps file should start from 1 when cif index starts from 0 !!
+vacancy_slab = read('vacancy_slab.cif')
+write('vacancy_slab.lmp', vacancy_slab, format='lammps-data')
+# No need to change index right? If we wanna track the atom, just modify the index by +1?
