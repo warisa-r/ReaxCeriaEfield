@@ -64,6 +64,12 @@ nearest_cerium_indices = [index for _, index in cerium_distances[:4]]
 # Print the indices of the 4 nearest cerium atoms
 print("Indices of the 4 nearest cerium atoms:", nearest_cerium_indices)
 
+# Write the indices to a file
+with open(f'vacancy_indices_{random_oxygen_index}.txt', 'w') as f:
+    f.write(f"Index of the oxygen vacancy: {random_oxygen_index}\n")
+    f.write(f"Indices of the 4 nearest cerium atoms: {nearest_cerium_indices}\n")
+    f.write(f"Index of the random oxygen atom: {random_oxygen_index}\n")
+
 # Use min_slab_size or the surface thickness without vacancy by generating a new supercell without vacuum
 
 # Extract the positions of all atoms
@@ -82,10 +88,6 @@ print("Middle of the x and y plane:", (x_middle, y_middle))
 
 # The vacancy is 120.0
 
-# TODO: place the random oxygen in the middle of the vacancy. The top of the slab is at z = min_slab_size
-# The z position of the vacancy oxygen is z = min_slab_size + 60.0
-# the oxygen should be placed in the middle of in the plane
-# This automated modification should be done in the cif file.
 with open('111slab.cif','r') as file:
     lines = file.readlines()
 
@@ -100,11 +102,11 @@ for i, line in enumerate(lines):
         lines[i] = "  O2-  " + keyword + "  1  " + "0.5  0.5  " + str(_z_new) + "  1.0 \n"
         break
 
-with open('vacancy_slab.cif','w') as file:
+with open(f'vacancy_slab_{random_oxygen_index}.cif','w') as file:
     file.writelines(lines)
 
 #TODO: Turn the cif files to lammps geometry files
 # !! the index of the atoms in lammps file should start from 1 when cif index starts from 0 !!
-vacancy_slab = read('vacancy_slab.cif')
-write('vacancy_slab.lmp', vacancy_slab, format='lammps-data')
+vacancy_slab = read(f'vacancy_slab_{random_oxygen_index}.cif')
+write(f'vacancy_slab_{random_oxygen_index}.lmp', vacancy_slab, format='lammps-data')
 # No need to change index right? If we wanna track the atom, just modify the index by +1?
