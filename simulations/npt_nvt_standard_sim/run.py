@@ -16,15 +16,6 @@ lmp.file("run-lammps-npt.lmp")
 from extract_lattice import lattice_constant_log
 timesteps, lx_values, ly_values, lz_values = lattice_constant_log("log.lammps")
 
-#Alternative approaches to extracting lattice constant:
-#from extract_lattice import lattice_constant_dump 
-#timesteps, lx_values, ly_values, lz_values = lattice_constant_log("log.lammps")
-
-#data = np.load('simulation_data_slab.npz')
-#lx_values = data['lx_values']
-#ly_values = data['ly_values']
-#lz_values = data['lz_values']
-
 lx_mean = np.mean(lx_values)
 ly_mean = np.mean(ly_values)
 lz_mean = np.mean(lz_values)
