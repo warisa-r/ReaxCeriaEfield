@@ -80,7 +80,7 @@ def temperatures_log(file_path):
         for line in file:
             if "Step" in line and "Temp" in line and "Press" in line:
                 start_extracting = True
-                continue  # Skip the header line itself
+                continue  
             
             if start_extracting:
                 parts = line.split()
@@ -91,7 +91,6 @@ def temperatures_log(file_path):
                     except ValueError:
                         pass
 
-    # Convert the list of temperatures to a numpy array
     return np.array(temperatures)
 
 #Extracts steps from log file as numpy array
@@ -116,3 +115,15 @@ def steps_log(file_path):
 
     return np.array(steps)
 
+#Updates efield with desired parameters
+def update_efield(filename, Ex, Ey, Ez):
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+    
+    with open(filename, 'w') as file:
+        for line in lines:
+            if line.startswith('fix 1 all efield'):
+                new_line = f'fix 1 all efield {Ex} {Ey} {Ez}\n'
+                file.write(new_line)
+            else:
+                file.write(line)
