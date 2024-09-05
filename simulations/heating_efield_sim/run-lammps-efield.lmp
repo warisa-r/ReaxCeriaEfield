@@ -2,7 +2,7 @@
 units           real
 atom_style      charge
 
-# Read the restart file from the NPT simulation
+# Read the restart file from the NVT simulation
 read_restart    restart.NVT
 
 # Change boundary conditions so that efield can be applied
