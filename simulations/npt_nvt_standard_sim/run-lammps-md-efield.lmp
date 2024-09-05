@@ -9,7 +9,7 @@ read_restart    restart.NVT
 change_box      all boundary p p s
 
 # Define constants
-variable        A equal 0.5         # Amplitude of electric field (V/Angstrom)
+variable        A equal 0.1         # Amplitude of electric field (V/Angstrom)
 variable        f equal 1.0e-4      # Frequency in THz (THz = 1e12 Hz)
 variable        omega equal 2*PI*${f}  # Angular frequency (omega = 2*pi*f)
 
