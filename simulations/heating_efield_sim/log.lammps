@@ -1,0 +1,2 @@
+LAMMPS (2 Aug 2023 - Update 3)
+WARNING: Using I/O redirection is unreliable with parallel runs. Better to use the -in switch to read input files. (../lammps.cpp:548)

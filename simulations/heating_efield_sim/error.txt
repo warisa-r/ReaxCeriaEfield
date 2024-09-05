@@ -1,0 +1,43 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"gcc"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "gcc"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+Lmod has detected the following error: The following module(s) are unknown:
+"openmpi/4.1.4"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "openmpi/4.1.4"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+[INFO] Module CMake/3.26.3 loaded.
+
+The following have been reloaded with a version change:
+  1) zlib/1.2.13 => zlib/1.2.12
+
+[INFO] Module mpi4py/3.1.4 loaded.
+[INFO] Module Python/3.10.4 loaded.
+WARNING: You are using pip version 22.0.4; however, version 24.2 is available.
+You should consider upgrading via the '/cvmfs/software.hpc.rwth.de/Linux/RH8/x86_64/intel/sapphirerapids/software/Python/3.10.4-GCCcore-11.3.0/bin/python -m pip install --upgrade pip' command.
+WARNING: You are using pip version 22.0.4; however, version 24.2 is available.
+You should consider upgrading via the '/cvmfs/software.hpc.rwth.de/Linux/RH8/x86_64/intel/sapphirerapids/software/Python/3.10.4-GCCcore-11.3.0/bin/python -m pip install --upgrade pip' command.
+slurmstepd: error: Detected 1 oom-kill event(s) in StepId=48769262.0. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: r23m0210: task 7: Out Of Memory
+srun: First task exited 5s ago
+srun: StepId=48769262.0 tasks 0-6: running
+srun: StepId=48769262.0 task 7: exited abnormally
+srun: launch/slurm: _step_signal: Terminating StepId=48769262.0
+srun: Job step aborted: Waiting up to 62 seconds for job step to finish.
+slurmstepd: error: *** STEP 48769262.0 ON r23m0210 CANCELLED AT 2024-09-04T11:50:04 ***
