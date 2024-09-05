@@ -28,7 +28,7 @@ variable Eapply equal swiggle(0.0,v_amp,v_freq)
 fix             3 all efield 0.0 0.0 v_Eapply
 
 timestep        1.0
-thermo          100000
+thermo          10
 thermo_style    custom step temp press lx ly lz
 
 dump           1 all custom 1000 dump_heat_efield.lammpstrj id type x y z vx vy vz q
