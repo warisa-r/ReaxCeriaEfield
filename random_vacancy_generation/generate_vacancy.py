@@ -134,8 +134,10 @@ for i, line in enumerate(lines):
 with open(f'vacancy_slab_{random_oxygen_index}.cif','w') as file:
     file.writelines(lines)
 
-#TODO: Turn the cif files to lammps geometry files
 # !! the index of the atoms in lammps file should start from 1 when cif index starts from 0 !!
+# TODO: use out already existing functions??? And also our existing functions are creating too many outputs.
+# is it possible if we can make another one of that function with ! that edits the file in place? (Be careful of data loss midway editing)
+# An idea is to just do what we normally do but remove the original file and rename the new file to the original file name
 vacancy_slab = read(f'vacancy_slab_{random_oxygen_index}.cif')
 write(f'vacancy_slab_{random_oxygen_index}.lmp', vacancy_slab, format='lammps-data')
 
