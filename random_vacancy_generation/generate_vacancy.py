@@ -7,6 +7,9 @@ import os
 import numpy as np
 import random
 
+# Define the number of vacancies
+N_vac = 3       # default is 1 vacancy
+
 # First generate a slab using ASE to get the size of the slab with 7 layers and 0 vacuum
 structure = read("bulk.cif")
 slab = surface(structure, (1,1,1), layers=14, vacuum=0.0)
@@ -33,7 +36,7 @@ slabgen = SlabGenerator(
     bulk_structure,
     miller_index=(1, 1, 1),  # Miller index of the surface plane
     min_slab_size=min_slab_size,      # Minimum slab thickness in Angstroms
-    min_vacuum_size=120.0,    # Minimum vacuum size in Angstroms
+    min_vacuum_size=N_vac*120.0,    # Minimum vacuum size in Angstroms
     lll_reduce=False         # Whether to use the LLL algorithm to reduce the cell
 )
 
@@ -70,34 +73,41 @@ for i, atom in enumerate(atoms):
     if atom.symbol == 'O':
         oxygen_indices.append(i)
 
-# Pick a random oxygen atom from the list
-random_oxygen_index = random.choice(oxygen_indices)
-print("Randomly selected oxygen atom index:", random_oxygen_index)
+# Pick N_vac random oxygen atom from the list
+random_oxygen_index = []
+for i in range(N_vac):
+    random_oxygen_index.append(random.choice(oxygen_indices))
+    print(f"{i+1}. Randomly selected oxygen atom index:", random_oxygen_index[i])
 
-# Get the position of the randomly selected oxygen atom
-oxygen_position = atoms[random_oxygen_index].position
+# Get the position of the randomly selected oxygen atoms
+oxygen_position = []
+for i in range(N_vac):
+    oxygen_position.append(atoms[random_oxygen_index[i]].position)
 
-# List to store the distances and indices of cerium atoms
-cerium_distances = []
+nearest_cerium_indices = []
+for j in range(N_vac):
+    # List to store the distances and indices of cerium atoms
+    cerium_distances = []
 
-# Iterate through the atoms and calculate distances to cerium atoms
-for i, atom in enumerate(atoms):
-    if atom.symbol == 'Ce':
-        distance = np.linalg.norm(atom.position - oxygen_position)
-        cerium_distances.append((distance, i))
+    # Iterate through the atoms and calculate distances to cerium atoms
+    for i, atom in enumerate(atoms):
+        if atom.symbol == 'Ce':
+            distance = np.linalg.norm(atom.position - oxygen_position[j])
+            cerium_distances.append((distance, i))
 
-# Sort the cerium atoms by distance and select the 4 nearest ones
-cerium_distances.sort()
-nearest_cerium_indices = [index for _, index in cerium_distances[:4]]
+    # Sort the cerium atoms by distance and select the 4 nearest ones
+    cerium_distances.sort()
+    nearest_cerium_indices.append([index for _, index in cerium_distances[:4]])
 
-# Print the indices of the 4 nearest cerium atoms
-print("Indices of the 4 nearest cerium atoms:", nearest_cerium_indices)
+    # Print the indices of the 4 nearest cerium atoms
+    print(f"Indices of the 4 nearest cerium atoms around {random_oxygen_index[j]}. oxygen atom:", nearest_cerium_indices[j])
 
 # Write the indices to a file
-with open(f'vacancy_indices_{random_oxygen_index}.txt', 'w') as f:
-    f.write(f"Index of the oxygen vacancy: {random_oxygen_index}\n")
-    f.write(f"Indices of the 4 nearest cerium atoms: {nearest_cerium_indices}\n")
-    f.write(f"Index of the random oxygen atom: {random_oxygen_index}\n")
+for i in range(N_vac):
+    with open(f'vacancy_indices_{random_oxygen_index[i]}.txt', 'w') as f:
+        f.write(f"Index of the oxygen vacancy: {random_oxygen_index[i]}\n")
+        f.write(f"Indices of the 4 nearest cerium atoms: {nearest_cerium_indices[i]}\n")
+        f.write(f"Index of the random oxygen atom: {random_oxygen_index[i]}\n")
 
 # Use min_slab_size or the surface thickness without vacancy by generating a new supercell without vacuum
 
@@ -115,7 +125,7 @@ y_middle = (y_min + y_max) / 2
 # Print the middle coordinates
 print("Middle of the x and y plane:", (x_middle, y_middle))
 
-# The vacancy is 120.0
+# The vacancy is 120.0 * N_vac
 
 with open('111slab.cif','r') as file:
     lines = file.readlines()
@@ -123,21 +133,19 @@ with open('111slab.cif','r') as file:
 cell = atoms.get_cell()
 a, b ,c = cell.lengths()
 
-keyword = "O" + str(random_oxygen_index)
-_z_new = round(60.0 / c, 8)
+for j in range(N_vac):
+    keyword = "O" + str(random_oxygen_index[j])
+    _z_new = round((60.0 + 120. * j) / c, 8)
 
-for i, line in enumerate(lines):
-    if keyword in line:
-        lines[i] = "  O2-  " + keyword + "  1  " + "0.5  0.5  " + str(_z_new) + "  1.0 \n"
-        break
+    for i, line in enumerate(lines):
+        if keyword in line:
+            lines[i] = "  O2-  " + keyword + "  1  " + "0.5  0.5  " + str(_z_new) + "  1.0 \n"
+            break
 
 with open(f'vacancy_slab_{random_oxygen_index}.cif','w') as file:
     file.writelines(lines)
 
 # !! the index of the atoms in lammps file should start from 1 when cif index starts from 0 !!
-# TODO: use out already existing functions??? And also our existing functions are creating too many outputs.
-# is it possible if we can make another one of that function with ! that edits the file in place? (Be careful of data loss midway editing)
-# An idea is to just do what we normally do but remove the original file and rename the new file to the original file name
 vacancy_slab = read(f'vacancy_slab_{random_oxygen_index}.cif')
 write(f'vacancy_slab_{random_oxygen_index}.lmp', vacancy_slab, format='lammps-data')
 
