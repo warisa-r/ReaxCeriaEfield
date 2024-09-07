@@ -138,4 +138,15 @@ with open(f'vacancy_slab_{random_oxygen_index}.cif','w') as file:
 # !! the index of the atoms in lammps file should start from 1 when cif index starts from 0 !!
 vacancy_slab = read(f'vacancy_slab_{random_oxygen_index}.cif')
 write(f'vacancy_slab_{random_oxygen_index}.lmp', vacancy_slab, format='lammps-data')
-# No need to change index right? If we wanna track the atom, just modify the index by +1?
+
+# Add the charges to the atoms in the LAMMPS file
+import sys
+import os
+
+# Add the directory containing geometry_utils to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from geometry_utils import add_charges_to_atoms
+
+add_charges_to_atoms(f'vacancy_slab_{random_oxygen_index}.lmp', f'vacancy_slab_{random_oxygen_index}_charge.lmp')
+
