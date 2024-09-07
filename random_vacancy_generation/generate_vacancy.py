@@ -149,6 +149,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from geometry_utils import add_charges_to_atoms
+from geometry_utils import add_masses_to_lmp
 
-add_charges_to_atoms(f'vacancy_slab_{random_oxygen_index}.lmp', f'vacancy_slab_{random_oxygen_index}_charge.lmp')
-
+add_charges_to_atoms(f'vacancy_slab_{random_oxygen_index}.lmp', f'vacancy_slab_{random_oxygen_index}.lmp')
+add_masses_to_lmp(f'vacancy_slab_{random_oxygen_index}.lmp', f'vacancy_slab_{random_oxygen_index}.lmp')
