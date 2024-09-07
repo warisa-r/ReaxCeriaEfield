@@ -7,8 +7,7 @@ import os
 import numpy as np
 import random
 
-# Use the slab in npt_nvt_simulation as a base structure before vacancy generation
-
+# First generate a slab using ASE to get the size of the slab with 7 layers and 0 vacuum
 structure = read("bulk.cif")
 slab = surface(structure, (1,1,1), layers=14, vacuum=0.0)
 supercell = make_supercell(slab,[[2,0,0],[0,2,0],[0,0,1]])
@@ -27,8 +26,38 @@ def get_cell_length_c(file_path):
 file_path = '111slab_ase.cif'
 min_slab_size = get_cell_length_c(file_path)
 
-# Delete the file '111slab_ase.cif'
-os.remove(file_path)
+bulk_structure = Structure.from_file("bulk.cif")
+
+#  Create SlabGenerator instance
+slabgen = SlabGenerator(
+    bulk_structure,
+    miller_index=(1, 1, 1),  # Miller index of the surface plane
+    min_slab_size=min_slab_size,      # Minimum slab thickness in Angstroms
+    min_vacuum_size=120.0,    # Minimum vacuum size in Angstroms
+    lll_reduce=False         # Whether to use the LLL algorithm to reduce the cell
+)
+
+# Generate slabs with different termination types
+slabs = slabgen.get_slabs(
+    symmetrize=True,     # Whether to symmetrize the slab
+    tol=0.1,              # Symmetrization tolerance
+    bonds=None,           # Custom bonds to pass to the slab generator
+    max_broken_bonds=0   # Maximum number of broken bonds allowed in the slab
+)
+
+# Create a 4x4 supercell in the xy-axis for each slab and save them
+for i, slab in enumerate(slabs):
+    # Create the 2x2 supercell for the slab
+    supercell_scaling_matrix = [[4, 0, 0], [0, 4, 0], [0, 0, 1]]
+    supercell = slab.make_supercell(supercell_scaling_matrix)
+    
+    # Check if the total number of atoms in the supercell is equal to 336
+    if len(supercell) == 672:
+        # Optionally, write the supercell slab to a file named 111slab.cif only if the condition is met
+        supercell.to(fmt="cif", filename="111slab.cif")
+        print(f"Supercell Slab {i+1} with 672 atoms saved as 111slab.cif")
+    else:
+        print(f"Supercell Slab {i+1} does not have 672 atoms and was not saved.")
 
 # Load the generated slab structure in ase 
 atoms = read('111slab.cif')
