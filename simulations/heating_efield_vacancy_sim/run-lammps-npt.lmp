@@ -4,7 +4,7 @@ boundary       p p p
 units		real
 
 atom_style	charge
-read_data vacancy_slab_319.lmp
+read_data vacancy_slab_361.lmp
 
 pair_style	reaxff NULL checkqeq yes
 pair_coeff	* * ffield.reax Ce O
