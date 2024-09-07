@@ -23,7 +23,7 @@ fix             2 all nve
 
 variable amp    equal 0.10     # amplitude of the electric field
 variable freq   equal 100.0   # frequency of the electric field
-variable Eapply equal swiggle(0.0,v_amp,v_freq)
+variable Eapply equal swiggle(0.0,v_amp,v_freq) # The swiggle(x,y,z) and cwiggle(x,y,z) functions each take 3 arguments: x = value0, y = amplitude, z = period. They use the elapsed time to oscillate the value by a sin() or cos() function over the course of a run, according to one of these formulas, where omega = 2 PI / period:
 
 fix             3 all efield 0.0 0.0 v_Eapply
 

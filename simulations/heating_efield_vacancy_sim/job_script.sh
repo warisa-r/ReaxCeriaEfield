@@ -1,5 +1,5 @@
 #!/usr/bin/zsh
-#SBATCH --job-name=my_first_npt_job
+#SBATCH --job-name=applying_efield_on_vacancy
 #SBATCH --output=output.txt
 #SBATCH --error=error.txt
 #SBATCH --time=72:00:00
