@@ -79,4 +79,34 @@ def find_optimal_window_size(x, y, window_sizes, r2_threshold=0.95, slope_tolera
 
     return best_window_size
 
-#window_sizes = range(50, 2000, 50)
+
+def steps_to_reach_trend(x,y, slope_tolerance =0.1, r2_tolerance = 0.1):
+    points_needed = 0
+    melting_point_index = 0
+ 
+    for i in range(len(x)):
+        if y[i] >= 2673: #Find melting point index
+            melting_point_index = i
+            break
+    x_global = np.array(x[0:melting_point_index]).reshape(-1, 1)
+    y_global= np.array(y[0:melting_point_index])
+        
+    # Fit linear regression
+    model_global = LinearRegression().fit(x_global, y_global)
+    y_pred_global = model_global.predict(x_global)
+    r2_global = r2_score(y_global, y_pred_global)
+    slope_global = model_global.coef_[0]
+    
+    for i in range(2, melting_point_index):
+        x_local = np.array(x[0:i]).reshape(-1,1)
+        y_local = np.array(y[0:i])
+        model_local = LinearRegression().fit(x_local, y_local)
+        y_pred_local = model_local.predict(x_local)
+        r2_local = r2_score(y_local, y_pred_local)
+        slope_local = model_local.coef_[0]
+
+        if abs(slope_global - slope_local) <= slope_tolerance and abs(r2_global-r2_local) <= r2_tolerance:
+            points_needed = i
+            break
+    return x[points_needed]-x[0]
+
