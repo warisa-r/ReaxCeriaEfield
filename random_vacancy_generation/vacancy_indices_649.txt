@@ -1,0 +1,3 @@
+Index of the oxygen vacancy: 649
+Indices of the 4 nearest cerium atoms: [222, 221, 217, 201]
+Index of the random oxygen atom: 649
