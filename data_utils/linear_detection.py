@@ -108,5 +108,6 @@ def steps_to_reach_trend(x,y, slope_tolerance =0.1, r2_tolerance = 0.1):
         if abs(slope_global - slope_local) <= slope_tolerance and abs(r2_global-r2_local) <= r2_tolerance:
             points_needed = i
             break
-    return x[points_needed]-x[0]
+    steps_needed = x[points_needed]-x[0]
+    return steps_needed, slope_global
 
