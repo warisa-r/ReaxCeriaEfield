@@ -14,6 +14,6 @@ optimal_window_size = find_optimal_window_size(x, y, window_sizes, r2_threshold=
 segments = sliding_window_linear_detection(x, y, window_size=optimal_window_size, r2_threshold=0.95, slope_tolerance=0.1)
 plot_sliding_window_linear_detection(x, y, segments)
 
-needed_steps = steps_to_reach_trend(x, y, 0.1, 0.1)
-print(f'It takes {needed_steps} steps to reach the upward linear trend found from 0 to melting point.')
+needed_steps, global_slope = steps_to_reach_trend(x, y, 0.1, 0.1)
+print(f'It takes {needed_steps} steps to reach the upward linear trend found from 0 to melting point with a slope of {global_slope}.')
 
