@@ -1,0 +1,33 @@
+# Initialize simulation
+units           real
+atom_style      charge
+
+# Read the restart file from the NPT simulation
+read_restart    restart.NPT
+
+# Apply the ReaxFF potential
+pair_style	reaxff NULL checkqeq yes
+pair_coeff	* * ffield.reax Ce O
+
+# Neighbor settings
+neighbor        2 bin
+neigh_modify    every 10 delay 0 check no
+
+# add charge equalibrium
+fix             1 all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+# Set up NVT ensemble
+fix             3 all nvt temp 300.0 300.0 100.0   # Nose-Hoover thermostat for NVT
+
+# Fix atom with index 369, 525 to not move by zeroing the force on it
+group          fixed_atom id 369 525 # index + 1 cos lammps index starts at 1
+fix            4 fixed_atom setforce 0.0 0.0 0.0
+
+# Output settings
+timestep        1.0
+thermo          1
+thermo_style    custom step temp press lx ly lz
+
+dump            2 all custom 1000 dump_nvt.lammpstrj id type x y z vx vy vz q
+
+

@@ -1,0 +1,40 @@
+# Initialize simulation
+units           real
+atom_style      charge
+
+# Read the restart file from the NVT simulation
+read_restart    restart.NVT
+
+# Change boundary conditions so that efield can be applied
+change_box      all boundary p p s
+
+# Apply the ReaxFF potential
+pair_style	reaxff NULL checkqeq yes
+pair_coeff	* * ffield.reax Ce O
+
+# Neighbor settings
+neighbor        2 bin
+neigh_modify    every 10 delay 0 check no
+
+# add charge equalibrium
+fix             1 all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+fix             2 all nve
+
+variable amp    equal 0.3     # amplitude of the electric field # 3 × 10^9 V/m or 0.3 V/Angstrom
+variable period   equal 1e6   # period of the electric field 1e6 femtoseconds -> 1e-9 seconds -> 1 GHz
+variable Eapply equal swiggle(0.0,v_amp,v_period) # The swiggle(x,y,z) and cwiggle(x,y,z) functions each take 3 arguments: x = value0, y = amplitude, z = period. They use the elapsed time to oscillate the value by a sin() or cos() function over the course of a run, according to one of these formulas, where omega = 2 PI / period:
+
+fix             3 all efield 0.0 0.0 v_Eapply
+
+# Fix atom with index 369, 525 to not move by zeroing the force on it
+group          fixed_atom id 369 525
+fix            4 fixed_atom setforce 0.0 0.0 0.0
+
+timestep        1.0
+thermo          10
+thermo_style    custom step temp press lx ly lz
+
+dump           1 all custom 1000 dump_heat_efield.lammpstrj id type x y z vx vy vz q
+
+run            10000000 # 10ns

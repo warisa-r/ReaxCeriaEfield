@@ -1,0 +1,33 @@
+# REAX potential for CeO2 system
+# .....
+boundary       p p p
+units		real
+
+atom_style	charge
+read_data vacancy_slab_361_charge.lmp
+
+pair_style	reaxff NULL checkqeq yes
+pair_coeff	* * ffield.reax Ce O
+
+neighbor	2 bin
+neigh_modify	every 10 delay 0 check no
+
+velocity        all create 300.0 12345 mom yes rot yes
+
+# add charge equalibrium
+fix             1 all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+# fix npt used Nose-Hoover thermostat and barostat
+fix             2 all npt temp 300.0 300.0 100.0 iso 1.0 1.0 1000.0 # T start = T end = 300 K, P start = P stop = 1 atm
+
+# Fix atom with index 362 to not move by zeroing the force on it
+group          fixed_atom id 362 # index + 1 in lammps index
+fix            3 fixed_atom setforce 0.0 0.0 0.0
+
+timestep        1.0
+thermo          100000
+thermo_style    custom step temp press lx ly lz
+
+dump           1 all custom 1000 dump.lammpstrj id type x y z vx vy vz q
+run            500000
+write_restart restart.NPT

@@ -8,7 +8,7 @@ import numpy as np
 import random
 
 # Define the number of vacancies
-N_vac = 3       # default is 1 vacancy
+N_vac = 2       # default is 1 vacancy
 
 # First generate a slab using ASE to get the size of the slab with 7 layers and 0 vacuum
 structure = read("bulk.cif")

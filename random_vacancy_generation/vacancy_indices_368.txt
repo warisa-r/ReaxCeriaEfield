@@ -1,0 +1,3 @@
+Index of the oxygen vacancy: 368
+Indices of the 4 nearest cerium atoms: [80, 48, 64, 84]
+Index of the random oxygen atom: 368
