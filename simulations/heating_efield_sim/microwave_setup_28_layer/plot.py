@@ -11,6 +11,6 @@ x, y = extract_temperature("log.lammps")
 #y = y[:6000]
 x_adjusted = x-x[0]
 
-np.savez('fourteen_layers.npz', x=x_adjusted, y=y)
+np.savez('twentyeight_layers.npz', x=x_adjusted, y=y)
 
 single_plot(x_adjusted, y, 'Steps', 'Temperature', '28 Layers - No Vacancy', 'Twentyeight_layers.png')
