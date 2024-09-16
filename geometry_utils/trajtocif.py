@@ -34,3 +34,4 @@ def trajtocif(traj_file, cif_file, frame=-1):
 
     # Write the last frame to a CIF file
     structure.to(fmt="cif", filename=cif_file)
+
