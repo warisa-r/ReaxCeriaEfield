@@ -18,9 +18,6 @@ group non_fixed subtract all fixed_atom
 # Set the velocity for atoms in the non_fixed group to correspond to 300 K
 velocity non_fixed create 300.0 12345 mom yes rot yes
 
-# Restrict the movement of fixed_atom by zeroing the velocity
-velocity fixed_atom set 0.0 0.0 0.0
-
 # add charge equalibrium
 fix             1 all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
 
@@ -29,6 +26,9 @@ fix             2 all npt temp 300.0 300.0 100.0 iso 1.0 1.0 1000.0 # T start = 
 
 # Fix atom with index 369, 525 to not move by zeroing the force on it
 fix            3 fixed_atom setforce 0.0 0.0 0.0
+
+# Restrict the movement of fixed_atom by zeroing the velocity
+velocity fixed_atom set 0.0 0.0 0.0
 
 timestep        1.0
 thermo          100000
