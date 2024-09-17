@@ -12,6 +12,15 @@ pair_coeff	* * ffield.reax Ce O
 neighbor	2 bin
 neigh_modify	every 10 delay 0 check no
 
+group          fixed_atom id 362 # index + 1 in lammps index
+group          non_fixed subtract all fixed_atom
+
+# Set the velocity for atoms in the non_fixed group to correspond to 300 K
+velocity non_fixed create 300.0 12345 mom yes rot yes
+
+# Zero the velocity for the atoms in the fixed_atom group
+velocity fixed_atom set 0.0 0.0 0.0
+
 velocity        all create 300.0 12345 mom yes rot yes
 
 # add charge equalibrium
@@ -21,7 +30,6 @@ fix             1 all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
 fix             2 all npt temp 300.0 300.0 100.0 iso 1.0 1.0 1000.0 # T start = T end = 300 K, P start = P stop = 1 atm
 
 # Fix atom with index 362 to not move by zeroing the force on it
-group          fixed_atom id 362 # index + 1 in lammps index
 fix            3 fixed_atom setforce 0.0 0.0 0.0
 
 timestep        1.0
