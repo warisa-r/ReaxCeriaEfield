@@ -18,6 +18,9 @@ group          non_fixed subtract all fixed_atom
 # Set the velocity for atoms in the non_fixed group to correspond to 300 K
 velocity non_fixed create 300.0 12345 mom yes rot yes
 
+# Zero the velocity for the atoms in the fixed_atom group
+velocity fixed_atom set 0.0 0.0 0.0
+
 # add charge equalibrium
 fix             1 all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
 

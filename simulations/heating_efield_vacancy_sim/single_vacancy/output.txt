@@ -1,0 +1,113 @@
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: mpi4py in /cvmfs/software.hpc.rwth.de/Linux/RH8/x86_64/intel/sapphirerapids/software/mpi4py/3.1.4-iimpi-2022a/lib/python3.10/site-packages (3.1.4)
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: matplotlib in /rwthfs/rz/cluster/home/nj616237/.local/lib/python3.10/site-packages (3.9.2)
+Requirement already satisfied: cycler>=0.10 in /rwthfs/rz/cluster/home/nj616237/.local/lib/python3.10/site-packages (from matplotlib) (0.12.1)
+Requirement already satisfied: packaging>=20.0 in /cvmfs/software.hpc.rwth.de/Linux/RH8/x86_64/intel/sapphirerapids/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/site-packages (from matplotlib) (20.9)
+Requirement already satisfied: python-dateutil>=2.7 in /cvmfs/software.hpc.rwth.de/Linux/RH8/x86_64/intel/sapphirerapids/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/site-packages (from matplotlib) (2.8.2)
+Requirement already satisfied: numpy>=1.23 in /rwthfs/rz/cluster/home/nj616237/.local/lib/python3.10/site-packages (from matplotlib) (2.1.0)
+Requirement already satisfied: pillow>=8 in /rwthfs/rz/cluster/home/nj616237/.local/lib/python3.10/site-packages (from matplotlib) (10.4.0)
+Requirement already satisfied: contourpy>=1.0.1 in /rwthfs/rz/cluster/home/nj616237/.local/lib/python3.10/site-packages (from matplotlib) (1.2.1)
+Requirement already satisfied: kiwisolver>=1.3.1 in /rwthfs/rz/cluster/home/nj616237/.local/lib/python3.10/site-packages (from matplotlib) (1.4.5)
+Requirement already satisfied: fonttools>=4.22.0 in /rwthfs/rz/cluster/home/nj616237/.local/lib/python3.10/site-packages (from matplotlib) (4.53.1)
+Requirement already satisfied: pyparsing>=2.3.1 in /cvmfs/software.hpc.rwth.de/Linux/RH8/x86_64/intel/sapphirerapids/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/site-packages (from matplotlib) (3.0.8)
+Requirement already satisfied: six>=1.5 in /cvmfs/software.hpc.rwth.de/Linux/RH8/x86_64/intel/sapphirerapids/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/site-packages (from python-dateutil>=2.7->matplotlib) (1.16.0)
+LAMMPS (2 Aug 2023 - Update 3)
+WARNING: Using I/O redirection is unreliable with parallel runs. Better to use the -in switch to read input files. (../lammps.cpp:548)
+Reading data file ...
+  triclinic box = (0 0 0) to (15.464285 13.392464 167.3016) with tilt (-7.7321424 1.9330356 1.1160386)
+WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (../domain.cpp:220)
+  1 by 1 by 8 MPI processor grid
+  reading atoms ...
+  672 atoms
+  read_data CPU = 0.008 seconds
+WARNING: Changed valency_val to valency_boc for X (../reaxff_ffield.cpp:299)
+1 atoms in group fixed_atom
+671 atoms in group non_fixed
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+- pair reaxff command: doi:10.1016/j.parco.2011.08.005
+- fix qeq/reaxff command: doi:10.1016/j.parco.2011.08.005
+The log file lists these citations in BibTeX format.
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = no
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 3 28
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Setting up Verlet run ...
+  Unit style    : real
+  Current step  : 0
+  Time step     : 1
+Per MPI rank memory allocation (min/avg/max) = 6.082 | 29.21 | 76.06 Mbytes
+   Step          Temp          Press            Lx             Ly             Lz      
+         0   299.55291      3193.0141      15.464285      13.392464      167.3016     
+    100000   285.85252     -359.2651       15.491893      13.416373      167.60028    
+    200000   309.97481     -855.69238      15.482416      13.408166      167.49776    
+    300000   299.15931      818.2352       15.454597      13.384073      167.19678    
+    400000   311.11174      296.6165       15.456947      13.386109      167.22221    
+    500000   306.97854     -609.82092      15.471658      13.398849      167.38137    
+Loop time of 23303.9 on 8 procs for 500000 steps with 672 atoms
+
+Performance: 1.854 ns/day, 12.947 hours/ns, 21.456 timesteps/s, 14.418 katom-step/s
+99.7% CPU use with 8 MPI tasks x no OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.72313    | 5362.1     | 20094      |10314.5 | 23.01
+Neigh   | 0.051446   | 238.22     | 849.85     |2038.3 |  1.02
+Comm    | 0.94879    | 2592.2     | 16380      |10573.1 | 11.12
+Output  | 0.29467    | 0.31093    | 0.34376    |   3.0 |  0.00
+Modify  | 2175.7     | 15110      | 23301      |7988.1 | 64.84
+Other   |            | 0.8722     |            |       |  0.00
+
+Nlocal:             84 ave         319 max           0 min
+Histogram: 5 1 0 0 0 0 0 0 0 2
+Nghost:        1297.75 ave        3753 max           0 min
+Histogram: 4 0 0 1 1 0 0 0 0 2
+Neighs:          32931 ave      127160 max           0 min
+Histogram: 5 1 0 0 0 0 0 0 0 2
+
+Total # of neighbors = 263448
+Ave neighs/atom = 392.03571
+Neighbor list builds = 50000
+Dangerous builds not checked
+System init for write_restart ...
+LAMMPS (2 Aug 2023 - Update 3)
+WARNING: Using I/O redirection is unreliable with parallel runs. Better to use the -in switch to read input files. (../lammps.cpp:548)
+Total wall time: 6:28:24
+Reading restart file ...
+  restart file = 2 Aug 2023, LAMMPS = 2 Aug 2023
+  restoring atom style charge from restart
+  triclinic box = (-0.0036868052 -0.0031928669 -0.039885995) to (15.467972 13.395656 167.34148) with tilt (-7.7358292 1.9339573 1.1165708)
+WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (../domain.cpp:220)
+  1 by 1 by 8 MPI processor grid
+  pair style reaxff stores no restart info
+  672 atoms
+  read_restart CPU = 0.014 seconds
+WARNING: Changed valency_val to valency_boc for X (../reaxff_ffield.cpp:299)
+1 atoms in group fixed_atom
+Changing box ...
+WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (../domain.cpp:220)
+  triclinic box = (0 -0.0031928669 -0.039885995) to (15.470299 13.395656 167.34148) with tilt (-7.7358292 1.9339573 1.1165708)
+WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (../domain.cpp:220)
+  triclinic box = (0 0 -0.039885995) to (15.470299 13.397672 167.34148) with tilt (-7.7358292 1.9339573 1.1165708)
+WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (../domain.cpp:220)
+  triclinic box = (0 0 0) to (15.470299 13.397672 167.36667) with tilt (-7.7358292 1.9339573 1.1165708)

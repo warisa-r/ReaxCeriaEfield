@@ -9,15 +9,16 @@ comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 size = comm.Get_size()
 
+'''
 lmp = lammps(comm=comm)
 
 # Run lammps npt simulation
 lmp.file("run-lammps-npt.lmp")
-
+'''
 
 # Some method to calculate mean lattice constant
 from extract_lattice import lattice_constant_log
-timesteps, lx_values, ly_values, lz_values = lattice_constant_log("log.lammps")
+timesteps, lx_values, ly_values, lz_values = lattice_constant_log("output.txt")
 
 lx_mean = np.mean(lx_values)
 ly_mean = np.mean(ly_values)
