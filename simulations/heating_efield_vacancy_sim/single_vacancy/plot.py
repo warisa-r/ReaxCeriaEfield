@@ -7,8 +7,8 @@ from data_utils.plotting import single_plot, double_plot
 
 x, y = extract_temperature("log.lammps")
 #Reduce for better visualization
-#x = x[:6000]
-#y = y[:6000]
+x = x[:21706]
+y = y[:21706]
 x_adjusted = x-x[0]
 
 np.savez('single_vacancy.npz', x=x_adjusted, y=y)
