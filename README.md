@@ -1,14 +1,6 @@
 # Getting started
 
-1. Install [lammps11Aug1017](https://download.lammps.org/tars/lammps-11Aug2017.tar.gz) (version with both reax/fortran and reax/c) as shared library on your operating system.
-2. Click [here](https://help.itc.rwth-aachen.de/service/rhr4fjjutttf/article/598d0f7f78cb4ab8b81af1b3f68ba831/) to read instruction on how to Connect to hpc node.
-3. Follow the instruction in install_lammps_mpi to install it to your cluster node.
-4. Additionally install packages according to your simulations
-   1. MISC for applying electric field and using `fix efield` command
-   2. reax/c for running `energy_volume_scan_sim` simulation
-<br>
-
-Note: If you decide to install lammps in your os system, the instruction might not be applicable and you might have to find your own way around tackling with dependencies.
+Report: https://www.overleaf.com/9276872947cwwjgyvrmhjp#c8cfa7
 
 # What is in this repository
 1. Module `geometry_utils` with functions to create, add charges to, scale, and visualize lammps geometry files, You can import this module to use these functions in your simulation as you want. All functions have been documented with docstring. Any function that deals with geometry files should be written here. To user this module in `simulations` folder, add these lines
