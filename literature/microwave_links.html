@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html><head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="Content-Security-Policy" content="script-src 'none'; media-src 'none'">
+		<title>Zotero Report</title>
+		<link rel="stylesheet" type="text/css" href="data:text/css;base64,Ym9keSB7CgliYWNrZ3JvdW5kOiB3aGl0ZTsKfQoKYSB7Cgl0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTsKfQoKYm9keSB7CglwYWRkaW5nOiAwOwp9Cgp1bC5yZXBvcnQgbGkuaXRlbSB7Cglib3JkZXItdG9wOiA0cHggc29saWQgIzU1NTsKCXBhZGRpbmctdG9wOiAxZW07CglwYWRkaW5nLWxlZnQ6IDFlbTsKCXBhZGRpbmctcmlnaHQ6IDFlbTsKCW1hcmdpbi1ib3R0b206IDJlbTsKfQoKaDEsIGgyLCBoMywgaDQsIGg1LCBoNiB7Cglmb250LXdlaWdodDogbm9ybWFsOwp9CgpoMiB7CgltYXJnaW46IDAgMCAuNWVtOwp9CgpoMi5wYXJlbnRJdGVtIHsKCWZvbnQtd2VpZ2h0OiBib2xkOwoJZm9udC1zaXplOiAxZW07CglwYWRkaW5nOiAwIDAgLjVlbTsKCWJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjY2NjOwp9CgovKiBJZiBjb21iaW5pbmcgY2hpbGRyZW4sIGRpc3BsYXkgcGFyZW50IHNsaWdodGx5IGxhcmdlciAqLwp1bC5yZXBvcnQuY29tYmluZUNoaWxkSXRlbXMgaDIucGFyZW50SXRlbSB7Cglmb250LXNpemU6IDEuMWVtOwoJcGFkZGluZy1ib3R0b206IC43NWVtOwoJbWFyZ2luLWJvdHRvbTogLjRlbTsKfQoKaDIucGFyZW50SXRlbSAudGl0bGUgewoJZm9udC13ZWlnaHQ6IG5vcm1hbDsKfQoKaDMgewoJbWFyZ2luLWJvdHRvbTogLjZlbTsKCWZvbnQtd2VpZ2h0OiBib2xkICFpbXBvcnRhbnQ7Cglmb250LXNpemU6IDFlbTsKCWRpc3BsYXk6IGJsb2NrOwp9CgovKiBNZXRhZGF0YSB0YWJsZSAqLwp0aCB7Cgl2ZXJ0aWNhbC1hbGlnbjogdG9wOwoJdGV4dC1hbGlnbjogcmlnaHQ7Cgl3aWR0aDogMTUlOwoJd2hpdGUtc3BhY2U6IG5vd3JhcDsKfQoKdGQgewoJcGFkZGluZy1sZWZ0OiAuNWVtOwp9CgoKdWwucmVwb3J0LCB1bC5ub3RlcywgdWwudGFncyB7CglsaXN0LXN0eWxlOiBub25lOwoJbWFyZ2luLWxlZnQ6IDA7CglwYWRkaW5nLWxlZnQ6IDA7Cn0KCi8qIFRhZ3MgKi8KaDMudGFncyB7Cglmb250LXNpemU6IDEuMWVtOwp9Cgp1bC50YWdzIHsKCWxpbmUtaGVpZ2h0OiAxLjc1ZW07CglsaXN0LXN0eWxlOiBub25lOwp9Cgp1bC50YWdzIGxpIHsKCWRpc3BsYXk6IGlubGluZTsKfQoKdWwudGFncyBsaTpub3QoOmxhc3QtY2hpbGQpOmFmdGVyIHsKCWNvbnRlbnQ6ICcsICc7Cn0KCgovKiBDaGlsZCBub3RlcyAqLwpoMy5ub3RlcyB7Cglmb250LXNpemU6IDEuMWVtOwp9Cgp1bC5ub3RlcyB7CgltYXJnaW4tYm90dG9tOiAxLjJlbTsKfQoKdWwubm90ZXMgPiBsaTpmaXJzdC1jaGlsZCBwIHsKCW1hcmdpbi10b3A6IDA7Cn0KCnVsLm5vdGVzID4gbGkgewoJcGFkZGluZzogLjdlbSAwOwp9Cgp1bC5ub3RlcyA+IGxpOm5vdCg6bGFzdC1jaGlsZCkgewoJYm9yZGVyLWJvdHRvbTogMXB4ICNjY2Mgc29saWQ7Cn0KCgp1bC5ub3RlcyA+IGxpIHA6Zmlyc3QtY2hpbGQgewoJbWFyZ2luLXRvcDogMDsKfQoKdWwubm90ZXMgPiBsaSBwOmxhc3QtY2hpbGQgewoJbWFyZ2luLWJvdHRvbTogMDsKfQoKLyogQWRkIHF1b3RhdGlvbiBtYXJrcyBhcm91bmQgYmxvY2txdW90ZSAqLwp1bC5ub3RlcyA+IGxpIGJsb2NrcXVvdGUgcDpub3QoOmVtcHR5KTpiZWZvcmUsCmxpLm5vdGUgYmxvY2txdW90ZSBwOm5vdCg6ZW1wdHkpOmJlZm9yZSB7Cgljb250ZW50OiAn4oCcJzsKfQoKdWwubm90ZXMgPiBsaSBibG9ja3F1b3RlIHA6bm90KDplbXB0eSk6bGFzdC1jaGlsZDphZnRlciwKbGkubm90ZSBibG9ja3F1b3RlIHA6bm90KDplbXB0eSk6bGFzdC1jaGlsZDphZnRlciB7Cgljb250ZW50OiAn4oCdJzsKfQoKLyogUHJlc2VydmUgd2hpdGVzcGFjZSBvbiBwbGFpbnRleHQgbm90ZXMgKi8KdWwubm90ZXMgbGkgcC5wbGFpbnRleHQsIGxpLm5vdGUgcC5wbGFpbnRleHQsIGRpdi5ub3RlIHAucGxhaW50ZXh0IHsKCXdoaXRlLXNwYWNlOiBwcmUtd3JhcDsKfQoKLyogRGlzcGxheSB0YWdzIHdpdGhpbiBjaGlsZCBub3RlcyBpbmxpbmUgKi8KdWwubm90ZXMgaDMudGFncyB7CglkaXNwbGF5OiBpbmxpbmU7Cglmb250LXNpemU6IDFlbTsKfQoKdWwubm90ZXMgaDMudGFnczphZnRlciB7Cgljb250ZW50OiAnICc7Cn0KCnVsLm5vdGVzIHVsLnRhZ3MgewoJZGlzcGxheTogaW5saW5lOwp9Cgp1bC5ub3RlcyB1bC50YWdzIGxpOm5vdCg6bGFzdC1jaGlsZCk6YWZ0ZXIgewoJY29udGVudDogJywgJzsKfQoKCi8qIENoaWxkIGF0dGFjaG1lbnRzICovCmgzLmF0dGFjaG1lbnRzIHsKCWZvbnQtc2l6ZTogMS4xZW07Cn0KCnVsLmF0dGFjaG1lbnRzIGxpIHsKCXBhZGRpbmctdG9wOiAuNWVtOwp9Cgp1bC5hdHRhY2htZW50cyBkaXYubm90ZSB7CgltYXJnaW4tbGVmdDogMmVtOwp9Cgp1bC5hdHRhY2htZW50cyBkaXYubm90ZSBwOmZpcnN0LWNoaWxkIHsKCW1hcmdpbi10b3A6IC43NWVtOwp9CgpkaXYgdGFibGUgewoJYm9yZGVyLWNvbGxhcHNlOiBjb2xsYXBzZTsKfQoKZGl2IHRhYmxlIHRkLCBkaXYgdGFibGUgdGggewoJYm9yZGVyOiAxcHggI2NjYyBzb2xpZDsKCWJvcmRlci1jb2xsYXBzZTogY29sbGFwc2U7Cgl3b3JkLWJyZWFrOiBicmVhay1hbGw7Cn0KCmRpdiB0YWJsZSB0ZCBwOmVtcHR5OjphZnRlciwgZGl2IHRhYmxlIHRoIHA6ZW1wdHk6OmFmdGVyIHsKCWNvbnRlbnQ6ICJcMDBhMCI7Cn0KCmRpdiB0YWJsZSB0ZCAqOmZpcnN0LWNoaWxkLCBkaXYgdGFibGUgdGggKjpmaXJzdC1jaGlsZCB7CgltYXJnaW4tdG9wOiAwOwp9CgpkaXYgdGFibGUgdGQgKjpsYXN0LWNoaWxkLCBkaXYgdGFibGUgdGggKjpsYXN0LWNoaWxkIHsKCW1hcmdpbi1ib3R0b206IDA7Cn0K">
+		<link rel="stylesheet" type="text/css" media="screen,projection" href="data:text/css;base64,LyogR2VuZXJpYyBzdHlsZXMgKi8KYm9keSB7Cglmb250OiA2Mi41JSBHZW9yZ2lhLCBUaW1lcywgc2VyaWY7Cgl3aWR0aDogNzgwcHg7CgltYXJnaW46IDAgYXV0bzsKfQoKaDIgewoJZm9udC1zaXplOiAxLjVlbTsKCWxpbmUtaGVpZ2h0OiAxLjVlbTsKCWZvbnQtZmFtaWx5OiBHZW9yZ2lhLCBUaW1lcywgc2VyaWY7Cn0KCnAgewoJbGluZS1oZWlnaHQ6IDEuNWVtOwp9CgphOmxpbmssIGE6dmlzaXRlZCB7Cgljb2xvcjogIzkwMDsKfQoKYTpob3ZlciwgYTphY3RpdmUgewoJY29sb3I6ICM3Nzc7Cn0KCgp1bC5yZXBvcnQgewoJZm9udC1zaXplOiAxLjRlbTsKCXdpZHRoOiA2ODBweDsKCW1hcmdpbjogMCBhdXRvOwoJcGFkZGluZzogMjBweCAyMHB4Owp9CgovKiBNZXRhZGF0YSB0YWJsZSAqLwp0YWJsZSB7Cglib3JkZXI6IDFweCAjY2NjIHNvbGlkOwoJb3ZlcmZsb3c6IGF1dG87Cgl3aWR0aDogMTAwJTsKCW1hcmdpbjogLjFlbSBhdXRvIC43NWVtOwoJcGFkZGluZzogMC41ZW07Cn0K">
+		<link rel="stylesheet" type="text/css" media="print" href="data:text/css;base64,Ym9keSB7Cglmb250OiAxMnB0ICJUaW1lcyBOZXcgUm9tYW4iLCBUaW1lcywgR2VvcmdpYSwgc2VyaWY7CgltYXJnaW46IDA7Cgl3aWR0aDogYXV0bzsKCWNvbG9yOiBibGFjazsKfQoKLyogUGFnZSBCcmVha3MgKHBhZ2UtYnJlYWstaW5zaWRlIG9ubHkgcmVjb2duaXplZCBieSBPcGVyYSkgKi8KaDEsIGgyLCBoMywgaDQsIGg1LCBoNiB7CglwYWdlLWJyZWFrLWFmdGVyOiBhdm9pZDsKCXBhZ2UtYnJlYWstaW5zaWRlOiBhdm9pZDsKfQoKdWwsIG9sLCBkbCB7CglwYWdlLWJyZWFrLWluc2lkZTogYXZvaWQ7Cgljb2xvci1hZGp1c3Q6IGV4YWN0Owp9CgpoMiB7Cglmb250LXNpemU6IDEuM2VtOwoJbGluZS1oZWlnaHQ6IDEuM2VtOwp9CgphIHsKCWNvbG9yOiAjMDAwOwoJdGV4dC1kZWNvcmF0aW9uOiBub25lOwp9Cg==">
+	</head>
+	<body>
+		<ul class="report combineChildItems">
+			<li id="item_L49BE72P" class="item journalArticle">
+			<h2>Classical molecular dynamics simulation of microwave heating of liquids: The case of water</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>N. D. Afify</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>M. B. Sweatman</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>We perform a complete classical molecular dynamics study of 
+the dielectric heating of water in the microwave (MW) region. MW 
+frequencies ranging from 1.0 to 15.0 GHz are used together with a series
+ of well-known empirical force fields. We show that the ability of an 
+empirical force field to correctly predict the dielectric response of 
+liquids to MW radiation should be evaluated on the basis of a joint 
+comparison of the predicted and experimental static dielectric constant,
+ frequency-dependent dielectric spectra, and heating profiles. We argue 
+that this is essential when multicomponent liquids are studied. We find 
+that both the three-site OPC3 and four-site TIP4P-ϵ empirical force 
+fields of water are equally superior for reproducing dielectric 
+properties at a range of MW frequencies. Despite its poor prediction of 
+the static dielectric constant, the well-known SPCE force field can be 
+used to accurately describe dielectric heating of water at low MW 
+frequencies.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2018-01-12</td>
+					</tr>
+					<tr>
+					<th>Short Title</th>
+						<td>Classical molecular dynamics simulation of microwave heating of liquids</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>Silverchair</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://doi.org/10.1063/1.5001928">https://doi.org/10.1063/1.5001928</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>9/5/2024, 3:35:49 PM</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>148</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>024508</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>The Journal of Chemical Physics</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1063/1.5001928">10.1063/1.5001928</a></td>
+					</tr>
+					<tr>
+					<th>Issue</th>
+						<td>2</td>
+					</tr>
+					<tr>
+					<th>Journal Abbr</th>
+						<td>The Journal of Chemical Physics</td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>0021-9606</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/5/2024, 3:35:49 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/5/2024, 3:35:53 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_29YKFXS7">Full Text PDF					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_E3GTCQS4" class="item journalArticle">
+			<h2>Dielectric determination of glucose solutions under microwave fields via a novel molecular dynamics simulation approach</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Yuan Tao</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Bowen Yan</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Nana Zhang</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Mingfu Wang</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Jianxin Zhao</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Hao Zhang</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Wei Chen</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Daming Fan</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>A novel molecular dynamics (MD) simulation method was 
+developed for the dielectric determination of glucose solutions under a 
+microwave field. The dielectric spectra were experimentally analyzed, 
+and then the Debye relaxation model was chosen. The static dielectric 
+property and relaxation time calculated based on the MD simulation were 
+employed in the Debye function to compute the simulated dielectric 
+spectra. The simulated dielectric properties at 2.45&nbsp;GHz and 
+915&nbsp;MHz were in good agreement with the experimental values 
+(maximum RMSE&nbsp;=&nbsp;0.430), validating the established MD 
+simulation method. No significant difference was found between the 
+dielectric properties of glucose solutions simulated with and without a 
+microwave electric field of 105&nbsp;V/m, indicating that the microwave 
+electric field exhibited no other tangible effect on the dielectric 
+properties, except for the temperature effects. Therefore, the 
+experimentally measured dielectric properties suffice to predict and 
+analyze the microwave absorption and thermal conversion of glucose 
+solutions during food processing.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2022-03-01</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>ScienceDirect</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://www.sciencedirect.com/science/article/pii/S0260877421003708">https://www.sciencedirect.com/science/article/pii/S0260877421003708</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>9/5/2024, 3:31:00 PM</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>316</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>110844</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>Journal of Food Engineering</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1016/j.jfoodeng.2021.110844">10.1016/j.jfoodeng.2021.110844</a></td>
+					</tr>
+					<tr>
+					<th>Journal Abbr</th>
+						<td>Journal of Food Engineering</td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>0260-8774</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/5/2024, 3:31:00 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/5/2024, 3:31:31 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>Dielectric properties</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+					<li>Molecular dynamics simulation</li>
+					<li>Debye model</li>
+					<li>Glucose solution</li>
+					<li>Microwave</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_IF8GDEF6">ScienceDirect Snapshot					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_PAJG9U6J" class="item journalArticle">
+			<h2>Extraction of Dielectric Permittivity from Atomistic Molecular Dynamics Simulations and Microwave Measurements</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Alex Saad-Falcon</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Zijian Zhang</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>David Ryoo</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>James Dee</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Ryan S. Westafer</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>James C. Gumbart</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>The design of new biotechnology depends on the prediction and 
+measurement of the electrical properties of biomolecules. The dielectric
+ permittivity, in particular, is highly important for the design of 
+microwave systems for diagnostics, yet this property is rarely 
+explicitly targeted during the development of biomolecular force fields 
+for molecular dynamics (MD) simulations. In order to explore the ability
+ of existing force fields to reproduce the frequency-dependent 
+permittivity, we carried out MD simulations of various aqueous 
+solutions, including pure water, isopropyl alcohol, alanine, and the 
+protein ubiquitin. The TIP3P, TIP4P, TIP4P/ε, and SWM4-NDP water models 
+were used along with the CHARMM36m and Drude protein force fields. An 
+experimental setup using a truncated coaxial line was created to measure
+ the permittivity of the same solutions to check for measure-model 
+agreement. We found that one of the nonpolarizable force fields (TIP4P/ε
+ + CHARMM36m) and the polarizable force fields (SWM4-NDP + Drude) 
+closely agree with experimental results. This demonstrates the strength 
+of the tuned TIP4P/ε water model, as well as the physical validity of 
+polarizable force fields in capturing dielectric permittivity. This 
+represents an important step toward the predictive design of biosensors.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2022-10-13</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>ACS Publications</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://doi.org/10.1021/acs.jpcb.2c05260">https://doi.org/10.1021/acs.jpcb.2c05260</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>4/23/2023, 7:47:15 PM</td>
+					</tr>
+					<tr>
+					<th>Extra</th>
+						<td>Publisher: American Chemical Society</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>126</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>8021-8029</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>The Journal of Physical Chemistry B</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1021/acs.jpcb.2c05260">10.1021/acs.jpcb.2c05260</a></td>
+					</tr>
+					<tr>
+					<th>Issue</th>
+						<td>40</td>
+					</tr>
+					<tr>
+					<th>Journal Abbr</th>
+						<td>J. Phys. Chem. B</td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>1520-6106</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>4/23/2023, 7:47:15 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>4/23/2023, 7:47:59 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_MVEIK45A">ACS Full Text Snapshot					</li>
+					<li id="item_A85YLX4S">Full Text PDF					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_MBUMM5IG" class="item journalArticle">
+			<h2>Investigation of Nonlinear Output-Input Microwave Power of DMSO-Ethanol Mixture by Molecular Dynamics Simulation</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Min Zhou</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Ke Cheng</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Haoran Sun</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Guozhu Jia</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>The nonlinear response of output-input microwave power for 
+DMSO-ethanol mixture, which was exhibited as the direct evidence of 
+non-thermal effect in experiment, was investigated by molecular dynamics
+ simulation. Effects of microwave field on the mixture were evaluated 
+from the alteration in structure, transport, hydrogen bonding dynamics 
+and intermolecular interaction energy. Increasing the strength of the 
+microwave field did not lead to any markedly conformational change, but 
+decrease the diffusion coefficient. Prolonged hydrogen bonding 
+lifetimes, which caused by the redistribution of microwave energy, was 
+also detected. Distinct threshold effect was observed, which was 
+consistent with the behavior in the experiment.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2018-05-08</td>
+					</tr>
+					<tr>
+					<th>Language</th>
+						<td>en</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>www.nature.com</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://www.nature.com/articles/s41598-018-21846-4">https://www.nature.com/articles/s41598-018-21846-4</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>9/5/2024, 3:41:00 PM</td>
+					</tr>
+					<tr>
+					<th>Rights</th>
+						<td>2018 The Author(s)</td>
+					</tr>
+					<tr>
+					<th>Extra</th>
+						<td>Publisher: Nature Publishing Group</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>8</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>7186</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>Scientific Reports</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1038/s41598-018-21846-4">10.1038/s41598-018-21846-4</a></td>
+					</tr>
+					<tr>
+					<th>Issue</th>
+						<td>1</td>
+					</tr>
+					<tr>
+					<th>Journal Abbr</th>
+						<td>Sci Rep</td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>2045-2322</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/5/2024, 3:41:00 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/5/2024, 3:41:03 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+					<li>Hydrogen storage</li>
+					<li>Energy and society</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_ZX8VAC9X">Full Text PDF					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_3E82V9PB" class="item preprint">
+			<h2>Microwave heating and collapse of methane hydrate by molecular dynamics simulations</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Preprint</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Motohiko Tanaka</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Motoyasu Sato</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Shin Nakatani</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>Microwave heating of methane hydrate is investigated with 
+electrostatic molecular dynamics simulations by the SPC/E water model. 
+The structure I of methane hydrate is constructed. When the methane 
+hydrate with a density of 0.91 $\rm{g/cm}^3$ and temperature of 273 K is
+ exposed to microwave electric fields, it suddenly collapses in liquid 
+after a certain period of irradiation. However, a hydrate with a five 
+percent higher density of 0.95 $\rm{g/cm}^3$ and the same initial 
+temperature shows no collapse as a crystal caused by the microwave. A 
+hydrate with CO$_{2}$ guest molecules has increased kinetic energy but 
+rapidly collapses due to the Lennard-Jones potentials. The methane 
+hydrate with variable density and temperature is presented and exhibits 
+slow heating as a crystal and an unchanging volume.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2023-11-24</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>arXiv.org</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="http://arxiv.org/abs/1909.01024">http://arxiv.org/abs/1909.01024</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>9/5/2024, 3:40:14 PM</td>
+					</tr>
+					<tr>
+					<th>Extra</th>
+						<td>arXiv:1909.01024 [physics]</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.48550/arXiv.1909.01024">10.48550/arXiv.1909.01024</a></td>
+					</tr>
+					<tr>
+					<th>Repository</th>
+						<td>arXiv</td>
+					</tr>
+					<tr>
+					<th>Archive ID</th>
+						<td>arXiv:1909.01024</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/5/2024, 3:40:14 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/5/2024, 3:40:16 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+					<li>Physics - Chemical Physics</li>
+				</ul>
+				<h3 class="notes">Notes:</h3>
+				<ul class="notes">
+					<li id="item_W3ZDFASE">
+<p class="plaintext">Comment: 14 pages, 2 tables, 8 figures, arXiv:1909.01024v3 (2023)</p>
+					</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_56F8MHNE">arXiv Fulltext PDF					</li>
+					<li id="item_JPXBF9DN">arXiv.org Snapshot					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_52ZYRK69" class="item journalArticle">
+			<h2>Microwave heating of water, ice, and saline solution: Molecular dynamics study</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Motohiko Tanaka</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Motoyasu Sato</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>In order to study the heating process of water by the 
+microwaves of 2.5–20GHz frequencies, the authors have performed 
+molecular dynamics simulations by adopting a nonpolarizable water model 
+that has fixed point charges on a rigid-body geometry. All runs are 
+started from the equilibrated states derived from the Ic ice with given 
+density and temperature. In the presence of microwaves, the molecules of
+ liquid water exhibit rotational motion whose average phase is delayed 
+from the microwave electric field. Microwave energy is transferred to 
+the kinetic and intermolecular energies of water, where one-third of the
+ absorbed microwave energy is stored as the latter energy. The water in 
+ice phase is scarcely heated by microwaves because of the tight 
+hydrogen-bonded network of water molecules. Dilute salt water is 
+significantly more heated than pure water because of the field-induced 
+motion of salt ions, especially that of large-size ions, by the 
+microwave electric field and energy transfer to water molecules by 
+collisions.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2007-01-18</td>
+					</tr>
+					<tr>
+					<th>Short Title</th>
+						<td>Microwave heating of water, ice, and saline solution</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>Silverchair</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://doi.org/10.1063/1.2403870">https://doi.org/10.1063/1.2403870</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>9/5/2024, 3:36:40 PM</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>126</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>034509</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>The Journal of Chemical Physics</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1063/1.2403870">10.1063/1.2403870</a></td>
+					</tr>
+					<tr>
+					<th>Issue</th>
+						<td>3</td>
+					</tr>
+					<tr>
+					<th>Journal Abbr</th>
+						<td>The Journal of Chemical Physics</td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>0021-9606</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/5/2024, 3:36:40 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/5/2024, 3:36:43 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_6TXFKJVX">Full Text PDF					</li>
+					<li id="item_PBGV8MB4">Snapshot					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_2H7DGHK7" class="item journalArticle">
+			<h2>Molecular dynamic simulation on temperature evolution of SiC under directional microwave radiation</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Tahsin Ashraf Khan</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Patrick A. Burr</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>David Payne</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Mattias Juhl</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Utshash Das</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Brett Hallam</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Darren Bagnall</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Binesh Puthen Veettil</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>Silicon carbide (SiC) is widely used as the substrate for high
+ power electronic devices as well as susceptors for microwave (MW) 
+heating. The dynamics of microwave interaction with SiC is not fully 
+understood, especially at the material boundaries. In this paper, we 
+used the molecular dynamics simulation method to study the temperature 
+evolution during the microwave absorption of SiC under various 
+amplitudes and frequencies of the microwave electric field. Directional 
+MW heating of a SiC crystal slab bounded by surfaces along [100] 
+crystallographic direction shows significantly faster melting when the 
+field is applied parallel to the surface compared to when applied 
+perpendicular.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2022-03</td>
+					</tr>
+					<tr>
+					<th>Language</th>
+						<td>en</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>Institute of Physics</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://dx.doi.org/10.1088/1361-648X/ac553c">https://dx.doi.org/10.1088/1361-648X/ac553c</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>9/5/2024, 3:37:58 PM</td>
+					</tr>
+					<tr>
+					<th>Extra</th>
+						<td>Publisher: IOP Publishing</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>34</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>195701</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>Journal of Physics: Condensed Matter</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1088/1361-648X/ac553c">10.1088/1361-648X/ac553c</a></td>
+					</tr>
+					<tr>
+					<th>Issue</th>
+						<td>19</td>
+					</tr>
+					<tr>
+					<th>Journal Abbr</th>
+						<td>J. Phys.: Condens. Matter</td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>0953-8984</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/5/2024, 3:37:58 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/5/2024, 3:38:17 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_CVXC7EXE">IOP Full Text PDF					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_9UHG69VY" class="item journalArticle">
+			<h2>Molecular dynamics simulation investigation of the microwave heating supercritical water</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Ying Hu</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Guozhu Jia</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>Nonequilibrium NVE molecular dynamics (MD) simulations were 
+performed to investigate the heating process of supercritical water 
+(SCW) by the microwaves (the field intensities are from 3 × 105V/m to 
+3 × 109V/m with the frequencies of 915 MHz and 2.45 GHz, respectively). 
+The energy distribution, microscopic molecular structure, diffusivity 
+and hydrogen bond dynamics were analyzed. Microwaves field dependence on
+ the rotational and translational coupling mechanisms of water molecules
+ have been detected. The microwave energy has been converted to the 
+kinetic and intermolecular energies of water. There are about 40% 
+absorbed microwave energy is stored as the intermolecular energy, and 
+the proportion decline at higher field intensity. The diffusion of 
+supercritical water is non-linearly fluctuation due to the coupling of 
+rotation and translation motions. And this work may provide a 
+theoretical basis to improve the efficiency of industrial application 
+with microwave and SCW.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2020-01-01</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>ScienceDirect</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://www.sciencedirect.com/science/article/pii/S0167732219333045">https://www.sciencedirect.com/science/article/pii/S0167732219333045</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>9/5/2024, 3:36:24 PM</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>297</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>111440</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>Journal of Molecular Liquids</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1016/j.molliq.2019.111440">10.1016/j.molliq.2019.111440</a></td>
+					</tr>
+					<tr>
+					<th>Journal Abbr</th>
+						<td>Journal of Molecular Liquids</td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>0167-7322</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/5/2024, 3:36:24 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/5/2024, 3:36:27 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>Molecular dynamics</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+					<li>Microwave heating</li>
+					<li>Energy distribution</li>
+					<li>Molecular structure</li>
+					<li>Supercritical water</li>
+				</ul>
+			</li>
+
+
+			<li id="item_2NLFHV6W" class="item journalArticle">
+			<h2>Molecular dynamics simulation of microwave heating of liquid monoethanolamine (MEA): An evaluation of existing force fields</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>N. D. Afify</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>M. B. Sweatman</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>We present a complete classical molecular dynamics (MD) study 
+of the dielectric heating of liquid monoethanolamine (MEA) at microwave 
+(MW) frequencies ranging from 1.0 to 10.0 GHz. The detailed dielectric 
+properties predicted by a series of existing empirical force fields of 
+MEA were carefully compared to experimental results. We find that all 
+the evaluated force fields were unable to accurately predict 
+experimental static dielectric constant, frequency-dependent dielectric 
+spectra, and MW heating profiles of liquid MEA, although GROMOS-aa 
+(all-atom GROningen molecular simulation) is the most accurate of those 
+tested. With an isotropic scaling of partial atomic charges, the 
+modified GROMOS-aa and OPLS-aa (all-atom optimized potentials for liquid
+ simulations) force fields could accurately reproduce the experimental 
+static dielectric constant and frequency-dependent dielectric spectra, 
+but they failed to predict MW heating rates directly from MD heating 
+simulations. Thus, the recently presented approach [F. J. Salas et al., 
+J. Chem. Theory Comput. 11, 683 (2015); A. P. de la Luz et al., ibid. 
+11, 2792 (2015)] to tune existing force fields is not an ideal approach 
+to produce force fields suitable for accurate dielectric heating 
+studies.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2018-05-31</td>
+					</tr>
+					<tr>
+					<th>Short Title</th>
+						<td>Molecular dynamics simulation of microwave heating of liquid monoethanolamine (MEA)</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>Silverchair</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://doi.org/10.1063/1.5022585">https://doi.org/10.1063/1.5022585</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>9/5/2024, 3:33:44 PM</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>148</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>204513</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>The Journal of Chemical Physics</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1063/1.5022585">10.1063/1.5022585</a></td>
+					</tr>
+					<tr>
+					<th>Issue</th>
+						<td>20</td>
+					</tr>
+					<tr>
+					<th>Journal Abbr</th>
+						<td>The Journal of Chemical Physics</td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>0021-9606</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/5/2024, 3:33:44 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/5/2024, 3:33:47 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_WC5QK29H">Full Text PDF					</li>
+					<li id="item_AGV5Y2QD">Snapshot					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_D6L8ZCD5" class="item journalArticle">
+			<h2>Molecular Dynamics Simulation on Structure and Dielectric Permittivity of BaTiO&lt;sub&gt;3&lt;/sub&gt;/PVDF Composites</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Ruitian Bo</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Junwang Liu</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Chunfeng Wang</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Yongliang Wang</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Peigang He</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Zhidong Han</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>Molecular dynamics (MD) simulation was performed to 
+investigate the structure and dielectric permittivity of poly(vinylidene
+ fluoride)- (PVDF-) based composites with different contents of barium 
+titanate (BT). The β-phase PVDF model with 100 structural units and the 
+spherical BT particle model with a radius of 0.495 nm were built and 
+applied in the initial models with three PVDF macromolecular chains and 
+BT particles for the MD simulations of the BT/PVDF composites. The 
+influences of BT content on the morphological structure, the free volume
+ fraction, and glass transition temperature of the composites were 
+explored according to the simulated results and the experimental ones of
+ X-ray diffraction (XRD) and scanning electron microscope (SEM). A model
+ was proposed to predict the static dielectric permittivity of the 
+composites, the results of which were compared with the Cole-Cole 
+fitting results of dielectric spectroscopy. Attempts were made to reveal
+ the structure evolution and the micropolarization mechanism with the 
+increasing content of BT.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2021/9/22</td>
+					</tr>
+					<tr>
+					<th>Language</th>
+						<td>en</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>www.hindawi.com</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://www.hindawi.com/journals/apt/2021/9019580/">https://www.hindawi.com/journals/apt/2021/9019580/</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>1/19/2023, 10:04:01 PM</td>
+					</tr>
+					<tr>
+					<th>Extra</th>
+						<td>Publisher: Hindawi</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>2021</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>e9019580</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>Advances in Polymer Technology</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1155/2021/9019580">10.1155/2021/9019580</a></td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>0730-6679</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>1/19/2023, 10:04:01 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>4/23/2023, 7:37:29 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_93SHG4UL">Full Text PDF					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_XY7TSVJM" class="item conferencePaper">
+			<h2>Molecular dynamics simulation on temperature and structure characteristics of microwave-heating NaCl solution</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Conference Paper</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Yi-Ming Zhang</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Jia-Lin Li</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Xin-Yang Wang</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Jian-Peng Wang</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Bing-Zhong Wang</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>In this paper, we performed a series of molecular dynamics 
+simulations to study the temperature characteristics of heating NaCl 
+solution at different concentrations by using different electric field 
+intensity of microwave. By fitting the obtained data, we have 
+established an empirical formula of temperature rise, which can simulate
+ the temperature characteristic of heating NaCl solution under a 
+microwave frequency of 20GHz within the span of molecular dynamics 
+simulation. By comparing and analyzing the pair distribution functions 
+obtained under microwave heating and conventional heating, we found that
+ there is no non-thermal effect during microwave heating NaCl solution.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2013-10</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>IEEE Xplore</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://ieeexplore.ieee.org/document/6814595">https://ieeexplore.ieee.org/document/6814595</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>9/5/2024, 3:40:00 PM</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>161-164</td>
+					</tr>
+					<tr>
+					<th>Proceedings Title</th>
+						<td>2013 International Workshop on Microwave and Millimeter Wave Circuits and System Technology</td>
+					</tr>
+					<tr>
+					<th>Conference Name</th>
+						<td>2013 International Workshop on Microwave and Millimeter Wave Circuits and System Technology</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1109/MMWCST.2013.6814595">10.1109/MMWCST.2013.6814595</a></td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/5/2024, 3:40:00 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/5/2024, 3:40:03 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>Molecular dynamics</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+					<li>Fitting</li>
+					<li>Microwave heating</li>
+					<li>Electric potential</li>
+					<li>Electromagnetic heating</li>
+					<li>Industries</li>
+					<li>Non-thermal effect</li>
+					<li>Resistance heating</li>
+					<li>Temperature</li>
+					<li>Temperature characteristic</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_I6TIXPKV">IEEE Xplore Abstract Record					</li>
+					<li id="item_A3NEBHQX">IEEE Xplore Full Text PDF					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_S2VL5XS5" class="item journalArticle">
+			<h2>Multidirectional Polarization Impacts on Microwave Heating 
+Efficiency: A Molecular Dynamics Research of Microwave Heating of Common
+ Solvents</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Hongxiao Shi</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Kama Huang</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Ying Liu</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Dezhi Gou</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>Energy efficiency has always been an inherent problem of 
+microwave heating. In this work, the higher heating efficiency of the 
+elliptically polarized microwave electric field is investigated via MD 
+simulations, aiming to examine the multidirectional polarization effect 
+during microwave heating. The MD results show that the heating 
+efficiency growth rates of EtOH, AcOH, DMSO, H2O, and DMF are 3.17%, 
+3.92%, 4.14%, 5.00%, and 27.06% sequentially larger with the 
+elliptically polarized microwave electric field (EF) than those with the
+ linearly polarized microwave EF. Energy analyses indicate that the 
+utilization rate of microwave energy would be increased of the 
+elliptically polarized microwave EF with the same electric field 
+intensities. The higher decay speed of the rotation autocorrelation 
+function curves of elliptically polarized EF presents that the sample 
+molecules do have a more frequent rotational motion to align with the 
+varying polarization directions. Additionally, dielectric properties 
+analysis gave the relation between the heating efficiency growth rate 
+and the loss tangent of the samples. This microwave heating method is 
+expected to be a new route to improve the microwave heating efficiency.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2023-02-02</td>
+					</tr>
+					<tr>
+					<th>Short Title</th>
+						<td>Multidirectional Polarization Impacts on Microwave Heating Efficiency</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>ACS Publications</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://doi.org/10.1021/acs.jpcb.2c07548">https://doi.org/10.1021/acs.jpcb.2c07548</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>9/5/2024, 3:37:16 PM</td>
+					</tr>
+					<tr>
+					<th>Extra</th>
+						<td>Publisher: American Chemical Society</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>127</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>970-979</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>The Journal of Physical Chemistry B</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1021/acs.jpcb.2c07548">10.1021/acs.jpcb.2c07548</a></td>
+					</tr>
+					<tr>
+					<th>Issue</th>
+						<td>4</td>
+					</tr>
+					<tr>
+					<th>Journal Abbr</th>
+						<td>J. Phys. Chem. B</td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>1520-6106</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/5/2024, 3:37:16 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/5/2024, 3:37:19 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_QJD54MKV">Full Text PDF					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_ITKGKNLX" class="item journalArticle">
+			<h2>The selective heating effect of microwave irradiation on a binary
+ mixture of water and polyethylene oxide: a molecular dynamics 
+simulation approach</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Junhe Chen</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Matthew J. Warner</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Benjamin Sikora</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Daniel Kiddle</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Danielle Coverdell</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Omar Allam</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Paul A. Kohl</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Seung Soon Jang</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>In this study, we investigate the molecular mechanisms of a 
+microwave-driven selective heating process by performing molecular 
+dynamics simulations for three different systems including pure water, 
+pure polyethylene oxide (PEO), and water–PEO mixed systems in the 
+presence of a microwave with two different intensities of electric field
+ such as 0.001 V Å−1 and 0.01 V Å−1 at a frequency of 100 GHz. First, 
+from performing molecular dynamics simulations of CO and CO2 in the 
+presence of the microwave, it is confirmed that the molecular dipole 
+moment is responsible for the rotational motion induced by the 
+oscillating electric field. Second, by analyzing the MD simulations of 
+the pure water system, we discover that the dipole moment of water 
+exhibits a time lag with respect to the microwave. During the heating 
+process, however, the temperature, kinetic, and potential energies 
+increase synchronously with the oscillating electric field of the 
+microwave, showing that the heating of the water system is caused by the
+ molecular reaction of water to the microwave. Comparing the water–PEO 
+mixed system to the pure water and pure PEO systems, the water–PEO mixed
+ system has a higher heating rate than the pure PEO system but a lower 
+heating rate than the pure water system. Therefore, we conclude that 
+heating the water–PEO mixed system is driven by water molecules 
+selectively activated by microwave irradiation. We also calculate the 
+diffusion coefficients of water molecules and PEO chains by describing 
+their mean square displacements, demonstrating that the diffusion 
+coefficients are increased in the presence of microwaves for both water 
+and PEO in pure and mixed systems. Lastly, during the microwave heating 
+process, the structures of the water–PEO mixed system are altered as a 
+function of the intensity of electric field, which is mainly driven by 
+the response of water molecules.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2023-05-03</td>
+					</tr>
+					<tr>
+					<th>Language</th>
+						<td>en</td>
+					</tr>
+					<tr>
+					<th>Short Title</th>
+						<td>The selective heating effect of microwave irradiation on a binary mixture of water and polyethylene oxide</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>pubs.rsc.org</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://pubs.rsc.org/en/content/articlelanding/2023/cp/d3cp00349c">https://pubs.rsc.org/en/content/articlelanding/2023/cp/d3cp00349c</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>9/5/2024, 3:36:10 PM</td>
+					</tr>
+					<tr>
+					<th>Extra</th>
+						<td>Publisher: The Royal Society of Chemistry</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>25</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>12522-12531</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>Physical Chemistry Chemical Physics</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1039/D3CP00349C">10.1039/D3CP00349C</a></td>
+					</tr>
+					<tr>
+					<th>Issue</th>
+						<td>17</td>
+					</tr>
+					<tr>
+					<th>Journal Abbr</th>
+						<td>Phys. Chem. Chem. Phys.</td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>1463-9084</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/5/2024, 3:36:10 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/5/2024, 3:36:15 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_W6BALK5H">Full Text PDF					</li>
+					<li id="item_LHIXFEEK">Supplementary Information PDF					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_WQW46N29" class="item journalArticle">
+			<h2>Theoretical estimation of dielectric loss of oxide glasses using nonequilibrium molecular dynamics simulations</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Shingo Urata</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Hiroyuki Hijiya</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Kazuhiko Niwano</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Jun Matsui</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>To theoretically explore amorphous materials with a 
+sufficiently low dielectric loss, which are essential for 
+next-generation communication devices, the applicability of a 
+nonequilibrium molecular dynamics simulation employing an external 
+alternating electric field was examined using alkaline silicate glass 
+models. In this method, the dielectric loss is directly evaluated as the
+ phase shift of the dipole moment from the applied electric field. This 
+method enabled us to evaluate the dielectric loss in a wide frequency 
+range from 1 GHz to 10 THz. It was observed that the dielectric loss 
+reaches its maximum at a few THz. The simulation method was found to 
+qualitatively reproduce the effects of alkaline content and alkaline 
+type on the dielectric loss. Furthermore, it reasonably reproduced the 
+effect of mixed alkalines on the dielectric loss, which was observed in 
+our experiments on sodium and/or potassium silicate glasses. Alkaline 
+mixing was thus found to reduce the dielectric loss.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2022</td>
+					</tr>
+					<tr>
+					<th>Language</th>
+						<td>en</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>Wiley Online Library</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/jace.18411">https://onlinelibrary.wiley.com/doi/abs/10.1111/jace.18411</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>1/19/2023, 9:49:01 PM</td>
+					</tr>
+					<tr>
+					<th>Extra</th>
+						<td>_eprint: https://onlinelibrary.wiley.com/doi/pdf/10.1111/jace.18411</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>105</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>4200-4207</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>Journal of the American Ceramic Society</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1111/jace.18411">10.1111/jace.18411</a></td>
+					</tr>
+					<tr>
+					<th>Issue</th>
+						<td>6</td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>1551-2916</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/12/2024, 4:09:19 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/12/2024, 4:09:52 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>dielectric loss</li>
+					<li>mixed alkaline effect</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_DQVH2RWR">Full Text PDF					</li>
+					<li id="item_H9G5HF4I">Snapshot					</li>
+				</ul>
+			</li>
+
+
+			<li id="item_YMEH77NP" class="item journalArticle">
+			<h2>Unusual heating effect of the elliptically polarized microwave 
+electric field on sodium chloride solution: A molecular dynamics 
+simulation</h2>
+				<table>
+					<tbody><tr>
+						<th>Item Type</th>
+						<td>Journal Article</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Hongxiao Shi</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Kama Huang</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Ying Liu</td>
+					</tr>
+					<tr>
+						<th class="author">Author</th>
+						<td>Dezhi Gou</td>
+					</tr>
+					<tr>
+					<th>Abstract</th>
+						<td>Our molecular dynamics simulation results show that the 
+elliptically polarized microwave electric field would increase the 
+heating efficiency of sodium chloride solution. The growth rate of the 
+heating efficiency is positively correlated with the concentration of 
+the sodium chloride solution and intensity of applied electric field. 
+The rotation autocorrelation function results confirm that water 
+molecules would do a more frequent rotational motion with the 
+multidirectional polarization of elliptically polarized microwave 
+electric field. The result of the more frequent rotational motion is 
+consistent with that of the higher microwave energy absorption of energy
+ analysis. The following analysis of hydrogen bond shows that the 
+existence of ionic solutes would break the hydrogen bonds between water 
+molecules and make it easier for water molecules to rotate with the 
+applied electric field. These results indicate that elliptically 
+polarized microwave electric field can indeed improve the heating 
+efficiency of salt solution.</td>
+					</tr>
+					<tr>
+					<th>Date</th>
+						<td>2023-05-01</td>
+					</tr>
+					<tr>
+					<th>Short Title</th>
+						<td>Unusual heating effect of the elliptically polarized microwave electric field on sodium chloride solution</td>
+					</tr>
+					<tr>
+					<th>Library Catalog</th>
+						<td>ScienceDirect</td>
+					</tr>
+					<tr>
+					<th>URL</th>
+						<td><a href="https://www.sciencedirect.com/science/article/pii/S0301010423000381">https://www.sciencedirect.com/science/article/pii/S0301010423000381</a></td>
+					</tr>
+					<tr>
+					<th>Accessed</th>
+						<td>9/5/2024, 3:33:16 PM</td>
+					</tr>
+					<tr>
+					<th>Volume</th>
+						<td>569</td>
+					</tr>
+					<tr>
+					<th>Pages</th>
+						<td>111856</td>
+					</tr>
+					<tr>
+					<th>Publication</th>
+						<td>Chemical Physics</td>
+					</tr>
+					<tr>
+					<th>DOI</th>
+						<td><a href="http://doi.org/10.1016/j.chemphys.2023.111856">10.1016/j.chemphys.2023.111856</a></td>
+					</tr>
+					<tr>
+					<th>Journal Abbr</th>
+						<td>Chemical Physics</td>
+					</tr>
+					<tr>
+					<th>ISSN</th>
+						<td>0301-0104</td>
+					</tr>
+					<tr>
+					<th>Date Added</th>
+						<td>9/5/2024, 3:33:16 PM</td>
+					</tr>
+					<tr>
+					<th>Modified</th>
+						<td>9/5/2024, 3:33:19 PM</td>
+					</tr>
+				</tbody></table>
+				<h3 class="tags">Tags:</h3>
+				<ul class="tags">
+					<li>method</li>
+					<li>superimp</li>
+					<li>permittivity</li>
+					<li>MD</li>
+					<li>MW</li>
+					<li>Elliptical polarization</li>
+					<li>Hydrogen bond</li>
+					<li>Microwave heating</li>
+					<li>Rotation autocorrelation function</li>
+				</ul>
+				<h3 class="attachments">Attachments</h3>
+				<ul class="attachments">
+					<li id="item_3MPMGEA9">ScienceDirect Snapshot					</li>
+					<li id="item_CD4LBQWQ">Shi et al. - 2023 - Unusual heating effect of the elliptically polariz.pdf					</li>
+				</ul>
+			</li>
+
+		</ul>
+	
+</body></html>

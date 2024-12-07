@@ -22,15 +22,15 @@ fix             1 all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
 fix             2 all nve
 
 variable amp    equal 0.3     # amplitude of the electric field # 3 × 10^9 V/m or 0.3 V/Angstrom
-variable period   equal 1e6   # period of the electric field 1e6 femtoseconds -> 1e-9 seconds -> 1 GHz
+variable period   equal 1e5   # period of the electric field 1e5 femtoseconds -> 1e-10 seconds -> 10 GHz
 variable Eapply equal swiggle(0.0,v_amp,v_period)
 
 fix             3 all efield 0.0 0.0 v_Eapply
 
 timestep        1.0
-thermo          10
+thermo          25
 thermo_style    custom step temp press lx ly lz
 
-dump           1 all custom 10 dump_heat_efield.lammpstrj id type x y z vx vy vz q
+dump           1 all custom 25 dump_heat_efield.lammpstrj id type x y z vx vy vz q
 
-run            10000000 # 10ns
+run            5000000 # 5ns = 5000 ps (according to Urata's paper)
